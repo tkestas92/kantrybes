@@ -1,13 +1,11 @@
 import Link from 'next/link'
+import NameAnimation from '@/components/NameAnimation'
 
 export default function Landing() {
   return (
     <main className="min-h-screen bg-[#0f0f0f] flex flex-col items-center justify-center px-6">
-      <div className="text-center mb-12">
-        <h1 className="text-3xl font-medium text-white mb-2 tracking-tight">
-          Kantrybės
-        </h1>
-        <p className="text-[15px] text-gray-500">Kęstas Trybė</p>
+      <div className="mb-12">
+        <NameAnimation />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">

@@ -29,7 +29,8 @@ export function getPool(): mysql.Pool {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
-      ssl: process.env.MYSQL_HOST?.includes('railway')
+      family: process.env.MYSQL_HOST?.includes('railway.internal') ? 0 : undefined,
+      ssl: process.env.MYSQL_HOST?.includes('proxy.rlwy.net')
         ? { rejectUnauthorized: false }
         : undefined,
     })

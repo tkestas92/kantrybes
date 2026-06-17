@@ -20,7 +20,7 @@ let pool: mysql.Pool | null = null
 
 export function getPool(): mysql.Pool {
   if (!pool) {
-    pool = mysql.createPool({
+    const poolConfig: mysql.PoolOptions = {
       host: process.env.MYSQL_HOST,
       port: Number(process.env.MYSQL_PORT) || 3306,
       user: process.env.MYSQL_USER,
@@ -29,11 +29,14 @@ export function getPool(): mysql.Pool {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
-      family: process.env.MYSQL_HOST?.includes('railway.internal') ? 0 : undefined,
       ssl: process.env.MYSQL_HOST?.includes('proxy.rlwy.net')
         ? { rejectUnauthorized: false }
         : undefined,
-    })
+    }
+    if (process.env.MYSQL_HOST?.includes('railway.internal')) {
+      (poolConfig as any).family = 0
+    }
+    pool = mysql.createPool(poolConfig)
   }
   return pool
 }

@@ -9,7 +9,7 @@
     "db:init": "node scripts/init-db.js"
   },
   "dependencies": {
-    "next": "14.2.3",
+    "next": "^14.2.35",
     "react": "^18",
     "react-dom": "^18",
     "mysql2": "^3.10.0",
@@ -25,6 +25,6 @@
     "postcss": "^8",
     "autoprefixer": "^10",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-next": "^14.2.35"
   }
 }

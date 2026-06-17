@@ -3,134 +3,157 @@
 import { useEffect, useRef } from 'react'
 
 const TOP_TEXT = 'Kęstas Trybė'
-const BOTTOM_WORD = 'Kantrybės'
+const WORD = 'Kantrybės'
+
+function shuffledIndices(n: number): number[] {
+  const arr = Array.from({ length: n }, (_, i) => i)
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  return arr
+}
 
 export default function NameAnimation() {
   const topRef = useRef<HTMLDivElement>(null)
-  const bottomRef = useRef<HTMLDivElement>(null)
-  const builtRef = useRef(false)
+  const botRef = useRef<HTMLDivElement>(null)
+  const modeRef = useRef(0)
+  const startedRef = useRef(false)
 
   useEffect(() => {
-    if (builtRef.current) return
-    builtRef.current = true
+    if (startedRef.current) return
+    startedRef.current = true
 
     const topEl = topRef.current
-    const bottomEl = bottomRef.current
-    if (!topEl || !bottomEl) return
+    const botEl = botRef.current
+    if (!topEl || !botEl) return
 
-    // "Kęstas Trybė" — typewriter raidė po raidės
-    ;[...TOP_TEXT].forEach((ch, i) => {
-      const s = document.createElement('span')
-      s.textContent = ch === ' ' ? '\u00A0' : ch
-      s.className = 'na-typeletter'
-      s.style.animationDelay = `${i * 0.07}s`
-      topEl.appendChild(s)
-    })
+    function playCycle() {
+      if (!topEl || !botEl) return
+      topEl.innerHTML = ''
+      botEl.innerHTML = ''
+      topEl.style.transition = 'none'
+      topEl.style.opacity = '1'
 
-    const cursor = document.createElement('span')
-    cursor.className = 'na-cursor'
-    topEl.appendChild(cursor)
+      const letterSpans: HTMLSpanElement[] = []
+      ;[...TOP_TEXT].forEach(ch => {
+        const s = document.createElement('span')
+        s.textContent = ch === ' ' ? '\u00A0' : ch
+        s.style.opacity = '0'
+        s.style.display = 'inline-block'
+        topEl.appendChild(s)
+        letterSpans.push(s)
+      })
 
-    // "Kantrybės" — raidės atskrenda iš atsitiktinų pozicijų
-    ;[...BOTTOM_WORD].forEach((ch, i) => {
-      const s = document.createElement('span')
-      s.textContent = ch
-      s.className = 'na-flyletter'
-      const fx = Math.round((Math.random() - 0.5) * 2 * (250 + Math.random() * 200))
-      const fy = Math.round((Math.random() < 0.5 ? -1 : 1) * (180 + Math.random() * 140))
-      const fr = Math.round((Math.random() - 0.5) * 50)
-      s.style.setProperty('--fx', `${fx}px`)
-      s.style.setProperty('--fy', `${fy}px`)
-      s.style.setProperty('--fr', `${fr}deg`)
-      s.style.animationDelay = `${i * 0.08}s`
-      bottomEl.appendChild(s)
-    })
+      const cursor = document.createElement('span')
+      cursor.style.display = 'inline-block'
+      cursor.style.width = '2px'
+      cursor.style.height = '30px'
+      cursor.style.verticalAlign = '-5px'
+      cursor.style.marginLeft = '2px'
+      cursor.style.background = '#f0f0f0'
+      cursor.style.opacity = '0'
+      topEl.appendChild(cursor)
+
+      letterSpans.forEach((s, i) => {
+        setTimeout(() => { s.style.opacity = '1' }, i * 70)
+      })
+
+      let blinkCount = 0
+      const blinkInterval = setInterval(() => {
+        cursor.style.opacity = cursor.style.opacity === '1' ? '0' : '1'
+        blinkCount++
+        if (blinkCount > 6) clearInterval(blinkInterval)
+      }, 250)
+
+      setTimeout(() => {
+        clearInterval(blinkInterval)
+        cursor.style.opacity = '0'
+        topEl.style.transition = 'opacity 0.6s ease'
+        topEl.style.opacity = '0'
+      }, 2400)
+
+      const mode = modeRef.current
+      const bottomSpans: HTMLSpanElement[] = []
+      ;[...WORD].forEach(ch => {
+        const s = document.createElement('span')
+        s.textContent = ch
+        s.style.display = 'inline-block'
+        s.style.position = 'relative'
+        s.style.opacity = '0'
+
+        if (mode === 0) {
+          const fx = Math.round((Math.random() - 0.5) * 2 * (250 + Math.random() * 200))
+          const fy = Math.round((Math.random() < 0.5 ? -1 : 1) * (180 + Math.random() * 140))
+          const fr = Math.round((Math.random() - 0.5) * 50)
+          s.style.transform = `translate(${fx}px,${fy}px) rotate(${fr}deg) scale(0.6)`
+          s.style.transition = 'transform 0.85s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease'
+        } else {
+          s.style.transform = 'translateY(-220px)'
+          s.style.transition = 'transform 0.6s cubic-bezier(0.55,0,1,0.45), opacity 0.3s ease'
+        }
+        botEl.appendChild(s)
+        bottomSpans.push(s)
+      })
+
+      const order = shuffledIndices(bottomSpans.length)
+      order.forEach((letterIdx, orderPos) => {
+        const delay = 3000 + orderPos * 80
+        setTimeout(() => {
+          const s = bottomSpans[letterIdx]
+          if (mode === 0) {
+            s.style.transform = 'translate(0,0) rotate(0deg) scale(1)'
+            s.style.opacity = '1'
+          } else {
+            s.style.transition = 'transform 0.55s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease'
+            s.style.transform = 'translateY(0)'
+            s.style.opacity = '1'
+          }
+        }, delay)
+      })
+
+      modeRef.current = 1 - modeRef.current
+    }
+
+    playCycle()
+    const interval = setInterval(playCycle, 7500)
+    return () => clearInterval(interval)
   }, [])
 
   return (
-    <div className="na-wrap">
-      <style>{`
-        .na-wrap {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-        }
-        @keyframes naTopFade { 0%{opacity:1} 38%{opacity:1} 50%{opacity:0} 100%{opacity:0} }
-        @keyframes naLetterIn {
-          0% { opacity:0; transform: translate(var(--fx), var(--fy)) rotate(var(--fr)) scale(0.6); }
-          47% { opacity:0; transform: translate(var(--fx), var(--fy)) rotate(var(--fr)) scale(0.6); }
-          72% { opacity:1; transform: translate(0,0) rotate(0deg) scale(1.08); }
-          82% { transform: translate(0,0) rotate(0deg) scale(0.97); }
-          90%,100% { opacity:1; transform: translate(0,0) rotate(0deg) scale(1); }
-        }
-        @keyframes naTypeIn { 0%{opacity:0} 1%{opacity:1} 100%{opacity:1} }
-        @keyframes naCursorBlink {
-          0% { opacity:0; }
-          1% { opacity:1; }
-          3%,3.5% { opacity:0; }
-          4%,4.5% { opacity:1; }
-          6%,6.5% { opacity:0; }
-          7%,7.5% { opacity:1; }
-          9%,9.5% { opacity:0; }
-          10%,10.5% { opacity:1; }
-          38% { opacity:1; }
-          39%,100% { opacity:0; }
-        }
-        .na-top {
-          font-size: 34px;
-          font-weight: 400;
-          color: #f0f0f0;
-          letter-spacing: 4px;
-          white-space: nowrap;
-          animation: naTopFade 9.5s ease infinite;
-          margin-bottom: -30px;
-          position: relative;
-          z-index: 1;
-        }
-        .na-typeletter {
-          display: inline-block;
-          opacity: 0;
-          animation-name: naTypeIn;
-          animation-duration: 9.5s;
-          animation-timing-function: steps(1);
-          animation-iteration-count: infinite;
-        }
-        .na-cursor {
-          display: inline-block;
-          width: 2px;
-          height: 30px;
-          vertical-align: -5px;
-          margin-left: 2px;
-          background: #f0f0f0;
-          opacity: 0;
-          animation: naCursorBlink 9.5s steps(1) infinite;
-        }
-        .na-bottom {
-          font-size: 40px;
-          font-weight: 500;
-          color: #4afa8a;
-          white-space: nowrap;
-          display: inline-flex;
-          min-height: 48px;
-        }
-        .na-flyletter {
-          display: inline-block;
-          position: relative;
-          animation-name: naLetterIn;
-          animation-duration: 9.5s;
-          animation-timing-function: ease-out;
-          animation-iteration-count: infinite;
-        }
-        @media (max-width: 480px) {
-          .na-top { font-size: 22px; letter-spacing: 2px; margin-bottom: -20px; }
-          .na-bottom { font-size: 28px; min-height: 34px; }
-          .na-cursor { height: 20px; }
-        }
-      `}</style>
-      <div ref={topRef} className="na-top" />
-      <div ref={bottomRef} className="na-bottom" />
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+      }}
+    >
+      <div
+        ref={topRef}
+        style={{
+          fontSize: 34,
+          fontWeight: 400,
+          color: '#f0f0f0',
+          letterSpacing: 4,
+          whiteSpace: 'nowrap',
+          marginBottom: -30,
+          position: 'relative',
+          zIndex: 1,
+        }}
+      />
+      <div
+        ref={botRef}
+        style={{
+          fontSize: 40,
+          fontWeight: 500,
+          color: '#4afa8a',
+          whiteSpace: 'nowrap',
+          display: 'inline-flex',
+          minHeight: 48,
+        }}
+      />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import NameAnimation from '@/components/NameAnimation'
 
 export default function DjPage() {
   return (
@@ -9,9 +10,9 @@ export default function DjPage() {
       </Link>
 
       <section>
-        <h1 className="text-3xl font-medium text-white mb-2 tracking-tight">
-          Kantrybės
-        </h1>
+        <div className="mb-4">
+          <NameAnimation />
+        </div>
         <p className="text-[15px] text-gray-500 leading-relaxed mb-6 max-w-lg">
           DJ ir event organizatorius iš Vilniaus. 100+ renginių, sunset boat party,
           charity events ir bendradarbiavimas su žinomais brandais.

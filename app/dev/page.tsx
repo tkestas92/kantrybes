@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Github, Linkedin, Mail, FileText, ArrowLeft } from 'lucide-react'
 import { getAllProjects } from '@/lib/db'
 import ProjectGrid from '@/components/ProjectGrid'
+import NameAnimation from '@/components/NameAnimation'
 
 // Visada nuskaityt naujausius duomenis iš DB (ne cache'int statiškai)
 export const dynamic = 'force-dynamic'
@@ -17,9 +18,9 @@ export default async function DevPage() {
 
       {/* Hero */}
       <section className="mb-12">
-        <h1 className="text-3xl font-medium text-white mb-2 tracking-tight">
-          Kęstas <span className="text-[#4afa8a]">Trybė</span>
-        </h1>
+        <div className="mb-4">
+          <NameAnimation />
+        </div>
         <p className="text-[15px] text-gray-500 leading-relaxed mb-6 max-w-lg">
           Full-stack developer ir AI/ML inžinierius iš Vilniaus.
           Kuriu mobilias aplikacijas, backend servisus ir machine learning sprendimus.

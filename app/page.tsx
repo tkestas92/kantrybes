@@ -10,21 +10,21 @@ export default function Landing() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
         <Link
-          href="/dj"
-          className="group bg-[#161616] border border-[#252525] rounded-xl p-8 flex flex-col items-center gap-3 hover:border-[#333] hover:bg-[#1e1e1e] transition-all"
-        >
-          <span className="text-3xl">🎧</span>
-          <span className="text-white font-medium text-[15px]">DJ</span>
-          <span className="text-gray-500 text-[12px] text-center">Renginiai, booking, muzika</span>
-        </Link>
-
-        <Link
           href="/dev"
           className="group bg-[#161616] border border-[#252525] rounded-xl p-8 flex flex-col items-center gap-3 hover:border-[#4afa8a]/30 hover:bg-[#1e1e1e] transition-all"
         >
           <span className="text-3xl">💻</span>
           <span className="text-white font-medium text-[15px]">Dev</span>
-          <span className="text-gray-500 text-[12px] text-center">Projektai, kodas, portfolio</span>
+          <span className="text-gray-500 text-[12px] text-center">Full-stack ir AI/ML projektai, technologijos</span>
+        </Link>
+
+        <Link
+          href="/dj"
+          className="group bg-[#161616] border border-[#252525] rounded-xl p-8 flex flex-col items-center gap-3 hover:border-[#333] hover:bg-[#1e1e1e] transition-all"
+        >
+          <span className="text-3xl">🎧</span>
+          <span className="text-white font-medium text-[15px]">DJ</span>
+          <span className="text-gray-500 text-[12px] text-center">Event hostingas, booking ir muzikinė produkcija</span>
         </Link>
       </div>
     </main>

@@ -85,7 +85,7 @@ export default function NameAnimation() {
           letter-spacing: 4px;
           white-space: nowrap;
           animation: naTopFade 9.5s ease infinite;
-          margin-bottom: -22px;
+          margin-bottom: -30px;
           position: relative;
           z-index: 1;
         }
@@ -124,7 +124,7 @@ export default function NameAnimation() {
           animation-iteration-count: infinite;
         }
         @media (max-width: 480px) {
-          .na-top { font-size: 22px; letter-spacing: 2px; margin-bottom: -14px; }
+          .na-top { font-size: 22px; letter-spacing: 2px; margin-bottom: -20px; }
           .na-bottom { font-size: 28px; min-height: 34px; }
           .na-cursor { height: 20px; }
         }

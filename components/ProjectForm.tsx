@@ -21,6 +21,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
   const [tags, setTags] = useState<string[]>(initial?.tags || [])
   const [githubUrl, setGithubUrl] = useState(initial?.github_url || '')
   const [liveUrl, setLiveUrl] = useState(initial?.live_url || '')
+  const [liveType, setLiveType] = useState<Project['live_type']>(initial?.live_type || null)
   const [status, setStatus] = useState<Project['status']>(initial?.status || 'shipped')
   const [loading, setLoading] = useState(false)
 
@@ -28,10 +29,31 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
     setTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag])
   }
 
+  function detectLiveType(url: string): Project['live_type'] {
+    try {
+      const hostname = new URL(url).hostname
+      if (hostname.startsWith('demo-') && hostname.endsWith('.kantrybes.lt')) {
+        return 'app'
+      }
+    } catch {
+      return 'web'
+    }
+    return 'web'
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
-    await onSave({ title, description, emoji, tags, github_url: githubUrl, live_url: liveUrl, status })
+    await onSave({
+      title,
+      description,
+      emoji,
+      tags,
+      github_url: githubUrl,
+      live_url: liveUrl || null,
+      live_type: liveUrl ? liveType : null,
+      status,
+    })
     setLoading(false)
   }
 
@@ -74,8 +96,48 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
 
       <div className="grid grid-cols-2 gap-3">
         <input className={inputClass} value={githubUrl} onChange={e => setGithubUrl(e.target.value)} placeholder="GitHub URL" />
-        <input className={inputClass} value={liveUrl} onChange={e => setLiveUrl(e.target.value)} placeholder="Live URL (nebūtina)" />
+        <input
+          className={inputClass}
+          value={liveUrl}
+          onChange={e => {
+            const nextUrl = e.target.value
+            setLiveUrl(nextUrl)
+            if (nextUrl) setLiveType(detectLiveType(nextUrl))
+            else setLiveType(null)
+          }}
+          placeholder="Live URL (nebūtina)"
+        />
       </div>
+
+      {liveUrl && (
+        <div>
+          <p className="text-[12px] text-gray-600 mb-2">Live demo tipas</p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setLiveType('web')}
+              className={`flex-1 text-xs px-3 py-2 rounded border transition-all ${
+                liveType === 'web'
+                  ? 'bg-[#4afa8a] text-black border-[#4afa8a] font-medium'
+                  : 'border-[#2a2a2a] text-gray-500 hover:border-[#444]'
+              }`}
+            >
+              Web puslapis
+            </button>
+            <button
+              type="button"
+              onClick={() => setLiveType('app')}
+              className={`flex-1 text-xs px-3 py-2 rounded border transition-all ${
+                liveType === 'app'
+                  ? 'bg-[#4afa8a] text-black border-[#4afa8a] font-medium'
+                  : 'border-[#2a2a2a] text-gray-500 hover:border-[#444]'
+              }`}
+            >
+              Mobili aplikacija
+            </button>
+          </div>
+        </div>
+      )}
 
       <select
         className={inputClass}

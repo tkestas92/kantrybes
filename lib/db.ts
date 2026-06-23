@@ -8,6 +8,7 @@ export type Project = {
   tags: string[]
   github_url: string | null
   live_url: string | null
+  live_type: 'web' | 'app' | null
   status: 'shipped' | 'in_progress' | 'archived'
   sort_order: number
   created_at: string
@@ -58,8 +59,8 @@ export async function getAllProjects(): Promise<Project[]> {
 export async function createProject(data: Partial<Project>): Promise<Project> {
   const pool = getPool()
   const [result] = await pool.query(
-    `INSERT INTO projects (title, description, emoji, tags, github_url, live_url, status, sort_order)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO projects (title, description, emoji, tags, github_url, live_url, live_type, status, sort_order)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       data.title,
       data.description,
@@ -67,6 +68,7 @@ export async function createProject(data: Partial<Project>): Promise<Project> {
       JSON.stringify(data.tags || []),
       data.github_url || null,
       data.live_url || null,
+      data.live_type || null,
       data.status || 'shipped',
       data.sort_order || 0,
     ]
@@ -87,6 +89,7 @@ export async function updateProject(id: number, data: Partial<Project>): Promise
   if (data.tags !== undefined) { fields.push('tags = ?'); values.push(JSON.stringify(data.tags)) }
   if (data.github_url !== undefined) { fields.push('github_url = ?'); values.push(data.github_url) }
   if (data.live_url !== undefined) { fields.push('live_url = ?'); values.push(data.live_url) }
+  if (data.live_type !== undefined) { fields.push('live_type = ?'); values.push(data.live_type) }
   if (data.status !== undefined) { fields.push('status = ?'); values.push(data.status) }
   if (data.sort_order !== undefined) { fields.push('sort_order = ?'); values.push(data.sort_order) }
 

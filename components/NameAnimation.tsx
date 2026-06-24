@@ -128,6 +128,7 @@ export default function NameAnimation() {
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
+        width: '100%',
       }}
     >
       <div
@@ -141,6 +142,9 @@ export default function NameAnimation() {
           marginBottom: -30,
           position: 'relative',
           zIndex: 1,
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
         }}
       />
       <div
@@ -151,7 +155,9 @@ export default function NameAnimation() {
           color: '#4afa8a',
           whiteSpace: 'nowrap',
           display: 'inline-flex',
+          justifyContent: 'center',
           minHeight: 48,
+          width: '100%',
         }}
       />
     </div>

@@ -17,15 +17,16 @@ export default async function DevPage() {
       </Link>
 
       {/* Hero */}
-      <section className="mb-12 flex flex-col items-center text-center">
-        <div className="mb-4">
-          <NameAnimation />
-        </div>
-        <p className="text-[15px] text-gray-500 leading-relaxed mb-6 max-w-lg">
-          Full-stack developer ir AI/ML inžinierius iš Vilniaus.
-          Kuriu mobilias aplikacijas, backend servisus ir machine learning sprendimus.
-        </p>
-        <div className="flex flex-wrap gap-2 justify-center">
+      <section className="mb-12 w-full">
+        <div className="mx-auto flex w-full max-w-xl flex-col items-center text-center">
+          <div className="mb-4 flex w-full justify-center">
+            <NameAnimation />
+          </div>
+          <p className="mb-6 max-w-lg text-[15px] leading-relaxed text-gray-500">
+            Full-stack developer ir AI/ML inžinierius iš Vilniaus.
+            Kuriu mobilias aplikacijas, backend servisus ir machine learning sprendimus.
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
           <a href="https://github.com/tkestas92" target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-2 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all">
             <Github size={15} /> GitHub
@@ -42,6 +43,7 @@ export default async function DevPage() {
             className="flex items-center gap-2 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all">
             <Mail size={15} /> Email
           </a>
+          </div>
         </div>
       </section>
 

@@ -1,10 +1,10 @@
 # Kantrybės — kantrybes.lt
 
-DJ & Dev portfolio. Next.js + MySQL (Railway), viskas vienoje vietoje.
+Dev & DJ portfolio. Next.js + MySQL (Railway), viskas vienoje vietoje.
 
 ## Struktūra
 ```
-/              → landing (DJ / Dev pasirinkimas)
+/              → landing (Dev / DJ pasirinkimas)
 /dev           → developer portfolio (projektai, admin valdomi)
 /dj            → DJ/event puslapis (kuriamas)
 /admin         → admin panel (apsaugotas slaptažodžiu)

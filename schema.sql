@@ -22,4 +22,6 @@ INSERT INTO projects (title, description, emoji, tags, github_url, status, sort_
 ('Dishcovery', 'Android aplikacija kuri leidžia naršyti tradicinius patiekalus pagal šalį su AI aprašymais.', '🍽️', '["kt", "ml"]', 'https://github.com', 'shipped', 3),
 ('VitaTrack', 'Asmeninių maisto papildų sekimo aplikacija su priminimais, statistika ir home screen widget.', '💊', '["kt"]', 'https://github.com', 'shipped', 4),
 ('TripSplit Pro', 'Kelionių išlaidų dalinimo aplikacija grupėms. Go REST API + Android klientas.', '✈️', '["go", "kt"]', 'https://github.com', 'shipped', 5),
-('Spaceship Titanic', 'Kaggle ML competition — neural network keleivių išgyvenimo prognozei. Top 20% rezultatas.', '🚀', '["py", "ml"]', 'https://github.com', 'shipped', 6);
+('Spaceship Titanic', 'Kaggle ML competition — neural network keleivių išgyvenimo prognozei. Top 20% rezultatas.', '🚀', '["py", "ml"]', 'https://github.com', 'shipped', 6),
+('Android Demo', 'Live Android aplikacijų demo platforma naršyklėje — redroid (Android-in-Docker), ws-scrcpy ir Caddy. Leidžia interaktyviai bandyti mobilias aplikacijas be diegimo.', '📱', '["kt"]', 'https://github.com/tkestas92/android-demo', 'shipped', 7),
+('kantrybes.lt Portfolio', 'Dev & DJ portfolio svetainė su admin paneliu, MySQL projektų valdymu ir live demo modalu. Next.js 14 ant Railway.', '💻', '[]', 'https://github.com/tkestas92/kantrybes', 'shipped', 8);

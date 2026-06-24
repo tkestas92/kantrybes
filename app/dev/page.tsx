@@ -17,7 +17,7 @@ export default async function DevPage() {
       </Link>
 
       {/* Hero */}
-      <section className="mb-12">
+      <section className="mb-12 flex flex-col items-center text-center">
         <div className="mb-4">
           <NameAnimation />
         </div>
@@ -25,12 +25,12 @@ export default async function DevPage() {
           Full-stack developer ir AI/ML inžinierius iš Vilniaus.
           Kuriu mobilias aplikacijas, backend servisus ir machine learning sprendimus.
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 justify-center">
           <a href="https://github.com/tkestas92" target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-2 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all">
             <Github size={15} /> GitHub
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+          <a href="https://www.linkedin.com/in/kestas-trybe/" target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-2 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all">
             <Linkedin size={15} /> LinkedIn
           </a>
@@ -38,7 +38,7 @@ export default async function DevPage() {
             className="flex items-center gap-2 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all">
             <FileText size={15} /> CV
           </a>
-          <a href="mailto:kestas@kantrybes.lt"
+          <a href="mailto:tkestas92@gmail.com"
             className="flex items-center gap-2 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all">
             <Mail size={15} /> Email
           </a>
@@ -61,7 +61,7 @@ export default async function DevPage() {
           <p className="text-[15px] text-white font-medium">Ieškau full-stack arba AI/ML pozicijos</p>
           <p className="text-[13px] text-gray-500 mt-1">Vilnius · Atviras remote galimybėms</p>
         </div>
-        <a href="mailto:kestas@kantrybes.lt"
+        <a href="mailto:tkestas92@gmail.com"
           className="text-[13px] font-medium bg-[#4afa8a] text-black px-5 py-2.5 rounded-lg hover:opacity-85 transition-opacity whitespace-nowrap">
           Susisiekti
         </a>

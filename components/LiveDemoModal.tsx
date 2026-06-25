@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { ExternalLink, X } from 'lucide-react'
 import { getLiveIframeUrl, LIVE_DEMO_LABELS, type LiveDemoType } from '@/lib/liveDemo'
+import { trackDemoOpen, trackDemoOpenNewTab } from '@/lib/analytics'
 
 type Props = {
   url: string
@@ -15,6 +16,10 @@ export default function LiveDemoModal({ url, title, type, onClose }: Props) {
   const iframeUrl = getLiveIframeUrl(url, type)
   const labels = LIVE_DEMO_LABELS[type]
   const isApp = type === 'app'
+
+  useEffect(() => {
+    trackDemoOpen({ title, type, url })
+  }, [title, type, url])
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -58,6 +63,7 @@ export default function LiveDemoModal({ url, title, type, onClose }: Props) {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackDemoOpenNewTab({ title, type, url })}
                 className="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-[#222] hover:text-white"
                 aria-label="Open in new tab"
               >

@@ -40,74 +40,96 @@ function getUpcomingEvents(events: DjProfile['events']) {
     .sort((a, b) => a.date.localeCompare(b.date) || a.startTime.localeCompare(b.startTime))
 }
 
-function dedupeSocialLinks(links: DjProfile['socialLinks']) {
-  const seen = new Set<string>()
-  return links.filter((link) => {
-    if (seen.has(link.url)) return false
-    seen.add(link.url)
-    return true
-  })
+function groupSocialLinksByPlatform(links: DjProfile['socialLinks']) {
+  const byPlatform = new Map<string, string>()
+
+  for (const link of links) {
+    if (!byPlatform.has(link.platform)) {
+      byPlatform.set(link.platform, link.url)
+    }
+  }
+
+  return Array.from(byPlatform.entries()).map(([platform, url]) => ({ platform, url }))
 }
 
 export default function DjProfileSection({ profile }: Props) {
   const photos = [...profile.photos].sort((a, b) => a.sortOrder - b.sortOrder)
+  const heroPhoto = photos[0] ?? null
+  const galleryPhotos = heroPhoto ? photos.slice(1) : photos
   const upcomingEvents = getUpcomingEvents(profile.events)
-  const socialLinks = dedupeSocialLinks(profile.socialLinks)
+  const socialLinks = groupSocialLinksByPlatform(profile.socialLinks)
 
   return (
     <div className="space-y-10">
       <section>
-        <h1 className="text-[28px] font-medium text-white mb-4">{profile.djName}</h1>
-        <p className="text-[15px] text-gray-500 leading-relaxed whitespace-pre-line max-w-lg">
-          {profile.bio}
-        </p>
+        <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
+          {heroPhoto && (
+            <div className="shrink-0 w-full sm:w-48 md:w-56">
+              <div className="overflow-hidden rounded-xl border border-[#252525] bg-[#161616] aspect-[4/5] sm:aspect-square">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={resolvePhotoUrl(heroPhoto.url)}
+                  alt={`${profile.djName} — profilio nuotrauka`}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+          )}
 
-        {profile.genres.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-5">
-            {profile.genres.map((genre) => (
-              <span
-                key={genre}
-                className="text-[11px] px-2.5 py-1 rounded-full font-medium bg-purple-950 text-purple-400"
-              >
-                {genre}
-              </span>
-            ))}
-          </div>
-        )}
+          <div className="min-w-0 flex-1">
+            <h1 className="text-[28px] font-medium text-white mb-4">{profile.djName}</h1>
+            <p className="text-[15px] text-gray-500 leading-relaxed whitespace-pre-line">
+              {profile.bio}
+            </p>
 
-        {socialLinks.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-5">
-            {socialLinks.map((link) => (
-              <a
-                key={link.url}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-white hover:border-[#444] transition-all"
-              >
-                <ExternalLink size={14} />
-                {link.platform}
-              </a>
-            ))}
+            {profile.genres.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-5">
+                {profile.genres.map((genre) => (
+                  <span
+                    key={genre}
+                    className="text-[11px] px-2.5 py-1 rounded-full font-medium bg-purple-950 text-purple-400"
+                  >
+                    {genre}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {socialLinks.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-5">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.platform}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-white hover:border-[#444] transition-all"
+                  >
+                    <ExternalLink size={14} />
+                    {link.platform}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </section>
 
-      {photos.length > 0 && (
+      {galleryPhotos.length > 0 && (
         <section>
           <SectionHeader title="Galerija" />
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {photos.map((photo) => (
+            {galleryPhotos.map((photo) => (
               <div
                 key={photo.url}
-                className="relative aspect-square overflow-hidden rounded-lg border border-[#252525] bg-[#161616]"
+                className="overflow-hidden rounded-lg border border-[#252525] bg-[#161616] aspect-square"
               >
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={resolvePhotoUrl(photo.url)}
                   alt={`${profile.djName} — nuotrauka ${photo.sortOrder + 1}`}
-                  fill
-                  sizes="(max-width: 640px) 50vw, 33vw"
-                  className="object-cover hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                  className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
             ))}

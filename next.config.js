@@ -9,6 +9,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'djbook-backend-production.up.railway.app',
+        pathname: '/uploads/photos/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'is1-ssl.mzstatic.com',
         pathname: '/**',
       },

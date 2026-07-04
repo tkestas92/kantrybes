@@ -85,7 +85,7 @@ export default function WaveCta() {
       onMouseLeave={stopWave}
     >
       <p className="text-[13px] text-gray-500 mb-2">Reikia pagalbos su:</p>
-      <p className="text-[13px] text-gray-600 leading-relaxed mb-4">
+      <p className="text-[13px] text-gray-500 leading-relaxed mb-4">
         Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
       </p>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -123,7 +123,7 @@ export default function WaveCta() {
         </div>
         <a
           href="mailto:kestas@kantrybes.lt"
-          className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg group-hover:scale-105 transition-transform duration-300 whitespace-nowrap"
+          className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg group-hover:scale-150 transition-transform duration-300 whitespace-nowrap"
         >
           Pasikalbėkim
         </a>

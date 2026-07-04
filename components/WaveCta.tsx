@@ -84,7 +84,7 @@ export default function WaveCta() {
       onMouseEnter={startWave}
       onMouseLeave={stopWave}
     >
-      <p className="text-[12px] text-gray-500 mb-2">Reikia pagalbos su:</p>
+      <p className="text-[13px] text-white font-medium mb-2">Reikia pagalbos su:</p>
       <p className="text-[13px] text-gray-500 leading-relaxed mb-4">
         Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
       </p>

@@ -4,6 +4,7 @@ import { getAllProjects } from '@/lib/db'
 import ProjectGrid from '@/components/ProjectGrid'
 import NameAnimation from '@/components/NameAnimation'
 import CertificationSection from '@/components/CertificationSection'
+import WaveCta from '@/components/WaveCta'
 
 // Visada nuskaityt naujausius duomenis iš DB (ne cache'int statiškai)
 export const dynamic = 'force-dynamic'
@@ -60,23 +61,7 @@ export default async function DevPage() {
 
       <CertificationSection />
 
-      {/* CTA */}
-      <section className="mt-12 p-5 bg-[#161616] border border-[#252525] rounded-xl group hover:border-[#333] transition-all duration-200 cursor-pointer">
-        <p className="text-[11px] text-gray-600 uppercase tracking-widest mb-2">Reikia pagalbos su:</p>
-        <p className="text-[13px] text-gray-600 leading-relaxed mb-4">
-          Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
-        </p>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <p className="text-[15px] font-medium text-[#4afa8a]">Kantrybės... Padėsiu!</p>
-            <span className="text-[#4afa8a] text-[18px] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 ease-out">→</span>
-          </div>
-          <a href="mailto:kestas@kantrybes.lt"
-            className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg group-hover:scale-105 group-hover:px-5 group-hover:py-2.5 transition-all duration-300 whitespace-nowrap">
-            Pasikalbėkim
-          </a>
-        </div>
-      </section>
+      <WaveCta />
     </main>
   )
 }

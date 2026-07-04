@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Calendar, ExternalLink, MapPin, Music2, Smartphone, Ticket } from 'lucide-react'
-import { resolvePhotoUrl, type DjProfile } from '@/lib/djbook'
+import ProfilePhoto from '@/components/ProfilePhoto'
+import { type DjProfile, type DjSocialLink } from '@/lib/djbook'
 
 type Props = {
   profile: DjProfile
@@ -52,6 +53,49 @@ function groupSocialLinksByPlatform(links: DjProfile['socialLinks']) {
   }
 
   return Array.from(byPlatform.entries()).map(([platform, url]) => ({ platform, url }))
+}
+
+function getSoundCloudProfileUrl(links: DjSocialLink[]): string | null {
+  return links.find((link) => link.platform === 'SoundCloud')?.url ?? null
+}
+
+function extractYouTubeVideoId(url: string): string | null {
+  try {
+    const parsed = new URL(url)
+
+    if (parsed.hostname.includes('youtu.be')) {
+      return parsed.pathname.slice(1).split('/')[0] || null
+    }
+
+    if (parsed.hostname.includes('youtube.com')) {
+      if (parsed.pathname.startsWith('/embed/')) {
+        return parsed.pathname.split('/')[2] || null
+      }
+      return parsed.searchParams.get('v')
+    }
+  } catch {
+    return null
+  }
+
+  return null
+}
+
+function getYouTubeVideos(links: DjSocialLink[]) {
+  const seen = new Set<string>()
+
+  return links
+    .filter((link) => link.platform === 'YouTube')
+    .map((link) => {
+      const id = extractYouTubeVideoId(link.url)
+      if (!id || seen.has(id)) return null
+      seen.add(id)
+      return { id, url: link.url }
+    })
+    .filter((video): video is { id: string; url: string } => video !== null)
+}
+
+function getSoundCloudEmbedUrl(profileUrl: string) {
+  return `https://w.soundcloud.com/player/?url=${encodeURIComponent(profileUrl)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`
 }
 
 function SocialIcon({ platform }: { platform: string }) {
@@ -119,15 +163,16 @@ export default function DjProfileSection({ profile }: Props) {
   const galleryPhotos = heroPhoto ? photos.slice(1) : photos
   const upcomingEvents = getUpcomingEvents(profile.events)
   const socialLinks = groupSocialLinksByPlatform(profile.socialLinks)
+  const soundCloudUrl = getSoundCloudProfileUrl(profile.socialLinks)
+  const youtubeVideos = getYouTubeVideos(profile.socialLinks)
 
   return (
     <div className="-mx-6 bg-[#0a0a0a] text-white">
       {/* Hero */}
       <section className="relative w-full h-[50vh] min-h-[280px] max-h-[520px] overflow-hidden bg-[#161616]">
         {heroPhoto ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            src={resolvePhotoUrl(heroPhoto.url)}
+          <ProfilePhoto
+            src={heroPhoto.url}
             alt={`${profile.djName} — profilio nuotrauka`}
             className="absolute inset-0 h-full w-full object-cover"
           />
@@ -178,15 +223,13 @@ export default function DjProfileSection({ profile }: Props) {
           <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide snap-x snap-mandatory">
             {galleryPhotos.map((photo) => (
               <div
-                key={photo.url}
+                key={`${photo.sortOrder}-${photo.url}`}
                 className={`shrink-0 snap-start overflow-hidden rounded-[12px] bg-[#161616] ${CARD_BORDER}`}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={resolvePhotoUrl(photo.url)}
+                <ProfilePhoto
+                  src={photo.url}
                   alt={`${profile.djName} — nuotrauka ${photo.sortOrder + 1}`}
-                  loading="lazy"
-                  className="h-[120px] w-[120px] object-cover"
+                  className="block h-[120px] w-[120px] object-cover"
                 />
               </div>
             ))}
@@ -231,6 +274,50 @@ export default function DjProfileSection({ profile }: Props) {
                     </a>
                   )}
                 </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* SoundCloud */}
+      {soundCloudUrl && (
+        <section className="px-6 pt-8">
+          <SectionHeader title="SoundCloud" />
+          <div className={`overflow-hidden rounded-2xl bg-[#161616] ${CARD_BORDER}`}>
+            <iframe
+              title="SoundCloud player"
+              width="100%"
+              height="450"
+              scrolling="no"
+              frameBorder="no"
+              allow="autoplay"
+              src={getSoundCloudEmbedUrl(soundCloudUrl)}
+              className="block w-full border-0"
+            />
+          </div>
+        </section>
+      )}
+
+      {/* YouTube */}
+      {youtubeVideos.length > 0 && (
+        <section className="px-6 pt-8">
+          <SectionHeader title="YouTube" />
+          <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide snap-x snap-mandatory">
+            {youtubeVideos.map((video) => (
+              <div
+                key={video.id}
+                className={`shrink-0 snap-start w-[min(100%,320px)] overflow-hidden rounded-2xl bg-[#161616] ${CARD_BORDER}`}
+              >
+                <iframe
+                  title={`YouTube video ${video.id}`}
+                  width="100%"
+                  height="180"
+                  src={`https://www.youtube.com/embed/${video.id}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="block w-full border-0"
+                />
               </div>
             ))}
           </div>

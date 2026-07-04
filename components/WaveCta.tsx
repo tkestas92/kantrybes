@@ -34,7 +34,7 @@ export default function WaveCta() {
       const progress = p.x / W
       const isMobileDevice = window.matchMedia('(hover: none)').matches
       if (isMobileDevice) {
-        p.speed = 1.5
+        p.speed = Math.sin(p.x * 0.05) > 0.3 ? 0 : 0.8
       } else {
         p.speed = 0.4 + Math.pow(progress, 2) * 18
       }

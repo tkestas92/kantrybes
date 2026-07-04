@@ -61,18 +61,18 @@ export default async function DevPage() {
       <CertificationSection />
 
       {/* CTA */}
-      <section className="group mt-12 p-5 bg-[#161616] border border-[#2a2a2a] rounded-xl">
-        <p className="text-[15px] font-medium text-white mb-2">Reikia pagalbos su:</p>
+      <section className="mt-12 p-5 bg-[#161616] border border-[#252525] rounded-xl group hover:border-[#333] transition-all duration-200 cursor-pointer">
+        <p className="text-[11px] text-gray-600 uppercase tracking-widest mb-2">Reikia pagalbos su:</p>
         <p className="text-[13px] text-gray-600 leading-relaxed mb-4">
           Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
         </p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-[15px] font-medium text-[#4afa8a] flex items-center gap-2">
-            Kantrybės... Padėsiu!
-            <span className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-[#4afa8a] translate-x-0 group-hover:translate-x-1">→</span>
-          </p>
+          <div className="flex items-center gap-2">
+            <p className="text-[15px] font-medium text-[#4afa8a]">Kantrybės... Padėsiu!</p>
+            <span className="text-[#4afa8a] text-[18px] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 ease-out">→</span>
+          </div>
           <a href="mailto:kestas@kantrybes.lt"
-            className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg hover:opacity-85 group-hover:text-[18px] group-hover:px-7 group-hover:py-3 transition-all duration-300 whitespace-nowrap">
+            className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg group-hover:scale-105 group-hover:px-5 group-hover:py-2.5 transition-all duration-300 whitespace-nowrap">
             Pasikalbėkim
           </a>
         </div>

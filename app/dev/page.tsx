@@ -67,7 +67,7 @@ export default async function DevPage() {
           Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
         </p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-[15px] font-medium text-white">Kantrybės... Padėsiu!</p>
+          <p className="text-[15px] font-medium text-[#4afa8a]">Kantrybės... Padėsiu!</p>
           <a href="mailto:kestas@kantrybes.lt"
             className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg hover:opacity-85 transition-opacity whitespace-nowrap">
             Pasikalbėkim

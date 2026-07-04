@@ -94,8 +94,19 @@ function getYouTubeVideos(links: DjSocialLink[]) {
     .filter((video): video is { id: string; url: string } => video !== null)
 }
 
+function normalizeSoundCloudUrl(url: string): string {
+  try {
+    const parsed = new URL(url)
+    parsed.hostname = parsed.hostname.replace(/^www\./, '')
+    return `${parsed.origin}${parsed.pathname}`.replace(/\/$/, '')
+  } catch {
+    return url.replace(/^https?:\/\/www\./i, 'https://').replace(/\/$/, '')
+  }
+}
+
 function getSoundCloudEmbedUrl(profileUrl: string) {
-  return `https://w.soundcloud.com/player/?url=${encodeURIComponent(profileUrl)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`
+  const normalized = normalizeSoundCloudUrl(profileUrl)
+  return `https://w.soundcloud.com/player/?url=${encodeURIComponent(normalized)}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=false`
 }
 
 function SocialIcon({ platform }: { platform: string }) {
@@ -288,7 +299,7 @@ export default function DjProfileSection({ profile }: Props) {
             <iframe
               title="SoundCloud player"
               width="100%"
-              height="450"
+              height="300"
               scrolling="no"
               frameBorder="no"
               allow="autoplay"

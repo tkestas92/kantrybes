@@ -15,7 +15,7 @@ export default async function DjPage() {
         <Link href="/" className="inline-flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-gray-400 transition-colors">
           <ArrowLeft size={13} /> kantrybes.lt
         </Link>
-        <span className="text-[11px] text-gray-600 border border-[#2a2a2a] rounded-full px-2.5 py-1 ml-2">
+        <span className="text-[13px] text-gray-600 border border-[#2a2a2a] rounded-full px-3 py-1.5 ml-2">
           DJBook app · name in progress
         </span>
       </div>

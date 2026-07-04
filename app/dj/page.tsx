@@ -11,9 +11,14 @@ export default async function DjPage() {
 
   return (
     <main className="min-h-screen bg-[#0a0a0a] px-6 py-12 max-w-3xl mx-auto">
-      <Link href="/" className="inline-flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-gray-400 transition-colors mb-8">
-        <ArrowLeft size={13} /> kantrybes.lt
-      </Link>
+      <div className="flex items-center gap-2 mb-8">
+        <Link href="/" className="inline-flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-gray-400 transition-colors">
+          <ArrowLeft size={13} /> kantrybes.lt
+        </Link>
+        <span className="text-[11px] text-gray-600 border border-[#2a2a2a] rounded-full px-2.5 py-1 ml-2">
+          DJBook app · name in progress
+        </span>
+      </div>
 
       {!profile && (
         <section className="mb-10">

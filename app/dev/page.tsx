@@ -66,10 +66,13 @@ export default async function DevPage() {
         <p className="text-[13px] text-gray-600 leading-relaxed mb-4">
           Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
         </p>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-[15px] font-medium text-[#4afa8a]">Kantrybės... Padėsiu!</p>
+        <div className="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <p className="text-[15px] font-medium text-[#4afa8a] flex items-center gap-2">
+            Kantrybės... Padėsiu!
+            <span className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-[#4afa8a] translate-x-0 group-hover:translate-x-1">→</span>
+          </p>
           <a href="mailto:kestas@kantrybes.lt"
-            className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg hover:opacity-85 transition-opacity whitespace-nowrap">
+            className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg hover:opacity-85 group-hover:scale-105 transition-transform duration-300 whitespace-nowrap">
             Pasikalbėkim
           </a>
         </div>

@@ -49,7 +49,7 @@ export default function NameAnimation() {
       cursor.style.display = 'inline-block'
       cursor.style.width = '2px'
       cursor.style.height = '1em'
-      cursor.style.verticalAlign = '-0.15em'
+      cursor.style.verticalAlign = '-0.35em'
       cursor.style.marginLeft = '2px'
       cursor.style.background = '#f0f0f0'
       cursor.style.opacity = '0'

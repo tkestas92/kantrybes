@@ -69,6 +69,7 @@ export default function NameAnimation() {
       setTimeout(() => {
         clearInterval(blinkInterval)
         cursor.style.opacity = '0'
+        cursor.remove()
         topEl.style.transition = 'opacity 0.6s ease'
         topEl.style.opacity = '0'
       }, 2400)

@@ -48,8 +48,8 @@ export default function NameAnimation() {
       const cursor = document.createElement('span')
       cursor.style.display = 'inline-block'
       cursor.style.width = '2px'
-      cursor.style.height = '30px'
-      cursor.style.verticalAlign = '-5px'
+      cursor.style.height = '1em'
+      cursor.style.verticalAlign = '-0.15em'
       cursor.style.marginLeft = '2px'
       cursor.style.background = '#f0f0f0'
       cursor.style.opacity = '0'

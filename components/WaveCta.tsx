@@ -33,9 +33,11 @@ export default function WaveCta() {
     particlesRef.current.forEach((p) => {
       const progress = p.x / W
       const isMobileDevice = window.matchMedia('(hover: none)').matches
-      p.speed = isMobileDevice
-        ? 0.2 + Math.pow(progress, 2) * 6
-        : 0.4 + Math.pow(progress, 2) * 18
+      if (isMobileDevice) {
+        p.speed = 1.5
+      } else {
+        p.speed = 0.4 + Math.pow(progress, 2) * 18
+      }
       p.x += p.speed
       const fade = progress > 0.75 ? 1 - (progress - 0.75) / 0.25 : 1
       const alpha = p.opacity * Math.max(0, fade)

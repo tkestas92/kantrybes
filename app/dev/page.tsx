@@ -61,7 +61,7 @@ export default async function DevPage() {
       <CertificationSection />
 
       {/* CTA */}
-      <section className="mt-12 p-6 bg-[#161616] border border-[#2a2a2a] rounded-xl">
+      <section className="mt-12 p-5 bg-[#161616] border border-[#2a2a2a] rounded-xl max-w-lg">
         <p className="text-[13px] text-gray-500 leading-relaxed mb-3">
           Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway · Supabase
         </p>

@@ -4,7 +4,7 @@ import NameAnimation from '@/components/NameAnimation'
 export default function Landing() {
   return (
     <main className="min-h-screen bg-[#0f0f0f] flex flex-col items-center justify-center px-6">
-      <div className="mb-12">
+      <div className="mb-12" style={{ transform: 'scale(0.6)', transformOrigin: 'center' }}>
         <NameAnimation />
       </div>
 

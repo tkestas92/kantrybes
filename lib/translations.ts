@@ -95,7 +95,7 @@ export const t = {
       shipped: 'Shipped',
       inProgress: 'In progress',
       ctaHeader: 'Need help with:',
-      ctaTitle: "Kantrybės... I'll help!",
+      ctaTitle: "Kantrybės. That's me. I'll help!",
       ctaButton: "Let's talk",
       ctaStack:
         'Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway',

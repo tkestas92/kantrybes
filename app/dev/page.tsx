@@ -62,7 +62,7 @@ export default async function DevPage() {
 
       {/* CTA */}
       <section className="mt-12 p-5 bg-[#161616] border border-[#2a2a2a] rounded-xl">
-        <p className="text-[11px] text-gray-600 uppercase tracking-widest mb-2">Reikia pagalbos su:</p>
+        <p className="text-[15px] font-medium text-white mb-2">Reikia pagalbos su:</p>
         <p className="text-[13px] text-gray-600 leading-relaxed mb-4">
           Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
         </p>

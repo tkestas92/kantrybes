@@ -15,7 +15,7 @@ export default function Landing() {
         >
           <span className="text-3xl">💻</span>
           <span className="text-white font-medium text-[15px]">Dev</span>
-          <span className="text-gray-500 text-[12px] text-center">Full-stack ir AI/ML projektai, technologijos</span>
+          <span className="text-gray-500 text-[12px] text-center">Full-stack, AI/ML, mobilios apps — nuo idėjos iki produkcijos.</span>
         </Link>
 
         <Link
@@ -24,7 +24,7 @@ export default function Landing() {
         >
           <span className="text-3xl">🎧</span>
           <span className="text-white font-medium text-[15px]">DJ</span>
-          <span className="text-gray-500 text-[12px] text-center">Event hostingas, booking ir muzikinė produkcija</span>
+          <span className="text-gray-500 text-[12px] text-center">DJ paslaugos ir renginių įgarsinimas.</span>
         </Link>
       </div>
     </main>

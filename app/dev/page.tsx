@@ -57,6 +57,32 @@ export default async function DevPage() {
         <ProjectGrid projects={projects} />
       </section>
 
+      {/* Sertifikatai */}
+      <section className="mt-10">
+        <div className="flex items-center gap-3 mb-5">
+          <span className="text-xs text-gray-600 uppercase tracking-widest">Sertifikatai</span>
+          <div className="flex-1 h-px bg-[#1e1e1e]" />
+        </div>
+        <div className="flex flex-col gap-3">
+          <div className="bg-[#161616] border border-[#252525] rounded-xl px-5 py-4 flex items-center gap-4 hover:border-[#333] transition-all">
+            <div className="text-2xl">🤖</div>
+            <div className="flex-1">
+              <p className="text-[14px] font-medium text-white">Artificial Intelligence and Python Development</p>
+              <p className="text-[12px] text-gray-500 mt-0.5">CodeAcademy · Balandis 2026</p>
+            </div>
+            <span className="text-[10px] text-[#4afa8a] border border-[#4afa8a]/30 rounded-full px-2.5 py-1">AI / ML</span>
+          </div>
+          <div className="bg-[#161616] border border-[#252525] rounded-xl px-5 py-4 flex items-center gap-4 hover:border-[#333] transition-all">
+            <div className="text-2xl">🧪</div>
+            <div className="flex-1">
+              <p className="text-[14px] font-medium text-white">Manual Testing Course</p>
+              <p className="text-[12px] text-gray-500 mt-0.5">Vilnius CODING School · Gruodis 2020</p>
+            </div>
+            <span className="text-[10px] text-blue-400 border border-blue-400/30 rounded-full px-2.5 py-1">QA</span>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="mt-12 p-6 bg-[#161616] border border-[#2a2a2a] rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>

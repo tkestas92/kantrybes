@@ -14,7 +14,7 @@ export default function WaveCta() {
     const canvas = canvasRef.current
     const wrap = wrapRef.current
     if (!canvas || !wrap) return
-    const W = wrap.getBoundingClientRect().width || 200
+    const W = wrap.offsetWidth || 150
     canvas.width = W
     const H = 20
     const ctx = canvas.getContext('2d')!
@@ -63,11 +63,15 @@ export default function WaveCta() {
 
   useEffect(() => {
     const isMobile = window.matchMedia('(hover: none)').matches
+    let startTimer: ReturnType<typeof setTimeout> | undefined
+
     if (isMobile) {
       isMobileRef.current = true
-      startStream()
+      startTimer = setTimeout(startStream, 300)
     }
+
     return () => {
+      if (startTimer) clearTimeout(startTimer)
       if (animRef.current) cancelAnimationFrame(animRef.current)
     }
   }, [])
@@ -82,7 +86,7 @@ export default function WaveCta() {
       <p className="text-[13px] text-gray-600 leading-relaxed mb-4">
         Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
       </p>
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-row items-center justify-between gap-2">
         <div className="flex items-center gap-0 flex-1 min-w-0">
           <span className="text-[13px] font-medium text-[#4afa8a] whitespace-nowrap">Kantrybės... Padėsiu!</span>
           <div ref={wrapRef} className="flex-1 mx-2.5 relative" style={{ height: '20px', overflow: 'hidden' }}>

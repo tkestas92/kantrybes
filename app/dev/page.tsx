@@ -61,15 +61,15 @@ export default async function DevPage() {
       <CertificationSection />
 
       {/* CTA */}
-      <section className="mt-12 p-5 bg-[#161616] border border-[#2a2a2a] rounded-xl max-w-lg">
-        <p className="text-[13px] text-gray-500 leading-relaxed mb-3">
-          Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway · Supabase
+      <section className="mt-12 p-5 bg-[#161616] border border-[#2a2a2a] rounded-xl">
+        <p className="text-[12px] text-gray-600 leading-relaxed mb-3">
+          Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
         </p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-[17px] font-medium text-white">Kantrybės. Padėsiu.</p>
+          <p className="text-[17px] font-medium text-white">Kantrybės. Padėsiu!</p>
           <a href="mailto:kestas@kantrybes.lt"
             className="text-[13px] font-medium bg-[#4afa8a] text-black px-5 py-2.5 rounded-lg hover:opacity-85 transition-opacity whitespace-nowrap">
-            Susisiekti
+            Pasikalbėkim
           </a>
         </div>
       </section>

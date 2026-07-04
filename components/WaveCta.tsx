@@ -123,7 +123,7 @@ export default function WaveCta() {
         </div>
         <a
           href="mailto:kestas@kantrybes.lt"
-          className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg group-hover:scale-110 transition-transform duration-300 whitespace-nowrap"
+          className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg group-hover:scale-125 group-hover:shadow-[0_0_20px_rgba(74,250,138,0.4)] transition-all duration-300 whitespace-nowrap"
         >
           Pasikalbėkim
         </a>

@@ -1,8 +1,14 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
+import { Lang, t } from '@/lib/translations'
 
-export default function WaveCta() {
+type Props = {
+  lang: Lang
+}
+
+export default function WaveCta({ lang }: Props) {
+  const labels = t[lang].dev
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
   const animRef = useRef<number | null>(null)
@@ -88,13 +94,11 @@ export default function WaveCta() {
       onMouseEnter={startStream}
       onMouseLeave={stopStream}
     >
-      <p className="text-[13px] text-white font-medium mb-2">Reikia pagalbos su:</p>
-      <p className="text-[13px] text-gray-600 leading-relaxed mb-4">
-        Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
-      </p>
+      <p className="text-[13px] text-white font-medium mb-2">{labels.ctaHeader}</p>
+      <p className="text-[13px] text-gray-600 leading-relaxed mb-4">{labels.ctaStack}</p>
       <div className="flex flex-row items-center justify-between gap-2">
         <div className="flex items-center gap-0 flex-1 min-w-0">
-          <span className="text-[13px] font-medium text-[#4afa8a] whitespace-nowrap">Kantrybės... Padėsiu!</span>
+          <span className="text-[13px] font-medium text-[#4afa8a] whitespace-nowrap">{labels.ctaTitle}</span>
           <div ref={wrapRef} className="flex-1 mx-2.5 relative" style={{ height: '20px', overflow: 'hidden' }}>
             <canvas ref={canvasRef} height={20} style={{ position: 'absolute', top: 0, left: 0 }} />
           </div>
@@ -103,7 +107,7 @@ export default function WaveCta() {
           href="mailto:kestas@kantrybes.lt"
           className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg group-hover:scale-125 group-hover:shadow-[0_0_20px_rgba(74,250,138,0.4)] transition-all duration-300 whitespace-nowrap"
         >
-          Pasikalbėkim!
+          {labels.ctaButton}
         </a>
       </div>
     </section>

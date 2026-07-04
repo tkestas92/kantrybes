@@ -2,9 +2,13 @@ import Image from 'next/image'
 import { Calendar, ExternalLink, MapPin, Music2, Smartphone, Ticket } from 'lucide-react'
 import ProfilePhoto from '@/components/ProfilePhoto'
 import { type DjProfile, type DjSocialLink } from '@/lib/djbook'
+import type { Lang } from '@/lib/translations'
+import { t } from '@/lib/translations'
 
 type Props = {
   profile: DjProfile
+  labels: (typeof t)['lt']['dj']
+  lang: Lang
 }
 
 const CARD_BORDER = 'border border-white/[0.07]'
@@ -18,10 +22,10 @@ function SectionHeader({ title }: { title: string }) {
   )
 }
 
-function formatEventDate(date: string, startTime: string): string {
+function formatEventDate(date: string, startTime: string, lang: Lang): string {
   const [hours, minutes] = startTime.split(':')
   const d = new Date(`${date}T${hours}:${minutes}:00`)
-  return d.toLocaleDateString('lt-LT', {
+  return d.toLocaleDateString(lang === 'lt' ? 'lt-LT' : 'en-GB', {
     weekday: 'short',
     year: 'numeric',
     month: 'long',
@@ -148,27 +152,25 @@ function SocialIcon({ platform }: { platform: string }) {
   }
 }
 
-function DjBookBadge() {
+function DjBookBadge({ labels }: { labels: (typeof t)['lt']['dj'] }) {
   return (
     <div className="mb-4 flex flex-col items-start gap-1.5">
       <span
         className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[12px] text-white/60"
-        title="DJ profile powered by my DJBook app"
+        title={labels.djbookTitle}
       >
         <Smartphone size={12} className="shrink-0 text-white/50" aria-hidden />
         <span>
-          <span className="text-white/70">DJBook</span>
-          <span className="text-white/45"> · new name in progress</span>
+          <span className="text-white/70">{labels.djbookName}</span>
+          <span className="text-white/45">{labels.djbookProgress}</span>
         </span>
       </span>
-      <p className="text-[11px] text-white/35 leading-snug">
-        DJ profile powered by my DJBook app
-      </p>
+      <p className="text-[11px] text-white/35 leading-snug">{labels.djbookNote}</p>
     </div>
   )
 }
 
-export default function DjProfileSection({ profile }: Props) {
+export default function DjProfileSection({ profile, labels, lang }: Props) {
   const photos = [...profile.photos].sort((a, b) => a.sortOrder - b.sortOrder)
   const heroPhoto = photos[0] ?? null
   const galleryPhotos = heroPhoto ? photos.slice(1) : photos
@@ -184,7 +186,7 @@ export default function DjProfileSection({ profile }: Props) {
         {heroPhoto ? (
           <ProfilePhoto
             src={heroPhoto.url}
-            alt={`${profile.djName} — profilio nuotrauka`}
+            alt={`${profile.djName} — ${labels.heroPhotoAlt}`}
             className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
@@ -202,13 +204,13 @@ export default function DjProfileSection({ profile }: Props) {
           <h1 className="text-[32px] font-semibold leading-tight tracking-tight text-white">
             {profile.djName}
           </h1>
-          <p className="mt-1 text-[14px] text-white/70">DJ · Vilnius</p>
+          <p className="mt-1 text-[14px] text-white/70">{labels.tagline}</p>
         </div>
       </section>
 
       {/* Bio & genres */}
       <section className="px-6 pt-5 pb-2">
-        <DjBookBadge />
+        <DjBookBadge labels={labels} />
         <p className="text-[15px] text-gray-400 leading-relaxed whitespace-pre-line">
           {profile.bio}
         </p>
@@ -230,7 +232,7 @@ export default function DjProfileSection({ profile }: Props) {
       {/* Gallery */}
       {galleryPhotos.length > 0 && (
         <section className="px-6 pt-8">
-          <SectionHeader title="Galerija" />
+          <SectionHeader title={labels.gallery} />
           <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 scrollbar-hide snap-x snap-mandatory">
             {galleryPhotos.map((photo) => (
               <div
@@ -239,7 +241,7 @@ export default function DjProfileSection({ profile }: Props) {
               >
                 <ProfilePhoto
                   src={photo.url}
-                  alt={`${profile.djName} — nuotrauka ${photo.sortOrder + 1}`}
+                  alt={`${profile.djName} — ${labels.photoAlt} ${photo.sortOrder + 1}`}
                   className="block h-[120px] w-[120px] object-cover"
                 />
               </div>
@@ -251,7 +253,7 @@ export default function DjProfileSection({ profile }: Props) {
       {/* Events */}
       {upcomingEvents.length > 0 && (
         <section className="px-6 pt-8">
-          <SectionHeader title="Artimiausi renginiai" />
+          <SectionHeader title={labels.events} />
           <div className="flex flex-col gap-3">
             {upcomingEvents.map((event) => (
               <div
@@ -268,7 +270,7 @@ export default function DjProfileSection({ profile }: Props) {
                       </span>
                       <span className="inline-flex items-center gap-1">
                         <Calendar size={12} />
-                        {formatEventDate(event.date, event.startTime)}
+                        {formatEventDate(event.date, event.startTime, lang)}
                       </span>
                       <span>{formatEventTime(event.startTime)}</span>
                     </div>
@@ -281,7 +283,7 @@ export default function DjProfileSection({ profile }: Props) {
                       className={`shrink-0 flex items-center gap-1.5 text-[12px] text-gray-300 bg-[#0a0a0a] rounded-xl px-3 py-1.5 ${CARD_BORDER} hover:text-white transition-colors`}
                     >
                       <Ticket size={13} />
-                      Bilietai
+                      {labels.tickets}
                     </a>
                   )}
                 </div>
@@ -338,7 +340,7 @@ export default function DjProfileSection({ profile }: Props) {
       {/* Releases */}
       {profile.releases.length > 0 && (
         <section className="px-6 pt-8">
-          <SectionHeader title="Leidiniai" />
+          <SectionHeader title={labels.releases} />
           <div className="flex flex-col gap-3">
             {profile.releases.map((release) => (
               <a
@@ -351,7 +353,7 @@ export default function DjProfileSection({ profile }: Props) {
                 <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
                   <Image
                     src={release.artworkUrl}
-                    alt={`${release.title} — viršelis`}
+                    alt={`${release.title} — ${labels.artworkAlt}`}
                     fill
                     sizes="64px"
                     className="object-cover"
@@ -364,7 +366,7 @@ export default function DjProfileSection({ profile }: Props) {
                   <p className="text-[12px] text-gray-500 mt-0.5 truncate">{release.artist}</p>
                   <div className="flex items-center gap-1.5 mt-2 text-[11px] text-gray-600">
                     <Music2 size={12} />
-                    <span>Klausyti visur</span>
+                    <span>{labels.listenEverywhere}</span>
                   </div>
                 </div>
                 <ExternalLink size={16} className="shrink-0 text-gray-600 group-hover:text-gray-400 transition-colors" />
@@ -377,7 +379,7 @@ export default function DjProfileSection({ profile }: Props) {
       {/* Social links */}
       {socialLinks.length > 0 && (
         <section className="px-6 pt-8 pb-10">
-          <SectionHeader title="Social" />
+          <SectionHeader title={labels.social} />
           <div className="flex flex-wrap gap-3">
             {socialLinks.map((link) => (
               <a

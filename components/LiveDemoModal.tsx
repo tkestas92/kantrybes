@@ -2,19 +2,21 @@
 
 import { useEffect } from 'react'
 import { ExternalLink, X } from 'lucide-react'
-import { getLiveIframeUrl, LIVE_DEMO_LABELS, type LiveDemoType } from '@/lib/liveDemo'
+import { getLiveIframeUrl, type LiveDemoType } from '@/lib/liveDemo'
+import type { t } from '@/lib/translations'
 import { trackDemoOpen, trackDemoOpenNewTab } from '@/lib/analytics'
 
 type Props = {
   url: string
   title: string
   type: LiveDemoType
+  labels: (typeof t)['lt']['liveDemo']
   onClose: () => void
 }
 
-export default function LiveDemoModal({ url, title, type, onClose }: Props) {
+export default function LiveDemoModal({ url, title, type, labels, onClose }: Props) {
   const iframeUrl = getLiveIframeUrl(url, type)
-  const labels = LIVE_DEMO_LABELS[type]
+  const subtitle = type === 'app' ? labels.appSubtitle : labels.webSubtitle
   const isApp = type === 'app'
 
   useEffect(() => {
@@ -38,13 +40,13 @@ export default function LiveDemoModal({ url, title, type, onClose }: Props) {
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
-      aria-label={`${title} ${labels.subtitle}`}
+      aria-label={`${title} ${subtitle}`}
     >
       <button
         type="button"
         className="absolute inset-0 bg-black/75 backdrop-blur-sm"
         onClick={onClose}
-        aria-label="Close demo"
+        aria-label={labels.closeDemo}
       />
 
       <div
@@ -55,7 +57,7 @@ export default function LiveDemoModal({ url, title, type, onClose }: Props) {
         <div className="flex items-center justify-between border-b border-[#222] px-4 py-3">
           <div>
             <p className="text-[13px] font-medium text-white">{title}</p>
-            <p className="text-[11px] text-gray-500">{labels.subtitle}</p>
+            <p className="text-[11px] text-gray-500">{subtitle}</p>
           </div>
           <div className="flex items-center gap-1">
             {!isApp && (
@@ -65,7 +67,7 @@ export default function LiveDemoModal({ url, title, type, onClose }: Props) {
                 rel="noopener noreferrer"
                 onClick={() => trackDemoOpenNewTab({ title, type, url })}
                 className="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-[#222] hover:text-white"
-                aria-label="Open in new tab"
+                aria-label={labels.openNewTab}
               >
                 <ExternalLink size={16} />
               </a>
@@ -74,7 +76,7 @@ export default function LiveDemoModal({ url, title, type, onClose }: Props) {
               type="button"
               onClick={onClose}
               className="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-[#222] hover:text-white"
-              aria-label="Close"
+              aria-label={labels.close}
             >
               <X size={18} />
             </button>
@@ -88,7 +90,7 @@ export default function LiveDemoModal({ url, title, type, onClose }: Props) {
         >
           <iframe
             src={iframeUrl}
-            title={`${title} ${labels.subtitle}`}
+            title={`${title} ${subtitle}`}
             className="absolute inset-0 h-full w-full border-0"
             allow="autoplay; fullscreen"
             referrerPolicy="strict-origin-when-cross-origin"

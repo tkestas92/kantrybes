@@ -1,23 +1,35 @@
 'use client'
 
-const FILTERS = [
-  { key: 'all', label: 'Visi' },
-  { key: 'go', label: 'Go' },
-  { key: 'rn', label: 'React Native' },
-  { key: 'py', label: 'Python' },
-  { key: 'kt', label: 'Kotlin' },
-  { key: 'ml', label: 'ML / AI' },
-]
+const FILTER_KEYS = ['all', 'go', 'rn', 'py', 'kt', 'ml'] as const
+
+type FilterLabels = {
+  filterAll: string
+  go: string
+  rn: string
+  py: string
+  kt: string
+  ml: string
+}
 
 type Props = {
   active: string
   onChange: (key: string) => void
+  labels: FilterLabels
 }
 
-export default function FilterBar({ active, onChange }: Props) {
+export default function FilterBar({ active, onChange, labels }: Props) {
+  const filters = [
+    { key: 'all', label: labels.filterAll },
+    { key: 'go', label: labels.go },
+    { key: 'rn', label: labels.rn },
+    { key: 'py', label: labels.py },
+    { key: 'kt', label: labels.kt },
+    { key: 'ml', label: labels.ml },
+  ]
+
   return (
     <div className="flex flex-wrap gap-2">
-      {FILTERS.map(f => (
+      {filters.map((f) => (
         <button
           key={f.key}
           onClick={() => onChange(f.key)}
@@ -33,3 +45,5 @@ export default function FilterBar({ active, onChange }: Props) {
     </div>
   )
 }
+
+export { FILTER_KEYS }

@@ -1,9 +1,17 @@
 import { Github, Globe, Smartphone } from 'lucide-react'
 import type { Project } from '@/lib/db'
-import { LIVE_DEMO_LABELS, resolveLiveDemoType, type LiveDemoType } from '@/lib/liveDemo'
+import { resolveLiveDemoType, type LiveDemoType } from '@/lib/liveDemo'
+import type { t } from '@/lib/translations'
 
 type Props = {
   project: Project
+  labels: {
+    statusInProgress: string
+    statusShipped: string
+    github: string
+    filters: (typeof t)['lt']['filters']
+    liveDemo: (typeof t)['lt']['liveDemo']
+  }
   onLiveClick?: (url: string, title: string, type: LiveDemoType) => void
 }
 
@@ -15,29 +23,35 @@ const TAG_STYLES: Record<string, string> = {
   ml: 'bg-amber-950 text-amber-400',
 }
 
-const TAG_LABELS: Record<string, string> = {
-  go: 'Go',
-  rn: 'React Native',
-  py: 'Python',
-  kt: 'Kotlin',
-  ml: 'ML / AI',
-}
-
-export default function ProjectCard({ project, onLiveClick }: Props) {
+export default function ProjectCard({ project, labels, onLiveClick }: Props) {
   const liveType = resolveLiveDemoType(project)
-  const liveLabel = liveType ? LIVE_DEMO_LABELS[liveType].button : 'Live'
+  const liveLabel = liveType
+    ? liveType === 'app'
+      ? labels.liveDemo.appButton
+      : labels.liveDemo.webButton
+    : 'Live'
   const LiveIcon = liveType === 'app' ? Smartphone : Globe
+
+  const tagLabels: Record<string, string> = {
+    go: labels.filters.go,
+    rn: labels.filters.rn,
+    py: labels.filters.py,
+    kt: labels.filters.kt,
+    ml: labels.filters.ml,
+  }
 
   return (
     <div className="bg-[#161616] border border-[#252525] rounded-xl p-5 hover:border-[#333] hover:bg-[#1e1e1e] transition-all duration-200 flex flex-col gap-4">
       <div className="flex items-start justify-between">
         <span className="text-2xl">{project.emoji}</span>
-        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-          project.status === 'in_progress'
-            ? 'bg-amber-950 text-amber-400'
-            : 'bg-green-950 text-green-400'
-        }`}>
-          {project.status === 'in_progress' ? 'In progress' : 'Baigtas'}
+        <span
+          className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+            project.status === 'in_progress'
+              ? 'bg-amber-950 text-amber-400'
+              : 'bg-green-950 text-green-400'
+          }`}
+        >
+          {project.status === 'in_progress' ? labels.statusInProgress : labels.statusShipped}
         </span>
       </div>
 
@@ -47,9 +61,12 @@ export default function ProjectCard({ project, onLiveClick }: Props) {
       </div>
 
       <div className="flex flex-wrap gap-1.5">
-        {project.tags.map(tag => (
-          <span key={tag} className={`text-[11px] px-2 py-0.5 rounded font-medium ${TAG_STYLES[tag] || 'bg-gray-800 text-gray-400'}`}>
-            {TAG_LABELS[tag] || tag}
+        {project.tags.map((tag) => (
+          <span
+            key={tag}
+            className={`text-[11px] px-2 py-0.5 rounded font-medium ${TAG_STYLES[tag] || 'bg-gray-800 text-gray-400'}`}
+          >
+            {tagLabels[tag] || tag}
           </span>
         ))}
       </div>
@@ -62,7 +79,7 @@ export default function ProjectCard({ project, onLiveClick }: Props) {
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-[12px] text-gray-500 border border-[#2a2a2a] rounded-md px-3 py-1.5 hover:text-white hover:border-[#444] transition-all"
           >
-            <Github size={13} /> GitHub
+            <Github size={13} /> {labels.github}
           </a>
         )}
         {project.live_url && liveType && (

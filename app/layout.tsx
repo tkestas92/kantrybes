@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import { LangProvider } from '@/components/LangProvider'
 
 export const metadata: Metadata = {
   title: 'Kantrybės — Dev & DJ',
-  description: 'Kęstas Trybė — full-stack developer ir DJ Kantrybės iš Vilniaus.',
+  description: 'Kęstas Trybė — full-stack developer and DJ Kantrybės from Vilnius.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -12,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="lt">
       <body>
         <GoogleAnalytics />
-        {children}
+        <LangProvider>{children}</LangProvider>
       </body>
     </html>
   )

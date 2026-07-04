@@ -6,25 +6,52 @@ import ProjectCard from './ProjectCard'
 import FilterBar from './FilterBar'
 import LiveDemoModal from './LiveDemoModal'
 import type { LiveDemoType } from '@/lib/liveDemo'
+import type { t } from '@/lib/translations'
 
-export default function ProjectGrid({ projects }: { projects: Project[] }) {
+type Labels = {
+  filters: (typeof t)['lt']['filters']
+  projects: {
+    filterAll: string
+    statusInProgress: string
+    statusShipped: string
+    github: string
+  }
+  liveDemo: (typeof t)['lt']['liveDemo']
+}
+
+type Props = {
+  projects: Project[]
+  labels: Labels
+}
+
+export default function ProjectGrid({ projects, labels }: Props) {
   const [filter, setFilter] = useState('all')
   const [liveDemo, setLiveDemo] = useState<{ url: string; title: string; type: LiveDemoType } | null>(null)
 
-  const filtered = filter === 'all'
-    ? projects
-    : projects.filter(p => p.tags.includes(filter))
+  const filtered = filter === 'all' ? projects : projects.filter((p) => p.tags.includes(filter))
+
+  const filterLabels = {
+    filterAll: labels.projects.filterAll,
+    ...labels.filters,
+  }
+
+  const cardLabels = {
+    ...labels.projects,
+    filters: labels.filters,
+    liveDemo: labels.liveDemo,
+  }
 
   return (
     <div>
       <div className="mb-5">
-        <FilterBar active={filter} onChange={setFilter} />
+        <FilterBar active={filter} onChange={setFilter} labels={filterLabels} />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {filtered.map(p => (
+        {filtered.map((p) => (
           <ProjectCard
             key={p.id}
             project={p}
+            labels={cardLabels}
             onLiveClick={(url, title, type) => setLiveDemo({ url, title, type })}
           />
         ))}
@@ -35,6 +62,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           url={liveDemo.url}
           title={liveDemo.title}
           type={liveDemo.type}
+          labels={labels.liveDemo}
           onClose={() => setLiveDemo(null)}
         />
       )}

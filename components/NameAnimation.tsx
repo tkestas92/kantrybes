@@ -18,17 +18,11 @@ export default function NameAnimation() {
   const topRef = useRef<HTMLDivElement>(null)
   const botRef = useRef<HTMLDivElement>(null)
   const modeRef = useRef(0)
-  const startedRef = useRef(false)
 
   useEffect(() => {
-    if (startedRef.current) return
-    startedRef.current = true
-
-    const topEl = topRef.current
-    const botEl = botRef.current
-    if (!topEl || !botEl) return
-
     function playCycle() {
+      const topEl = topRef.current
+      const botEl = botRef.current
       if (!topEl || !botEl) return
       topEl.innerHTML = ''
       botEl.innerHTML = ''

@@ -91,7 +91,7 @@ export default function WaveCta() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-0 flex-1 min-w-0">
           <span className="text-[13px] font-medium text-[#4afa8a] whitespace-nowrap">Kantrybės... Padėsiu!</span>
-          <div className="flex-1 mx-2.5 relative h-6">
+          <div className="flex-1 mx-2.5 relative" style={{ height: '24px', overflow: 'visible' }}>
             <svg
               ref={svgRef}
               width="100%"
@@ -123,7 +123,7 @@ export default function WaveCta() {
         </div>
         <a
           href="mailto:kestas@kantrybes.lt"
-          className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg group-hover:scale-150 transition-transform duration-300 whitespace-nowrap"
+          className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg group-hover:scale-110 transition-transform duration-300 whitespace-nowrap"
         >
           Pasikalbėkim
         </a>

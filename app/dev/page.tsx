@@ -25,7 +25,7 @@ export default async function DevPage() {
           </div>
           <p className="mb-6 max-w-lg text-[15px] leading-relaxed text-gray-500">
             Full-stack developer ir AI/ML inžinierius iš Vilniaus.
-            Kuriu mobilias aplikacijas, backend servisus ir machine learning sprendimus — nuo idėjos iki produkcijos. Kuo nestandartiškiau, tuo įdomiau.
+            Kuriu mobilias aplikacijas, backend servisus ir machine learning sprendimus — nuo idėjos iki produkcijos. Kuo nestandartiškiau, tuo įdomiau!
           </p>
           <div className="flex flex-wrap justify-center gap-2">
           <a href="https://github.com/tkestas92" target="_blank" rel="noopener noreferrer"

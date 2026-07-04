@@ -20,7 +20,9 @@ export default function WaveCta() {
     const ctx = canvas.getContext('2d')!
     ctx.clearRect(0, 0, W, H)
 
-    if (activeRef.current && Math.random() < 0.35) {
+    const isMobileDevice = window.matchMedia('(hover: none)').matches
+
+    if (activeRef.current && Math.random() < (isMobileDevice ? 0.15 : 0.35)) {
       particlesRef.current.push({
         x: 0,
         y: H / 2 + (Math.random() - 0.5) * 6,
@@ -32,9 +34,8 @@ export default function WaveCta() {
 
     particlesRef.current.forEach((p) => {
       const progress = p.x / W
-      const isMobileDevice = window.matchMedia('(hover: none)').matches
       if (isMobileDevice) {
-        p.speed = Math.sin(p.x * 0.05) > 0.3 ? 0 : 0.8
+        p.speed = 0.8 + Math.sin(p.x * 0.05) * 0.3
       } else {
         p.speed = 0.4 + Math.pow(progress, 2) * 18
       }

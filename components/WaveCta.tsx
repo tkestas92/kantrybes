@@ -84,13 +84,13 @@ export default function WaveCta() {
       onMouseEnter={startWave}
       onMouseLeave={stopWave}
     >
-      <p className="text-[11px] text-gray-600 uppercase tracking-widest mb-2">Reikia pagalbos su:</p>
+      <p className="text-[13px] text-gray-500 mb-2">Reikia pagalbos su:</p>
       <p className="text-[13px] text-gray-600 leading-relaxed mb-4">
         Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
       </p>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-0 flex-1 min-w-0">
-          <span className="text-[15px] font-medium text-[#4afa8a] whitespace-nowrap">Kantrybės... Padėsiu!</span>
+          <span className="text-[13px] font-medium text-[#4afa8a] whitespace-nowrap">Kantrybės... Padėsiu!</span>
           <div className="flex-1 mx-2.5 relative h-6">
             <svg
               ref={svgRef}

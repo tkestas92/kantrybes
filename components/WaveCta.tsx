@@ -3,137 +3,90 @@
 import { useRef, useEffect } from 'react'
 
 export default function WaveCta() {
-  const svgRef = useRef<SVGSVGElement>(null)
-  const pathRef = useRef<SVGPathElement>(null)
-  const headRef = useRef<SVGPolylineElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const wrapRef = useRef<HTMLDivElement>(null)
   const animRef = useRef<number | null>(null)
-  const progressRef = useRef(0)
-  const timeRef = useRef(0)
   const activeRef = useRef(false)
   const isMobileRef = useRef(false)
+  const particlesRef = useRef<{ x: number; y: number; speed: number; char: string; opacity: number }[]>([])
 
-  function drawWave() {
-    const svg = svgRef.current
-    const path = pathRef.current
-    const head = headRef.current
-    if (!svg || !path || !head) return
+  function draw() {
+    const canvas = canvasRef.current
+    const wrap = wrapRef.current
+    if (!canvas || !wrap) return
+    const W = wrap.getBoundingClientRect().width || 200
+    canvas.width = W
+    const H = 20
+    const ctx = canvas.getContext('2d')!
+    ctx.clearRect(0, 0, W, H)
 
-    const W = svg.getBoundingClientRect().width || 100
-    const cy = 12
-    const amp = 4
-    const freq = 0.08
-
-    timeRef.current += 0.06
-    if (activeRef.current && progressRef.current < W) progressRef.current += 14
-    if (!activeRef.current && progressRef.current > 0) progressRef.current -= 5
-    if (isMobileRef.current && activeRef.current && progressRef.current >= W) {
-      progressRef.current = 0
-      timeRef.current = 0
+    if (activeRef.current && Math.random() < 0.35) {
+      particlesRef.current.push({
+        x: 0,
+        y: H / 2 + (Math.random() - 0.5) * 6,
+        speed: 0.4,
+        char: Math.random() > 0.5 ? '1' : '0',
+        opacity: 0.5 + Math.random() * 0.5,
+      })
     }
 
-    const pts: string[] = []
-    const steps = Math.ceil(progressRef.current)
-    for (let x = 0; x <= steps; x += 2) {
-      const y = cy + Math.sin(x * freq + timeRef.current) * amp
-      pts.push(`${x},${y}`)
-    }
+    particlesRef.current.forEach((p) => {
+      const progress = p.x / W
+      p.speed = 0.4 + Math.pow(progress, 2) * 18
+      p.x += p.speed
+      const fade = progress > 0.75 ? 1 - (progress - 0.75) / 0.25 : 1
+      const alpha = p.opacity * Math.max(0, fade)
+      ctx.fillStyle = `rgba(74, 250, 138, ${alpha})`
+      ctx.font = `500 10px 'JetBrains Mono', monospace`
+      ctx.fillText(p.char, p.x, p.y + 4)
+    })
 
-    if (pts.length > 1) {
-      path.setAttribute('d', 'M' + pts.join(' L'))
-      path.setAttribute('opacity', String(Math.min(1, progressRef.current / 20)))
-      const lastX = steps
-      const lastY = cy + Math.sin(lastX * freq + timeRef.current) * amp
-      const prevY = cy + Math.sin((lastX - 4) * freq + timeRef.current) * amp
-      const angle = Math.atan2(lastY - prevY, 4)
-      const hs = 7
-      const hx1 = lastX - Math.cos(angle) * hs
-      const hy1 = lastY - Math.sin(angle) * hs - hs * 0.6
-      const hx2 = lastX - Math.cos(angle) * hs
-      const hy2 = lastY - Math.sin(angle) * hs + hs * 0.6
-      head.setAttribute('points', `${hx1},${hy1} ${lastX},${lastY} ${hx2},${hy2}`)
-      head.setAttribute(
-        'opacity',
-        progressRef.current > 15 ? String(Math.min(1, (progressRef.current - 15) / 15)) : '0',
-      )
-    }
+    particlesRef.current = particlesRef.current.filter((p) => p.x < W + 10)
 
-    if (progressRef.current > 0 || activeRef.current) {
-      animRef.current = requestAnimationFrame(drawWave)
+    if (activeRef.current || particlesRef.current.length > 0) {
+      animRef.current = requestAnimationFrame(draw)
     } else {
-      path.setAttribute('d', '')
-      path.setAttribute('opacity', '0')
-      head.setAttribute('opacity', '0')
+      ctx.clearRect(0, 0, W, H)
       animRef.current = null
-      progressRef.current = 0
     }
   }
 
-  function startWave() {
+  function startStream() {
     activeRef.current = true
-    if (!animRef.current) animRef.current = requestAnimationFrame(drawWave)
+    if (!animRef.current) animRef.current = requestAnimationFrame(draw)
   }
 
-  function stopWave() {
+  function stopStream() {
     if (isMobileRef.current) return
     activeRef.current = false
   }
 
   useEffect(() => {
-    return () => {
-      if (animRef.current) cancelAnimationFrame(animRef.current)
-    }
-  }, [])
-
-  useEffect(() => {
     const isMobile = window.matchMedia('(hover: none)').matches
     if (isMobile) {
       isMobileRef.current = true
-      activeRef.current = true
-      animRef.current = requestAnimationFrame(drawWave)
+      startStream()
+    }
+    return () => {
+      if (animRef.current) cancelAnimationFrame(animRef.current)
     }
   }, [])
 
   return (
     <section
       className="mt-12 p-5 bg-[#161616] border border-[#252525] rounded-xl hover:border-[#333] transition-all duration-200 cursor-pointer group"
-      onMouseEnter={startWave}
-      onMouseLeave={stopWave}
+      onMouseEnter={startStream}
+      onMouseLeave={stopStream}
     >
       <p className="text-[13px] text-white font-medium mb-2">Reikia pagalbos su:</p>
-      <p className="text-[13px] text-gray-500 leading-relaxed mb-4">
+      <p className="text-[13px] text-gray-600 leading-relaxed mb-4">
         Python · Go · React Native · Kotlin · Next.js · MySQL · AI · ML · GraphQL · REST · Docker · Railway
       </p>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-0 flex-1 min-w-0">
           <span className="text-[13px] font-medium text-[#4afa8a] whitespace-nowrap">Kantrybės... Padėsiu!</span>
-          <div className="flex-1 mx-2.5 relative" style={{ height: '24px', overflow: 'visible' }}>
-            <svg
-              ref={svgRef}
-              width="100%"
-              height="24"
-              style={{ position: 'absolute', top: 0, left: 0, overflow: 'visible' }}
-            >
-              <path
-                ref={pathRef}
-                d=""
-                stroke="#4afa8a"
-                strokeWidth="1.5"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                opacity="0"
-              />
-              <polyline
-                ref={headRef}
-                points="0,12 0,12 0,12"
-                stroke="#4afa8a"
-                strokeWidth="1.5"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                opacity="0"
-              />
-            </svg>
+          <div ref={wrapRef} className="flex-1 mx-2.5 relative" style={{ height: '20px', overflow: 'hidden' }}>
+            <canvas ref={canvasRef} height={20} style={{ position: 'absolute', top: 0, left: 0 }} />
           </div>
         </div>
         <a

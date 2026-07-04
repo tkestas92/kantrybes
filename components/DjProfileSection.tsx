@@ -231,7 +231,7 @@ export default function DjProfileSection({ profile }: Props) {
       {galleryPhotos.length > 0 && (
         <section className="px-6 pt-8">
           <SectionHeader title="Galerija" />
-          <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide snap-x snap-mandatory">
+          <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 scrollbar-hide snap-x snap-mandatory">
             {galleryPhotos.map((photo) => (
               <div
                 key={`${photo.sortOrder}-${photo.url}`}
@@ -314,7 +314,7 @@ export default function DjProfileSection({ profile }: Props) {
       {youtubeVideos.length > 0 && (
         <section className="px-6 pt-8">
           <SectionHeader title="YouTube" />
-          <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide snap-x snap-mandatory">
+          <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 scrollbar-hide snap-x snap-mandatory">
             {youtubeVideos.map((video) => (
               <div
                 key={video.id}

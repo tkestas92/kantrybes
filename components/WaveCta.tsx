@@ -10,6 +10,7 @@ export default function WaveCta() {
   const progressRef = useRef(0)
   const timeRef = useRef(0)
   const activeRef = useRef(false)
+  const isMobileRef = useRef(false)
 
   function drawWave() {
     const svg = svgRef.current
@@ -25,6 +26,10 @@ export default function WaveCta() {
     timeRef.current += 0.06
     if (activeRef.current && progressRef.current < W) progressRef.current += 14
     if (!activeRef.current && progressRef.current > 0) progressRef.current -= 5
+    if (isMobileRef.current && activeRef.current && progressRef.current >= W) {
+      progressRef.current = 0
+      timeRef.current = 0
+    }
 
     const pts: string[] = []
     const steps = Math.ceil(progressRef.current)
@@ -69,12 +74,22 @@ export default function WaveCta() {
   }
 
   function stopWave() {
+    if (isMobileRef.current) return
     activeRef.current = false
   }
 
   useEffect(() => {
     return () => {
       if (animRef.current) cancelAnimationFrame(animRef.current)
+    }
+  }, [])
+
+  useEffect(() => {
+    const isMobile = window.matchMedia('(hover: none)').matches
+    if (isMobile) {
+      isMobileRef.current = true
+      activeRef.current = true
+      animRef.current = requestAnimationFrame(drawWave)
     }
   }, [])
 

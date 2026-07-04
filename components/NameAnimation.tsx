@@ -45,30 +45,11 @@ export default function NameAnimation() {
         letterSpans.push(s)
       })
 
-      const cursor = document.createElement('span')
-      cursor.style.display = 'inline-block'
-      cursor.style.width = '2px'
-      cursor.style.height = '0.8em'
-      cursor.style.verticalAlign = 'middle'
-      cursor.style.marginLeft = '2px'
-      cursor.style.background = '#f0f0f0'
-      cursor.style.opacity = '0'
-      topEl.appendChild(cursor)
-
       letterSpans.forEach((s, i) => {
         setTimeout(() => { s.style.opacity = '1' }, i * 70)
       })
 
-      let blinkCount = 0
-      const blinkInterval = setInterval(() => {
-        cursor.style.opacity = cursor.style.opacity === '1' ? '0' : '1'
-        blinkCount++
-        if (blinkCount > 6) clearInterval(blinkInterval)
-      }, 250)
-
       setTimeout(() => {
-        clearInterval(blinkInterval)
-        cursor.style.opacity = '0'
         topEl.style.transition = 'opacity 0.6s ease'
         topEl.style.opacity = '0'
       }, 2400)

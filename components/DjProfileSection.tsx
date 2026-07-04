@@ -6,11 +6,13 @@ type Props = {
   profile: DjProfile
 }
 
+const CARD_BORDER = 'border border-white/[0.07]'
+
 function SectionHeader({ title }: { title: string }) {
   return (
-    <div className="flex items-center gap-3 mb-5">
-      <span className="text-xs text-gray-600 uppercase tracking-widest">{title}</span>
-      <div className="flex-1 h-px bg-[#1e1e1e]" />
+    <div className="flex items-center gap-3 mb-4">
+      <span className="text-[11px] text-gray-500 uppercase tracking-widest">{title}</span>
+      <div className="flex-1 h-px bg-white/[0.07]" />
     </div>
   )
 }
@@ -52,6 +54,45 @@ function groupSocialLinksByPlatform(links: DjProfile['socialLinks']) {
   return Array.from(byPlatform.entries()).map(([platform, url]) => ({ platform, url }))
 }
 
+function SocialIcon({ platform }: { platform: string }) {
+  const className = 'h-[18px] w-[18px]'
+
+  switch (platform) {
+    case 'TikTok':
+      return (
+        <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.77 1.52V6.76a4.85 4.85 0 0 1-1-.07z" />
+        </svg>
+      )
+    case 'YouTube':
+      return (
+        <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z" />
+        </svg>
+      )
+    case 'Facebook':
+      return (
+        <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+          <path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07c0 6.04 4.42 11.06 10.2 11.97v-8.47H7.13v-3.5h3.07V9.41c0-3.02 1.8-4.69 4.56-4.69 1.32 0 2.7.23 2.7.23v2.97h-1.52c-1.5 0-1.97.93-1.97 1.88v2.26h3.35l-.53 3.5h-2.82v8.47C19.58 23.13 24 18.11 24 12.07z" />
+        </svg>
+      )
+    case 'Instagram':
+      return (
+        <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+          <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.67.52.73.29 1.35.68 1.97 1.3.62.62 1.01 1.24 1.3 1.97.28.7.47 1.5.52 2.67.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.97-.52 2.67-.29.73-.68 1.35-1.3 1.97-.62.62-1.24 1.01-1.97 1.3-.7.28-1.5.47-2.67.52-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.97-.24-2.67-.52a5.3 5.3 0 0 1-1.97-1.3 5.3 5.3 0 0 1-1.3-1.97c-.28-.7-.47-1.5-.52-2.67C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.24-1.97.52-2.67.29-.73.68-1.35 1.3-1.97.62-.62 1.24-1.01 1.97-1.3.7-.28 1.5-.47 2.67-.52C8.42 2.17 8.8 2.16 12 2.16zm0 1.8c-3.15 0-3.52.01-4.75.07-1.01.05-1.56.22-1.93.37-.48.19-.82.41-1.18.77-.36.36-.58.7-.77 1.18-.15.37-.32.92-.37 1.93-.06 1.23-.07 1.6-.07 4.75s.01 3.52.07 4.75c.05 1.01.22 1.56.37 1.93.19.48.41.82.77 1.18.36.36.7.58 1.18.77.37.15.92.32 1.93.37 1.23.06 1.6.07 4.75.07s3.52-.01 4.75-.07c1.01-.05 1.56-.22 1.93-.37.48-.19.82-.41 1.18-.77.36-.36.58-.7.77-1.18.15-.37.32-.92.37-1.93.06-1.23.07-1.6.07-4.75s-.01-3.52-.07-4.75c-.05-1.01-.22-1.56-.37-1.93a3.2 3.2 0 0 0-.77-1.18 3.2 3.2 0 0 0-1.18-.77c-.37-.15-.92-.32-1.93-.37-1.23-.06-1.6-.07-4.75-.07zm0 3.67a4.37 4.37 0 1 1 0 8.74 4.37 4.37 0 0 1 0-8.74zm0 1.8a2.57 2.57 0 1 0 0 5.14 2.57 2.57 0 0 0 0-5.14zm4.9-3.03a1.02 1.02 0 1 1-2.04 0 1.02 1.02 0 0 1 2.04 0z" />
+        </svg>
+      )
+    case 'SoundCloud':
+      return (
+        <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+          <path d="M1.175 13.5c-.22 0-.4.18-.4.4v2.4c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-2.4c0-.22-.18-.4-.4-.4h-1.2zm1.8-1.2c-.22 0-.4.18-.4.4v3.6c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-3.6c0-.22-.18-.4-.4-.4h-1.2zm1.8-.6c-.22 0-.4.18-.4.4v4.2c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-4.2c0-.22-.18-.4-.4-.4h-1.2zm1.8-.6c-.22 0-.4.18-.4.4v4.8c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-4.8c0-.22-.18-.4-.4-.4h-1.2zm1.8-.3c-.22 0-.4.18-.4.4v5.1c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-5.1c0-.22-.18-.4-.4-.4h-1.2zm1.8 0c-.22 0-.4.18-.4.4v5.1c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-5.1c0-.22-.18-.4-.4-.4h-1.2zm1.8.3c-.22 0-.4.18-.4.4v4.8c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-4.8c0-.22-.18-.4-.4-.4h-1.2zm1.8.6c-.22 0-.4.18-.4.4v4.2c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-4.2c0-.22-.18-.4-.4-.4h-1.2zm1.8 1.2c-.22 0-.4.18-.4.4v3.6c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-3.6c0-.22-.18-.4-.4-.4h-1.2zm1.8 1.8c-.22 0-.4.18-.4.4v2.4c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-2.4c0-.22-.18-.4-.4-.4h-1.2zm2.1-8.1c-.22 0-.4.18-.4.4v11.4c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4V8.7c0-.22-.18-.4-.4-.4h-1.2zm2.1 1.5c-.22 0-.4.18-.4.4v9.6c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-9.6c0-.22-.18-.4-.4-.4h-1.2zm2.1 1.5c-.22 0-.4.18-.4.4v7.2c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-7.2c0-.22-.18-.4-.4-.4h-1.2zm2.1 1.5c-.22 0-.4.18-.4.4v4.8c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-4.8c0-.22-.18-.4-.4-.4h-1.2zm2.1 0c-.22 0-.4.18-.4.4v4.8c0 .22.18.4.4.4h1.2c.22 0 .4-.18.4-.4v-4.8c0-.22-.18-.4-.4-.4h-1.2z" />
+        </svg>
+      )
+    default:
+      return <ExternalLink size={18} aria-hidden />
+  }
+}
+
 export default function DjProfileSection({ profile }: Props) {
   const photos = [...profile.photos].sort((a, b) => a.sortOrder - b.sortOrder)
   const heroPhoto = photos[0] ?? null
@@ -60,76 +101,71 @@ export default function DjProfileSection({ profile }: Props) {
   const socialLinks = groupSocialLinksByPlatform(profile.socialLinks)
 
   return (
-    <div className="space-y-10">
-      <section>
-        <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
-          {heroPhoto && (
-            <div className="shrink-0 w-full sm:w-48 md:w-56">
-              <div className="overflow-hidden rounded-xl border border-[#252525] bg-[#161616] aspect-[4/5] sm:aspect-square">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={resolvePhotoUrl(heroPhoto.url)}
-                  alt={`${profile.djName} — profilio nuotrauka`}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-          )}
+    <div className="-mx-6 bg-[#0a0a0a] text-white">
+      {/* Hero */}
+      <section className="relative w-full h-[50vh] min-h-[280px] max-h-[520px] overflow-hidden bg-[#161616]">
+        {heroPhoto ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={resolvePhotoUrl(heroPhoto.url)}
+            alt={`${profile.djName} — profilio nuotrauka`}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a]" />
+        )}
 
-          <div className="min-w-0 flex-1">
-            <h1 className="text-[28px] font-medium text-white mb-4">{profile.djName}</h1>
-            <p className="text-[15px] text-gray-500 leading-relaxed whitespace-pre-line">
-              {profile.bio}
-            </p>
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 35%, rgba(10, 10, 10, 0.55) 65%, #0a0a0a 100%)',
+          }}
+        />
 
-            {profile.genres.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-5">
-                {profile.genres.map((genre) => (
-                  <span
-                    key={genre}
-                    className="text-[11px] px-2.5 py-1 rounded-full font-medium bg-purple-950 text-purple-400"
-                  >
-                    {genre}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {socialLinks.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-5">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.platform}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-white hover:border-[#444] transition-all"
-                  >
-                    <ExternalLink size={14} />
-                    {link.platform}
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
+        <div className="absolute inset-x-0 bottom-0 px-6 pb-5">
+          <h1 className="text-[32px] font-semibold leading-tight tracking-tight text-white">
+            {profile.djName}
+          </h1>
+          <p className="mt-1 text-[14px] text-white/70">DJ · Vilnius</p>
         </div>
       </section>
 
+      {/* Bio & genres */}
+      <section className="px-6 pt-6 pb-2">
+        <p className="text-[15px] text-gray-400 leading-relaxed whitespace-pre-line">
+          {profile.bio}
+        </p>
+
+        {profile.genres.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-5">
+            {profile.genres.map((genre) => (
+              <span
+                key={genre}
+                className={`text-[11px] px-3 py-1.5 rounded-full font-medium bg-[#161616] text-gray-300 ${CARD_BORDER}`}
+              >
+                {genre}
+              </span>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Gallery */}
       {galleryPhotos.length > 0 && (
-        <section>
+        <section className="px-6 pt-8">
           <SectionHeader title="Galerija" />
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide snap-x snap-mandatory">
             {galleryPhotos.map((photo) => (
               <div
                 key={photo.url}
-                className="overflow-hidden rounded-lg border border-[#252525] bg-[#161616] aspect-square"
+                className={`shrink-0 snap-start overflow-hidden rounded-[12px] bg-[#161616] ${CARD_BORDER}`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={resolvePhotoUrl(photo.url)}
                   alt={`${profile.djName} — nuotrauka ${photo.sortOrder + 1}`}
                   loading="lazy"
-                  className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="h-[120px] w-[120px] object-cover"
                 />
               </div>
             ))}
@@ -137,14 +173,15 @@ export default function DjProfileSection({ profile }: Props) {
         </section>
       )}
 
+      {/* Events */}
       {upcomingEvents.length > 0 && (
-        <section>
+        <section className="px-6 pt-8">
           <SectionHeader title="Artimiausi renginiai" />
           <div className="flex flex-col gap-3">
             {upcomingEvents.map((event) => (
               <div
                 key={`${event.date}-${event.startTime}-${event.title}`}
-                className="bg-[#161616] border border-[#252525] rounded-xl px-5 py-4 hover:border-[#333] transition-all"
+                className={`bg-[#161616] rounded-2xl px-5 py-4 ${CARD_BORDER}`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
@@ -166,7 +203,7 @@ export default function DjProfileSection({ profile }: Props) {
                       href={event.ticketsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="shrink-0 flex items-center gap-1.5 text-[12px] text-gray-400 border border-[#2a2a2a] rounded-lg px-3 py-1.5 hover:text-white hover:border-[#444] transition-all"
+                      className={`shrink-0 flex items-center gap-1.5 text-[12px] text-gray-300 bg-[#0a0a0a] rounded-xl px-3 py-1.5 ${CARD_BORDER} hover:text-white transition-colors`}
                     >
                       <Ticket size={13} />
                       Bilietai
@@ -179,8 +216,9 @@ export default function DjProfileSection({ profile }: Props) {
         </section>
       )}
 
+      {/* Releases */}
       {profile.releases.length > 0 && (
-        <section>
+        <section className="px-6 pt-8">
           <SectionHeader title="Leidiniai" />
           <div className="flex flex-col gap-3">
             {profile.releases.map((release) => (
@@ -189,9 +227,9 @@ export default function DjProfileSection({ profile }: Props) {
                 href={release.songLinkUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group bg-[#161616] border border-[#252525] rounded-xl p-4 flex items-center gap-4 hover:border-[#333] hover:bg-[#1e1e1e] transition-all"
+                className={`group bg-[#161616] rounded-2xl p-4 flex items-center gap-4 ${CARD_BORDER} hover:bg-[#1a1a1a] transition-colors`}
               >
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-[#2a2a2a]">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
                   <Image
                     src={release.artworkUrl}
                     alt={`${release.title} — viršelis`}
@@ -211,6 +249,28 @@ export default function DjProfileSection({ profile }: Props) {
                   </div>
                 </div>
                 <ExternalLink size={16} className="shrink-0 text-gray-600 group-hover:text-gray-400 transition-colors" />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Social links */}
+      {socialLinks.length > 0 && (
+        <section className="px-6 pt-8 pb-10">
+          <SectionHeader title="Social" />
+          <div className="flex flex-wrap gap-3">
+            {socialLinks.map((link) => (
+              <a
+                key={link.platform}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={link.platform}
+                title={link.platform}
+                className={`flex h-11 w-11 items-center justify-center rounded-xl bg-[#161616] text-gray-300 ${CARD_BORDER} hover:text-white hover:bg-[#1a1a1a] transition-colors`}
+              >
+                <SocialIcon platform={link.platform} />
               </a>
             ))}
           </div>

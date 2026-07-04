@@ -10,22 +10,22 @@ export default async function DjPage() {
   const profile = await getPublicDjProfile('kantrybes')
 
   return (
-    <main className="min-h-screen bg-[#0f0f0f] px-6 py-12 max-w-3xl mx-auto">
+    <main className="min-h-screen bg-[#0a0a0a] px-6 py-12 max-w-3xl mx-auto">
       <Link href="/" className="inline-flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-gray-400 transition-colors mb-8">
         <ArrowLeft size={13} /> kantrybes.lt
       </Link>
 
-      <section className="mb-10">
-        <div className="mb-4">
-          <NameAnimation />
-        </div>
-        {!profile && (
+      {!profile && (
+        <section className="mb-10">
+          <div className="mb-4">
+            <NameAnimation />
+          </div>
           <p className="text-[15px] text-gray-500 leading-relaxed mb-2 max-w-lg">
             DJ ir event organizatorius iš Vilniaus. 100+ renginių, sunset boat party,
             charity events ir bendradarbiavimas su žinomais brandais.
           </p>
-        )}
-      </section>
+        </section>
+      )}
 
       {profile ? (
         <DjProfileSection profile={profile} />

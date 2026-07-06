@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Calendar, ExternalLink, MapPin, Music2, Smartphone, Ticket } from 'lucide-react'
+import { Calendar, ExternalLink, MapPin, Music2, Ticket } from 'lucide-react'
 import ProfilePhoto from '@/components/ProfilePhoto'
 import { type DjProfile, type DjSocialLink } from '@/lib/djbook'
 import type { Lang } from '@/lib/translations'
@@ -152,24 +152,6 @@ function SocialIcon({ platform }: { platform: string }) {
   }
 }
 
-function DjBookBadge({ labels }: { labels: (typeof t)['lt']['dj'] }) {
-  return (
-    <div className="mb-4 flex flex-col items-start gap-1.5">
-      <span
-        className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[12px] text-white/60"
-        title={labels.djbookTitle}
-      >
-        <Smartphone size={12} className="shrink-0 text-white/50" aria-hidden />
-        <span>
-          <span className="text-white/70">{labels.djbookName}</span>
-          <span className="text-white/45">{labels.djbookProgress}</span>
-        </span>
-      </span>
-      <p className="text-[11px] text-white/35 leading-snug">{labels.djbookNote}</p>
-    </div>
-  )
-}
-
 export default function DjProfileSection({ profile, labels, lang }: Props) {
   const photos = [...profile.photos].sort((a, b) => a.sortOrder - b.sortOrder)
   const heroPhoto = photos[0] ?? null
@@ -210,7 +192,6 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
 
       {/* Bio & genres */}
       <section className="px-6 pt-5 pb-2">
-        <DjBookBadge labels={labels} />
         <p className="text-[15px] text-gray-400 leading-relaxed whitespace-pre-line">
           {profile.bio}
         </p>

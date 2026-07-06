@@ -3,6 +3,7 @@
 import NameAnimation from '@/components/NameAnimation'
 import DjProfileSection from '@/components/DjProfileSection'
 import PageHeader from '@/components/PageHeader'
+import DjBookBadge from '@/components/DjBookBadge'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
 import type { DjProfile } from '@/lib/djbook'
@@ -17,14 +18,7 @@ export default function DjPageClient({ profile }: Props) {
 
   return (
     <main className="min-h-screen bg-[#0a0a0a] px-6 py-12 max-w-3xl mx-auto">
-      <PageHeader
-        backLabel={labels.back}
-        extra={
-          <span className="text-[13px] text-gray-600 border border-[#2a2a2a] rounded-full px-3 py-1.5 ml-2">
-            {labels.djbook}
-          </span>
-        }
-      />
+      <PageHeader backLabel={labels.back} extra={<DjBookBadge labels={labels} />} />
 
       {!profile && (
         <section className="mb-10">

@@ -18,7 +18,7 @@ export default function DjPageClient({ profile }: Props) {
 
   return (
     <main className="min-h-screen bg-[#0a0a0a] px-6 py-12 max-w-3xl mx-auto">
-      <PageHeader backLabel={labels.back} extra={<DjBookBadge labels={labels} />} />
+      <PageHeader backLabel={labels.back} extra={<DjBookBadge />} />
 
       {!profile && (
         <section className="mb-10">

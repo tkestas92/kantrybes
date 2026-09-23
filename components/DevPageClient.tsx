@@ -6,7 +6,6 @@ import ProjectGrid from '@/components/ProjectGrid'
 import NameAnimation from '@/components/NameAnimation'
 import CertificationSection from '@/components/CertificationSection'
 import WaveCta from '@/components/WaveCta'
-import PageHeader from '@/components/PageHeader'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
 
@@ -19,9 +18,7 @@ export default function DevPageClient({ projects }: Props) {
   const labels = t[lang].dev
 
   return (
-    <main className="min-h-screen bg-[#0f0f0f] px-6 py-12 max-w-3xl mx-auto">
-      <PageHeader backLabel={labels.back} />
-
+    <>
       <section className="mb-12 w-full">
         <div className="mx-auto flex w-full max-w-xl flex-col items-center text-center">
           <div className="mb-4 flex w-full justify-center">
@@ -93,6 +90,6 @@ export default function DevPageClient({ projects }: Props) {
         }}
       />
       <WaveCta lang={lang} />
-    </main>
+    </>
   )
 }

@@ -2,7 +2,6 @@
 
 import NameAnimation from '@/components/NameAnimation'
 import DjProfileSection from '@/components/DjProfileSection'
-import PageHeader from '@/components/PageHeader'
 import DjBookBadge from '@/components/DjBookBadge'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
@@ -17,8 +16,10 @@ export default function DjPageClient({ profile }: Props) {
   const labels = t[lang].dj
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] px-6 py-12 max-w-3xl mx-auto">
-      <PageHeader backLabel={labels.back} extra={<DjBookBadge />} />
+    <>
+      <div className="flex justify-end -mt-4 mb-8">
+        <DjBookBadge />
+      </div>
 
       {!profile && (
         <section className="mb-10">
@@ -42,6 +43,6 @@ export default function DjPageClient({ profile }: Props) {
           </a>
         </div>
       )}
-    </main>
+    </>
   )
 }

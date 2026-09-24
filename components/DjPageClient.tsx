@@ -1,8 +1,6 @@
 'use client'
 
-import { useState } from 'react'
 import NameAnimation from '@/components/NameAnimation'
-import ContactModal from '@/components/ContactModal'
 import DjProfileSection from '@/components/DjProfileSection'
 import DjBookBadge from '@/components/DjBookBadge'
 import { useLang } from '@/components/LangProvider'
@@ -16,7 +14,6 @@ type Props = {
 export default function DjPageClient({ profile }: Props) {
   const { lang } = useLang()
   const labels = t[lang].dj
-  const [contactOpen, setContactOpen] = useState(false)
 
   return (
     <>
@@ -38,16 +35,14 @@ export default function DjPageClient({ profile }: Props) {
       ) : (
         <div className="bg-[#161616] border border-[#252525] rounded-xl px-5 py-4">
           <p className="text-[14px] text-gray-400">{labels.loadError}</p>
-          <button
-            type="button"
-            onClick={() => setContactOpen(true)}
+          <a
+            href="mailto:kestas@kantrybes.lt"
             className="inline-block mt-4 text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg hover:opacity-85 transition-opacity"
           >
             {labels.write}
-          </button>
+          </a>
         </div>
       )}
-      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </>
   )
 }

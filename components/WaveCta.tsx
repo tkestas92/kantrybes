@@ -1,7 +1,8 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Lang, t } from '@/lib/translations'
+import ContactModal from '@/components/ContactModal'
 
 type Props = {
   lang: Lang
@@ -9,6 +10,7 @@ type Props = {
 
 export default function WaveCta({ lang }: Props) {
   const labels = t[lang].dev
+  const [modalOpen, setModalOpen] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
   const animRef = useRef<number | null>(null)
@@ -89,6 +91,7 @@ export default function WaveCta({ lang }: Props) {
   }, [])
 
   return (
+    <>
     <section
       className="mt-12 p-5 bg-[#161616] border border-[#252525] rounded-xl hover:border-[#333] transition-all duration-200 cursor-pointer group"
       onMouseEnter={startStream}
@@ -103,13 +106,16 @@ export default function WaveCta({ lang }: Props) {
             <canvas ref={canvasRef} height={20} style={{ position: 'absolute', top: 0, left: 0 }} />
           </div>
         </div>
-        <a
-          href="mailto:kestas@kantrybes.lt"
+        <button
+          type="button"
+          onClick={() => setModalOpen(true)}
           className="text-[13px] font-medium bg-[#4afa8a] text-black px-4 py-2 rounded-lg group-hover:scale-125 group-hover:shadow-[0_0_20px_rgba(74,250,138,0.4)] transition-all duration-300 whitespace-nowrap"
         >
           {labels.ctaButton}
-        </a>
+        </button>
       </div>
     </section>
+    <ContactModal open={modalOpen} onClose={() => setModalOpen(false)} />
+    </>
   )
 }

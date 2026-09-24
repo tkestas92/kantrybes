@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { resolvePhotoUrl } from '@/lib/djbook'
 
 type Props = {
@@ -12,10 +13,11 @@ export default function ProfilePhoto({ src, alt, className }: Props) {
   const resolvedSrc = resolvePhotoUrl(src)
 
   return (
-    /* eslint-disable-next-line @next/next/no-img-element */
-    <img
+    <Image
       src={resolvedSrc}
       alt={alt}
+      width={1200}
+      height={800}
       className={className}
       onError={(e) => {
         e.currentTarget.style.display = 'none'

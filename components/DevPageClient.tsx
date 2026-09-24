@@ -1,6 +1,7 @@
 'use client'
 
-import { Github, Linkedin, Mail, FileText } from 'lucide-react'
+import { Github, Linkedin, FileText } from 'lucide-react'
+import EmailButton from '@/components/EmailButton'
 import type { Project } from '@/lib/db'
 import ProjectGrid from '@/components/ProjectGrid'
 import NameAnimation from '@/components/NameAnimation'
@@ -50,12 +51,7 @@ export default function DevPageClient({ projects }: Props) {
             >
               <FileText size={15} /> {labels.cvButton}
             </a>
-            <a
-              href="mailto:tkestas92@gmail.com"
-              className="flex items-center gap-2 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
-            >
-              <Mail size={15} /> Email
-            </a>
+            <EmailButton />
           </div>
         </div>
       </section>

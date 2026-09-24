@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { error } = await resend.emails.send({
-      from: 'Kantrybės kontaktai <onboarding@resend.dev>',
+      from: 'Kantrybės kontaktai <kontaktai@kantrybes.lt>',
       to: process.env.CONTACT_EMAIL!,
       replyTo: email,
       subject: `Nauja žinutė nuo ${name} — kantrybes.lt`,

@@ -43,7 +43,11 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
   return (
     <div className="bg-[#161616] border border-[#252525] rounded-xl p-5 hover:border-[#333] hover:bg-[#1e1e1e] transition-all duration-200 flex flex-col gap-4">
       <div className="flex items-start justify-between">
-        <span className="text-2xl">{project.emoji}</span>
+        {project.image_url ? (
+          <img src={project.image_url} alt={project.title} className="w-full h-32 object-cover rounded-lg mb-3" />
+        ) : (
+          <span className="text-2xl">{project.emoji}</span>
+        )}
         <span
           className={`text-xs px-2.5 py-1 rounded-full font-medium ${
             project.status === 'in_progress'

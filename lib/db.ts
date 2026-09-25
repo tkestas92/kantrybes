@@ -5,6 +5,7 @@ export type Project = {
   title: string
   description: string
   emoji: string
+  image_url: string | null
   tags: string[]
   github_url: string | null
   live_url: string | null
@@ -59,12 +60,13 @@ export async function getAllProjects(): Promise<Project[]> {
 export async function createProject(data: Partial<Project>): Promise<Project> {
   const pool = getPool()
   const [result] = await pool.query(
-    `INSERT INTO projects (title, description, emoji, tags, github_url, live_url, live_type, status, sort_order)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO projects (title, description, emoji, image_url, tags, github_url, live_url, live_type, status, sort_order)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       data.title,
       data.description,
       data.emoji || '🚀',
+      data.image_url || null,
       JSON.stringify(data.tags || []),
       data.github_url || null,
       data.live_url || null,
@@ -86,6 +88,7 @@ export async function updateProject(id: number, data: Partial<Project>): Promise
   if (data.title !== undefined) { fields.push('title = ?'); values.push(data.title) }
   if (data.description !== undefined) { fields.push('description = ?'); values.push(data.description) }
   if (data.emoji !== undefined) { fields.push('emoji = ?'); values.push(data.emoji) }
+  if (data.image_url !== undefined) { fields.push('image_url = ?'); values.push(data.image_url) }
   if (data.tags !== undefined) { fields.push('tags = ?'); values.push(JSON.stringify(data.tags)) }
   if (data.github_url !== undefined) { fields.push('github_url = ?'); values.push(data.github_url) }
   if (data.live_url !== undefined) { fields.push('live_url = ?'); values.push(data.live_url) }

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { Project } from '@/lib/db'
+import { uploadImage } from '@/lib/cloudinary'
 
 const ALL_TAGS = ['go', 'rn', 'py', 'kt', 'ml']
 const TAG_LABELS: Record<string, string> = {
@@ -18,6 +19,8 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
   const [title, setTitle] = useState(initial?.title || '')
   const [description, setDescription] = useState(initial?.description || '')
   const [emoji, setEmoji] = useState(initial?.emoji || '🚀')
+  const [imageUrl, setImageUrl] = useState(initial?.image_url || '')
+  const [uploading, setUploading] = useState(false)
   const [tags, setTags] = useState<string[]>(initial?.tags || [])
   const [githubUrl, setGithubUrl] = useState(initial?.github_url || '')
   const [liveUrl, setLiveUrl] = useState(initial?.live_url || '')
@@ -48,6 +51,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
       title,
       description,
       emoji,
+      image_url: imageUrl,
       tags,
       github_url: githubUrl,
       live_url: liveUrl || null,
@@ -61,6 +65,33 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <div>
+        <p className="text-[12px] text-gray-600 mb-2">Nuotrauka</p>
+        {imageUrl && (
+          <img src={imageUrl} alt="" className="w-full h-32 object-cover rounded-lg mb-2" />
+        )}
+        <input
+          type="file"
+          accept="image/*"
+          disabled={uploading}
+          onChange={async (e) => {
+            const file = e.target.files?.[0]
+            if (!file) return
+            setUploading(true)
+            try {
+              const url = await uploadImage(file)
+              setImageUrl(url)
+            } catch {
+              alert('Nepavyko įkelti nuotraukos')
+            } finally {
+              setUploading(false)
+            }
+          }}
+          className="text-[12px] text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border file:border-[#2a2a2a] file:bg-[#0f0f0f] file:text-gray-400 file:text-[12px] hover:file:border-[#444]"
+        />
+        {uploading && <p className="text-[11px] text-gray-600 mt-1">Įkeliama...</p>}
+      </div>
+
       <div className="grid grid-cols-[60px_1fr] gap-3">
         <input className={inputClass} value={emoji} onChange={e => setEmoji(e.target.value)} placeholder="🚀" />
         <input className={inputClass} value={title} onChange={e => setTitle(e.target.value)} placeholder="Projekto pavadinimas" required />

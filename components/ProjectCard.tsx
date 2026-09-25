@@ -42,12 +42,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
 
   return (
     <div className="bg-[#161616] border border-[#252525] rounded-xl p-5 hover:border-[#333] hover:bg-[#1e1e1e] transition-all duration-200 flex flex-col gap-4">
-      <div className="flex items-start justify-between">
-        {project.image_url ? (
-          <img src={project.image_url} alt={project.title} className="w-full h-32 object-cover rounded-lg mb-3" />
-        ) : (
-          <span className="text-2xl">{project.emoji}</span>
-        )}
+      <div className="flex justify-end">
         <span
           className={`text-xs px-2.5 py-1 rounded-full font-medium ${
             project.status === 'in_progress'
@@ -58,6 +53,13 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
           {project.status === 'in_progress' ? labels.statusInProgress : labels.statusShipped}
         </span>
       </div>
+      {project.image_url ? (
+        <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-black flex items-center justify-center">
+          <img src={project.image_url} alt={project.title} className="w-full h-full object-contain" />
+        </div>
+      ) : (
+        project.emoji && <span className="text-2xl">{project.emoji}</span>
+      )}
 
       <div>
         <h3 className="text-[15px] font-medium text-white mb-1.5">{project.title}</h3>

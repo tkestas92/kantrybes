@@ -46,7 +46,7 @@ export default function ProjectGrid({ projects, labels }: Props) {
       <div className="mb-5">
         <FilterBar active={filter} onChange={setFilter} labels={filterLabels} />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
         {filtered.map((p) => (
           <ProjectCard
             key={p.id}

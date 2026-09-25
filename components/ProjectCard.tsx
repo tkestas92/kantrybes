@@ -41,7 +41,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
   }
 
   return (
-    <div className="bg-[#161616] border border-[#252525] rounded-xl p-5 hover:border-[#333] hover:bg-[#1e1e1e] transition-all duration-200 flex flex-col gap-4">
+    <div className="bg-[#161616] border border-[#252525] rounded-xl p-5 hover:border-[#333] hover:bg-[#1e1e1e] transition-all duration-200 flex flex-col gap-4 h-full">
       <div className="flex justify-end">
         <span
           className={`text-xs px-2.5 py-1 rounded-full font-medium ${

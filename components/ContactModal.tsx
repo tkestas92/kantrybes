@@ -1,17 +1,30 @@
 'use client'
 
 import { useState } from 'react'
-import { X } from 'lucide-react'
+import { Check, X } from 'lucide-react'
+import { useLang } from '@/components/LangProvider'
+import { t } from '@/lib/translations'
 
 type Props = { open: boolean; onClose: () => void }
 
 export default function ContactModal({ open, onClose }: Props) {
+  const { lang } = useLang()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
   if (!open) return null
+
+  function handleClose() {
+    if (status === 'sent') {
+      setStatus('idle')
+      setName('')
+      setEmail('')
+      setMessage('')
+    }
+    onClose()
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -32,21 +45,37 @@ export default function ContactModal({ open, onClose }: Props) {
   return (
     <div
       className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
-      onClick={onClose}
+      onClick={handleClose}
     >
       <div
-        className="bg-[#161616] border border-[#2a2a2a] rounded-xl w-full max-w-md p-6"
+        className={`bg-[#161616] border border-[#2a2a2a] rounded-xl w-full max-w-md relative ${status === 'sent' ? 'pt-10 pb-8 px-6' : 'p-6'}`}
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between mb-5">
-          <p className="text-[15px] font-medium text-white">Pasikalbėkim</p>
-          <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
+        {status === 'sent' ? (
+          <button
+            onClick={handleClose}
+            className="absolute top-4 right-5 text-gray-500 hover:text-white transition-colors"
+            aria-label="Close"
+          >
             <X size={18} />
           </button>
-        </div>
+        ) : (
+          <div className="flex items-center justify-between mb-5">
+            <p className="text-[15px] font-medium text-white">Pasikalbėkim</p>
+            <button onClick={handleClose} className="text-gray-500 hover:text-white transition-colors">
+              <X size={18} />
+            </button>
+          </div>
+        )}
 
         {status === 'sent' ? (
-          <p className="text-[14px] text-[#4afa8a] py-8 text-center">Ačiū! Žinutė išsiųsta, atsakysiu greitai.</p>
+          <div className="flex flex-col items-center text-center">
+            <div className="w-11 h-11 rounded-full border border-[#4afa8a]/35 bg-[#4afa8a]/10 flex items-center justify-center mb-4">
+              <Check size={20} className="text-[#4afa8a]" />
+            </div>
+            <p className="text-[16px] font-medium text-[#f0f0f0] mb-1.5">{t[lang].contact.successTitle}</p>
+            <p className="text-[13px] text-gray-500 leading-relaxed">{t[lang].contact.successText}</p>
+          </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <input

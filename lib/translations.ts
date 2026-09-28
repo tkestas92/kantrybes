@@ -79,6 +79,10 @@ export const t = {
       photoAlt: 'nuotrauka',
       artworkAlt: 'viršelis',
     },
+    contact: {
+      successTitle: 'Ačiū už žinutę',
+      successText: 'Susisieksiu el. paštu artimiausiu metu.',
+    },
   },
   en: {
     landing: {
@@ -157,6 +161,10 @@ export const t = {
       heroPhotoAlt: 'profile photo',
       photoAlt: 'photo',
       artworkAlt: 'cover art',
+    },
+    contact: {
+      successTitle: 'Thanks for your message',
+      successText: "I'll get back to you by email shortly.",
     },
   },
 }

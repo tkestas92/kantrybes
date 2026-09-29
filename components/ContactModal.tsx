@@ -54,7 +54,7 @@ export default function ContactModal({ open, onClose }: Props) {
         {status === 'sent' ? (
           <button
             onClick={handleClose}
-            className="absolute top-4 right-5 text-gray-500 hover:text-white transition-colors"
+            className="absolute top-4 right-5 text-white hover:text-white transition-colors"
             aria-label="Close"
           >
             <X size={18} />
@@ -62,7 +62,7 @@ export default function ContactModal({ open, onClose }: Props) {
         ) : (
           <div className="flex items-center justify-between mb-5">
             <p className="text-[15px] font-medium text-white">Pasikalbėkim</p>
-            <button onClick={handleClose} className="text-gray-500 hover:text-white transition-colors">
+            <button onClick={handleClose} className="text-white hover:text-white transition-colors">
               <X size={18} />
             </button>
           </div>
@@ -74,7 +74,7 @@ export default function ContactModal({ open, onClose }: Props) {
               <Check size={20} className="text-[#4afa8a]" />
             </div>
             <p className="text-[16px] font-medium text-[#f0f0f0] mb-1.5">{t[lang].contact.successTitle}</p>
-            <p className="text-[13px] text-gray-500 leading-relaxed">{t[lang].contact.successText}</p>
+            <p className="text-[13px] text-white leading-relaxed">{t[lang].contact.successText}</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">

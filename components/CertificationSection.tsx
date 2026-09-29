@@ -79,7 +79,7 @@ function CertificateModal({
           <button
             type="button"
             onClick={onClose}
-            className="text-gray-500 hover:text-white transition-colors"
+            className="text-white hover:text-white transition-colors"
             aria-label={closeLabel}
           >
             <X size={18} />
@@ -103,7 +103,7 @@ export default function CertificationSection({ labels }: Props) {
     <>
       <section className="mt-10">
         <div className="flex items-center gap-3 mb-5">
-          <span className="text-xs text-gray-600 uppercase tracking-widest">{labels.section}</span>
+          <span className="text-xs text-white uppercase tracking-widest">{labels.section}</span>
           <div className="flex-1 h-px bg-[#1e1e1e]" />
         </div>
         <div className="flex flex-col gap-3">
@@ -115,14 +115,14 @@ export default function CertificationSection({ labels }: Props) {
               <div className="text-2xl">{cert.icon}</div>
               <div className="flex-1 min-w-0">
                 <p className="text-[14px] font-medium text-white">{cert.title}</p>
-                <p className="text-[12px] text-gray-500 mt-0.5">{cert.subtitle}</p>
+                <p className="text-[12px] text-white mt-0.5">{cert.subtitle}</p>
               </div>
               <div className="flex flex-col items-end gap-2 shrink-0">
                 <span className={`text-[10px] border rounded-full px-2.5 py-1 ${cert.tagClassName}`}>{cert.tag}</span>
                 <button
                   type="button"
                   onClick={() => setOpenIndex(index)}
-                  className="flex items-center gap-1.5 text-[12px] text-gray-400 border border-[#2a2a2a] rounded-lg px-3 py-1.5 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
+                  className="flex items-center gap-1.5 text-[12px] text-white border border-[#2a2a2a] rounded-lg px-3 py-1.5 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
                 >
                   <FileText size={13} />
                   {labels.button}

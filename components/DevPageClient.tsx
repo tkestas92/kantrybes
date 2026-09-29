@@ -25,13 +25,13 @@ export default function DevPageClient({ projects }: Props) {
           <div className="mb-4 flex w-full justify-center">
             <NameAnimation />
           </div>
-          <p className="mb-6 max-w-lg text-[15px] leading-relaxed text-gray-500">{labels.bio}</p>
+          <p className="mb-6 max-w-lg text-[15px] leading-relaxed text-white">{labels.bio}</p>
           <div className="flex flex-wrap justify-center gap-2">
             <a
               href="https://github.com/tkestas92"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
+              className="flex items-center gap-2 text-[13px] text-white border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
             >
               <Github size={15} /> GitHub
             </a>
@@ -39,7 +39,7 @@ export default function DevPageClient({ projects }: Props) {
               href="https://www.linkedin.com/in/kestas-trybe/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
+              className="flex items-center gap-2 text-[13px] text-white border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
             >
               <Linkedin size={15} /> LinkedIn
             </a>
@@ -47,7 +47,7 @@ export default function DevPageClient({ projects }: Props) {
               href="/cv.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
+              className="flex items-center gap-2 text-[13px] text-white border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
             >
               <FileText size={15} /> {labels.cvButton}
             </a>
@@ -58,7 +58,7 @@ export default function DevPageClient({ projects }: Props) {
 
       <section>
         <div className="flex items-center gap-3 mb-5">
-          <span className="text-xs text-gray-600 uppercase tracking-widest">{labels.projects}</span>
+          <span className="text-xs text-white uppercase tracking-widest">{labels.projects}</span>
           <div className="flex-1 h-px bg-[#1e1e1e]" />
         </div>
 

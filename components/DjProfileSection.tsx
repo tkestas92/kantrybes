@@ -16,7 +16,7 @@ const CARD_BORDER = 'border border-white/[0.07]'
 function SectionHeader({ title }: { title: string }) {
   return (
     <div className="flex items-center gap-3 mb-4">
-      <span className="text-[11px] text-gray-500 uppercase tracking-widest">{title}</span>
+      <span className="text-[11px] text-white uppercase tracking-widest">{title}</span>
       <div className="flex-1 h-px bg-white/[0.07]" />
     </div>
   )
@@ -192,7 +192,7 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
 
       {/* Bio & genres */}
       <section className="px-6 pt-5 pb-2">
-        <p className="text-[15px] text-gray-400 leading-relaxed whitespace-pre-line">
+        <p className="text-[15px] text-white leading-relaxed whitespace-pre-line">
           {profile.bio}
         </p>
 
@@ -244,7 +244,7 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
                     <p className="text-[14px] font-medium text-white">{event.title}</p>
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[12px] text-gray-500">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[12px] text-white">
                       <span className="inline-flex items-center gap-1">
                         <MapPin size={12} />
                         {event.venue}
@@ -344,13 +344,13 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
                   <p className="text-[14px] font-medium text-white group-hover:text-[#4afa8a] transition-colors truncate">
                     {release.title}
                   </p>
-                  <p className="text-[12px] text-gray-500 mt-0.5 truncate">{release.artist}</p>
-                  <div className="flex items-center gap-1.5 mt-2 text-[11px] text-gray-600">
+                  <p className="text-[12px] text-white mt-0.5 truncate">{release.artist}</p>
+                  <div className="flex items-center gap-1.5 mt-2 text-[11px] text-white">
                     <Music2 size={12} />
                     <span>{labels.listenEverywhere}</span>
                   </div>
                 </div>
-                <ExternalLink size={16} className="shrink-0 text-gray-600 group-hover:text-gray-400 transition-colors" />
+                <ExternalLink size={16} className="shrink-0 text-white group-hover:text-gray-400 transition-colors" />
               </a>
             ))}
           </div>

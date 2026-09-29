@@ -66,7 +66,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div>
-        <p className="text-[12px] text-gray-600 mb-2">Nuotrauka</p>
+        <p className="text-[12px] text-white mb-2">Nuotrauka</p>
         {imageUrl && (
           <img src={imageUrl} alt="" className="w-full h-32 object-cover rounded-lg mb-2" />
         )}
@@ -87,9 +87,9 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
               setUploading(false)
             }
           }}
-          className="text-[12px] text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border file:border-[#2a2a2a] file:bg-[#0f0f0f] file:text-gray-400 file:text-[12px] hover:file:border-[#444]"
+          className="text-[12px] text-white file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border file:border-[#2a2a2a] file:bg-[#0f0f0f] file:text-white file:text-[12px] hover:file:border-[#444]"
         />
-        {uploading && <p className="text-[11px] text-gray-600 mt-1">Įkeliama...</p>}
+        {uploading && <p className="text-[11px] text-white mt-1">Įkeliama...</p>}
       </div>
 
       <div className="grid grid-cols-[60px_1fr] gap-3">
@@ -106,7 +106,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
       />
 
       <div>
-        <p className="text-[12px] text-gray-600 mb-2">Technologijos</p>
+        <p className="text-[12px] text-white mb-2">Technologijos</p>
         <div className="flex flex-wrap gap-2">
           {ALL_TAGS.map(tag => (
             <button
@@ -116,7 +116,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
               className={`text-xs px-3 py-1 rounded border transition-all ${
                 tags.includes(tag)
                   ? 'bg-[#4afa8a] text-black border-[#4afa8a] font-medium'
-                  : 'border-[#2a2a2a] text-gray-500 hover:border-[#444]'
+                  : 'border-[#2a2a2a] text-white hover:border-[#444]'
               }`}
             >
               {TAG_LABELS[tag]}
@@ -142,7 +142,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
 
       {liveUrl && (
         <div>
-          <p className="text-[12px] text-gray-600 mb-2">Live demo tipas</p>
+          <p className="text-[12px] text-white mb-2">Live demo tipas</p>
           <div className="flex gap-2">
             <button
               type="button"
@@ -150,7 +150,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
               className={`flex-1 text-xs px-3 py-2 rounded border transition-all ${
                 liveType === 'web'
                   ? 'bg-[#4afa8a] text-black border-[#4afa8a] font-medium'
-                  : 'border-[#2a2a2a] text-gray-500 hover:border-[#444]'
+                  : 'border-[#2a2a2a] text-white hover:border-[#444]'
               }`}
             >
               Web puslapis
@@ -161,7 +161,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
               className={`flex-1 text-xs px-3 py-2 rounded border transition-all ${
                 liveType === 'app'
                   ? 'bg-[#4afa8a] text-black border-[#4afa8a] font-medium'
-                  : 'border-[#2a2a2a] text-gray-500 hover:border-[#444]'
+                  : 'border-[#2a2a2a] text-white hover:border-[#444]'
               }`}
             >
               Mobili aplikacija
@@ -191,7 +191,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg hover:border-[#444] hover:text-white transition-all"
+          className="px-5 text-[13px] text-white border border-[#2a2a2a] rounded-lg hover:border-[#444] hover:text-white transition-all"
         >
           Atšaukti
         </button>

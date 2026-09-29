@@ -17,7 +17,7 @@ export default function PageHeader({ backLabel, extra }: Props) {
     <div className="flex items-center justify-between gap-4 mb-8">
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-gray-400 transition-colors shrink-0"
+        className="inline-flex items-center gap-1.5 text-[12px] text-white hover:text-gray-400 transition-colors shrink-0"
       >
         <ArrowLeft size={13} /> {backLabel}
       </Link>

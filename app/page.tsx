@@ -30,7 +30,7 @@ export default function Landing() {
             >
               <span className="text-3xl">💻</span>
               <span className="text-white font-medium text-[15px]">{labels.devTitle}</span>
-              <span className="text-gray-500 text-[12px] text-center">{labels.devDesc}</span>
+              <span className="text-white text-[12px] text-center">{labels.devDesc}</span>
             </Link>
 
             <Link
@@ -39,7 +39,7 @@ export default function Landing() {
             >
               <span className="text-3xl">🎧</span>
               <span className="text-white font-medium text-[15px]">{labels.djTitle}</span>
-              <span className="text-gray-500 text-[12px] text-center">{labels.djDesc}</span>
+              <span className="text-white text-[12px] text-center">{labels.djDesc}</span>
             </Link>
           </div>
         </div>

@@ -14,7 +14,7 @@ export default function LangSwitcher({ lang, onChange }: Props) {
           className={`text-[11px] uppercase tracking-widest px-2 py-1 rounded transition-all ${
             lang === l
               ? 'text-[#4afa8a] border border-[#4afa8a]/40'
-              : 'text-gray-600 hover:text-gray-400'
+              : 'text-white hover:text-gray-400'
           }`}
         >
           {l}

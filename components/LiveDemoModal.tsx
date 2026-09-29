@@ -57,7 +57,7 @@ export default function LiveDemoModal({ url, title, type, labels, onClose }: Pro
         <div className="flex items-center justify-between border-b border-[#222] px-4 py-3">
           <div>
             <p className="text-[13px] font-medium text-white">{title}</p>
-            <p className="text-[11px] text-gray-500">{subtitle}</p>
+            <p className="text-[11px] text-white">{subtitle}</p>
           </div>
           <div className="flex items-center gap-1">
             {!isApp && (
@@ -66,7 +66,7 @@ export default function LiveDemoModal({ url, title, type, labels, onClose }: Pro
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackDemoOpenNewTab({ title, type, url })}
-                className="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-[#222] hover:text-white"
+                className="rounded-lg p-1.5 text-white transition-colors hover:bg-[#222] hover:text-white"
                 aria-label={labels.openNewTab}
               >
                 <ExternalLink size={16} />
@@ -75,7 +75,7 @@ export default function LiveDemoModal({ url, title, type, labels, onClose }: Pro
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-[#222] hover:text-white"
+              className="rounded-lg p-1.5 text-white transition-colors hover:bg-[#222] hover:text-white"
               aria-label={labels.close}
             >
               <X size={18} />

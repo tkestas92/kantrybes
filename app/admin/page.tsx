@@ -68,15 +68,15 @@ export default function AdminPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-xl font-medium text-white">Admin panel</h1>
-          <p className="text-[13px] text-gray-600 mt-0.5">kantrybes.lt/dev projektai</p>
+          <p className="text-[13px] text-white mt-0.5">kantrybes.lt/dev projektai</p>
         </div>
         <div className="flex gap-2">
           <a href="/dev" target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-3 py-2 hover:text-white hover:border-[#444] transition-all">
+            className="flex items-center gap-1.5 text-[13px] text-white border border-[#2a2a2a] rounded-lg px-3 py-2 hover:text-white hover:border-[#444] transition-all">
             <ExternalLink size={13} /> Peržiūrėti
           </a>
           <button onClick={handleLogout}
-            className="flex items-center gap-1.5 text-[13px] text-gray-500 border border-[#2a2a2a] rounded-lg px-3 py-2 hover:text-red-400 hover:border-red-900 transition-all">
+            className="flex items-center gap-1.5 text-[13px] text-white border border-[#2a2a2a] rounded-lg px-3 py-2 hover:text-red-400 hover:border-red-900 transition-all">
             <LogOut size={13} /> Atsijungti
           </button>
         </div>
@@ -89,7 +89,7 @@ export default function AdminPage() {
         </div>
       ) : (
         <button onClick={() => setCreating(true)}
-          className="w-full flex items-center justify-center gap-2 text-[13px] text-gray-500 border border-dashed border-[#2a2a2a] rounded-xl py-4 mb-4 hover:border-[#4afa8a] hover:text-[#4afa8a] transition-all">
+          className="w-full flex items-center justify-center gap-2 text-[13px] text-white border border-dashed border-[#2a2a2a] rounded-xl py-4 mb-4 hover:border-[#4afa8a] hover:text-[#4afa8a] transition-all">
           <Plus size={15} /> Pridėti projektą
         </button>
       )}
@@ -114,7 +114,7 @@ export default function AdminPage() {
                   <span className="text-xl">{p.emoji}</span>
                   <div className="flex-1 min-w-0">
                     <p className="text-[14px] text-white font-medium truncate">{p.title}</p>
-                    <p className="text-[12px] text-gray-600 truncate">{p.description}</p>
+                    <p className="text-[12px] text-white truncate">{p.description}</p>
                   </div>
                   <span className={`text-[10px] px-2 py-0.5 rounded-full ${
                     p.status === 'in_progress' ? 'bg-amber-950 text-amber-400' : 'bg-green-950 text-green-400'
@@ -123,11 +123,11 @@ export default function AdminPage() {
                   </span>
                   <div className="flex gap-1">
                     <button onClick={() => setEditing(p)}
-                      className="p-1.5 text-gray-600 hover:text-white rounded transition-colors">
+                      className="p-1.5 text-white hover:text-white rounded transition-colors">
                       <Pencil size={13} />
                     </button>
                     <button onClick={() => handleDelete(p.id)}
-                      className="p-1.5 text-gray-600 hover:text-red-400 rounded transition-colors">
+                      className="p-1.5 text-white hover:text-red-400 rounded transition-colors">
                       <Trash2 size={13} />
                     </button>
                   </div>

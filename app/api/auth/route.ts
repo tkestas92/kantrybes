@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { createToken, verifyToken } from '@/lib/auth'
+import { checkRateLimit, resetRateLimit } from '@/lib/rateLimit'
 
 export async function GET() {
   const token = cookies().get('admin_token')?.value
@@ -11,10 +12,21 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+  const rateLimit = checkRateLimit(ip)
+
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: `Per daug bandymų. Bandyk vėl po ${Math.ceil((rateLimit.retryAfterSeconds || 0) / 60)} min.` },
+      { status: 429 }
+    )
+  }
+
   const { password } = await req.json()
   if (password !== process.env.ADMIN_PASSWORD) {
     return NextResponse.json({ error: 'Invalid password' }, { status: 401 })
   }
+  resetRateLimit(ip)
   const token = createToken()
   const res = NextResponse.json({ ok: true })
   res.cookies.set('admin_token', token, {

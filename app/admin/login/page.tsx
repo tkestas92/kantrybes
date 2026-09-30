@@ -24,6 +24,9 @@ export default function AdminLogin() {
     if (res.ok) {
       router.push('/admin')
       router.refresh()
+    } else if (res.status === 429) {
+      const data = await res.json().catch(() => ({}))
+      setError(typeof data.error === 'string' ? data.error : 'Per daug bandymų')
     } else {
       setError('Neteisingas slaptažodis')
     }

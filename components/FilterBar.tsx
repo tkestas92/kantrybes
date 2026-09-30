@@ -1,6 +1,6 @@
 'use client'
 
-const FILTER_KEYS = ['all', 'go', 'rn', 'py', 'kt', 'ml', 'devops', 'linux', 'ubuntu', 'docker', 'bash', 'systemd', 'netplan', 'ssh', 'tailscale', 'torrserver', 'stremio', 'restapi', 'iot'] as const
+const FILTER_KEYS = ['all', 'go', 'rn', 'py', 'kt', 'ml', 'devops', 'linux', 'docker', 'bash', 'iot'] as const
 
 type FilterLabels = {
   filterAll: string
@@ -27,16 +27,8 @@ export default function FilterBar({ active, onChange, labels }: Props) {
     { key: 'ml', label: labels.ml },
     { key: 'devops', label: 'DevOps' },
     { key: 'linux', label: 'Linux' },
-    { key: 'ubuntu', label: 'Ubuntu Server' },
     { key: 'docker', label: 'Docker' },
     { key: 'bash', label: 'Bash' },
-    { key: 'systemd', label: 'systemd' },
-    { key: 'netplan', label: 'netplan' },
-    { key: 'ssh', label: 'SSH' },
-    { key: 'tailscale', label: 'Tailscale' },
-    { key: 'torrserver', label: 'TorrServer' },
-    { key: 'stremio', label: 'Stremio' },
-    { key: 'restapi', label: 'REST API' },
     { key: 'iot', label: 'IoT' },
   ]
 

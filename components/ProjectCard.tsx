@@ -23,24 +23,14 @@ const TAG_STYLES: Record<string, string> = {
   ml: 'bg-amber-950 text-amber-400',
   devops: 'bg-stone-950 text-stone-300',
   linux: 'bg-slate-950 text-slate-300',
-  ubuntu: 'bg-orange-950 text-orange-400',
   docker: 'bg-sky-950 text-sky-400',
   bash: 'bg-lime-950 text-lime-400',
-  systemd: 'bg-indigo-950 text-indigo-400',
-  netplan: 'bg-teal-950 text-teal-400',
-  ssh: 'bg-emerald-950 text-emerald-400',
-  tailscale: 'bg-violet-950 text-violet-400',
-  torrserver: 'bg-rose-950 text-rose-400',
-  stremio: 'bg-fuchsia-950 text-fuchsia-400',
-  restapi: 'bg-yellow-950 text-yellow-400',
   iot: 'bg-cyan-950 text-cyan-400',
 }
 
 const TAG_LABELS: Record<string, string> = {
   go: 'Go', rn: 'React Native', py: 'Python', kt: 'Kotlin', ml: 'ML / AI', devops: 'DevOps',
-  linux: 'Linux', ubuntu: 'Ubuntu Server', docker: 'Docker', bash: 'Bash', systemd: 'systemd',
-  netplan: 'netplan', ssh: 'SSH', tailscale: 'Tailscale', torrserver: 'TorrServer',
-  stremio: 'Stremio', restapi: 'REST API', iot: 'IoT',
+  linux: 'Linux', docker: 'Docker', bash: 'Bash', iot: 'IoT',
 }
 
 export default function ProjectCard({ project, labels, onLiveClick }: Props) {

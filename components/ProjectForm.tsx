@@ -4,9 +4,12 @@ import { useState } from 'react'
 import type { Project } from '@/lib/db'
 import { uploadImage } from '@/lib/cloudinary'
 
-const ALL_TAGS = ['go', 'rn', 'py', 'kt', 'ml']
+const ALL_TAGS = ['go', 'rn', 'py', 'kt', 'ml', 'devops', 'linux', 'ubuntu', 'docker', 'bash', 'systemd', 'netplan', 'ssh', 'tailscale', 'torrserver', 'stremio', 'restapi', 'iot']
 const TAG_LABELS: Record<string, string> = {
-  go: 'Go', rn: 'React Native', py: 'Python', kt: 'Kotlin', ml: 'ML / AI'
+  go: 'Go', rn: 'React Native', py: 'Python', kt: 'Kotlin', ml: 'ML / AI', devops: 'DevOps',
+  linux: 'Linux', ubuntu: 'Ubuntu Server', docker: 'Docker', bash: 'Bash', systemd: 'systemd',
+  netplan: 'netplan', ssh: 'SSH', tailscale: 'Tailscale', torrserver: 'TorrServer',
+  stremio: 'Stremio', restapi: 'REST API', iot: 'IoT'
 }
 
 type Props = {

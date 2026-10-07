@@ -35,6 +35,13 @@ const TAG_LABELS: Record<string, string> = {
   linux: 'Linux', docker: 'Docker', bash: 'Bash', iot: 'IoT',
 }
 
+const GRID_BG = {
+  backgroundColor: '#0f0f0f',
+  backgroundImage:
+    'linear-gradient(#1f1f1f 1px, transparent 1px), linear-gradient(90deg, #1f1f1f 1px, transparent 1px)',
+  backgroundSize: '16px 16px',
+} as const
+
 export default function ProjectCard({ project, labels, onLiveClick }: Props) {
   const liveType = resolveLiveDemoType(project)
   const liveLabel = liveType
@@ -60,9 +67,10 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
         </span>
       </div>
       {project.image_url && (
-        <div className={`relative w-full aspect-[4/3] rounded-lg overflow-hidden border ${
-          project.platform ? 'bg-[#0e2a1a] border-[#14361f]' : 'bg-[#0d0d0d] border-[#1e1e1e]'
-        }`}>
+        <div
+          className={`relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-[#1e1e1e] ${project.platform ? '' : 'bg-[#0d0d0d]'}`}
+          style={project.platform ? GRID_BG : undefined}
+        >
           {project.platform === 'app' ? (
             <PhoneMockup src={project.image_url} alt={project.title} />
           ) : project.platform === 'web' ? (

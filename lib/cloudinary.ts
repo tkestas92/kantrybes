@@ -12,3 +12,8 @@ export async function uploadImage(file: File): Promise<string> {
   const data = await res.json()
   return data.secure_url as string
 }
+
+export function cld(url: string | null, transform: string): string {
+  if (!url || !url.includes('/upload/')) return url || ''
+  return url.replace('/upload/', `/upload/${transform}/`)
+}

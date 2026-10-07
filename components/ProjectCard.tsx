@@ -1,9 +1,12 @@
-import { Github, Globe, Smartphone } from 'lucide-react'
+import { useState } from 'react'
+import { Github, Globe, Smartphone, ZoomIn } from 'lucide-react'
 import type { Project } from '@/lib/db'
 import { resolveLiveDemoType, type LiveDemoType } from '@/lib/liveDemo'
 import type { t } from '@/lib/translations'
 import PhoneMockup from '@/components/PhoneMockup'
 import BrowserMockup from '@/components/BrowserMockup'
+import ImageLightbox from '@/components/ImageLightbox'
+import { cld } from '@/lib/cloudinary'
 
 type Props = {
   project: Project
@@ -52,8 +55,12 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
   const LiveIcon = liveType === 'app' ? Smartphone : Globe
 
   const tagLabels = TAG_LABELS
+  const [zoom, setZoom] = useState(false)
+  const thumb = cld(project.image_url, 'f_auto,q_auto,w_900')
+  const full = cld(project.image_url, 'f_auto,q_auto,w_1800')
 
   return (
+    <>
     <div className="bg-[#161616] border border-[#252525] rounded-xl p-5 hover:border-[#333] hover:bg-[#1e1e1e] transition-all duration-200 flex flex-col gap-4">
       <div className="flex justify-end">
         <span
@@ -68,16 +75,24 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
       </div>
       {project.image_url && (
         <div
-          className={`relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-[#1e1e1e] ${project.platform ? '' : 'bg-[#0d0d0d]'}`}
+          className={`relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-[#1e1e1e] group/media cursor-zoom-in ${project.platform ? '' : 'bg-[#0d0d0d]'}`}
           style={project.platform ? GRID_BG : undefined}
+          role="button"
+          tabIndex={0}
+          aria-label={`Peržiūrėti ${project.title} nuotrauką`}
+          onClick={() => setZoom(true)}
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setZoom(true) } }}
         >
           {project.platform === 'app' ? (
-            <PhoneMockup src={project.image_url} alt={project.title} />
+            <PhoneMockup src={thumb} alt={project.title} />
           ) : project.platform === 'web' ? (
-            <BrowserMockup src={project.image_url} alt={project.title} />
+            <BrowserMockup src={thumb} alt={project.title} />
           ) : (
-            <img src={project.image_url} alt={project.title} className="w-full h-full object-contain" />
+            <img src={thumb} alt={project.title} className="w-full h-full object-contain" />
           )}
+          <span className="absolute bottom-2 right-2 rounded-md bg-black/60 p-1.5 text-white opacity-0 group-hover/media:opacity-100 transition-opacity pointer-events-none">
+            <ZoomIn size={14} />
+          </span>
         </div>
       )}
 
@@ -130,5 +145,9 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
         )}
       </div>
     </div>
+    {zoom && project.image_url && (
+      <ImageLightbox src={full} alt={project.title} onClose={() => setZoom(false)} />
+    )}
+    </>
   )
 }

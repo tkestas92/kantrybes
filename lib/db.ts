@@ -54,7 +54,7 @@ function rowToProject(row: any): Project {
 
 export async function getAllProjects(): Promise<Project[]> {
   const pool = getPool()
-  const [rows] = await pool.query('SELECT * FROM projects ORDER BY sort_order ASC')
+  const [rows] = await pool.query('SELECT * FROM projects ORDER BY sort_order ASC, id ASC')
   return (rows as any[]).map(rowToProject)
 }
 
@@ -110,4 +110,21 @@ export async function updateProject(id: number, data: Partial<Project>): Promise
 export async function deleteProject(id: number): Promise<void> {
   const pool = getPool()
   await pool.query('DELETE FROM projects WHERE id = ?', [id])
+}
+
+export async function reorderProjects(ids: number[]): Promise<void> {
+  const pool = getPool()
+  const conn = await pool.getConnection()
+  try {
+    await conn.beginTransaction()
+    for (let i = 0; i < ids.length; i++) {
+      await conn.query('UPDATE projects SET sort_order = ? WHERE id = ?', [i + 1, ids[i]])
+    }
+    await conn.commit()
+  } catch (err) {
+    await conn.rollback()
+    throw err
+  } finally {
+    conn.release()
+  }
 }

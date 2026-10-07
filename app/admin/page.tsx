@@ -3,8 +3,25 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Plus, Pencil, Trash2, LogOut, ExternalLink } from 'lucide-react'
+import {
+  DndContext,
+  closestCenter,
+  MouseSensor,
+  TouchSensor,
+  KeyboardSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  arrayMove,
+  sortableKeyboardCoordinates,
+} from '@dnd-kit/sortable'
 import type { Project } from '@/lib/db'
 import ProjectForm from '@/components/ProjectForm'
+import SortableRow from '@/components/SortableRow'
 
 export default function AdminPage() {
   const [projects, setProjects] = useState<Project[]>([])
@@ -12,6 +29,11 @@ export default function AdminPage() {
   const [editing, setEditing] = useState<Project | null>(null)
   const [creating, setCreating] = useState(false)
   const router = useRouter()
+  const sensors = useSensors(
+    useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 8 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  )
 
   useEffect(() => {
     init()
@@ -37,7 +59,10 @@ export default function AdminPage() {
     const res = await fetch('/api/projects', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...data, sort_order: projects.length + 1 }),
+      body: JSON.stringify({
+        ...data,
+        sort_order: projects.length ? Math.max(...projects.map(p => p.sort_order)) + 1 : 1,
+      }),
     })
     if (res.ok) { setCreating(false); loadProjects() }
   }
@@ -56,6 +81,28 @@ export default function AdminPage() {
     if (!confirm('Tikrai ištrinti?')) return
     await fetch(`/api/projects/${id}`, { method: 'DELETE' })
     loadProjects()
+  }
+
+  async function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+    const oldIndex = projects.findIndex(p => p.id === active.id)
+    const newIndex = projects.findIndex(p => p.id === over.id)
+    if (oldIndex < 0 || newIndex < 0) return
+    const previous = projects
+    const next = arrayMove(projects, oldIndex, newIndex)
+    setProjects(next)
+    try {
+      const res = await fetch('/api/projects/reorder', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: next.map(p => p.id) }),
+      })
+      if (!res.ok) throw new Error()
+    } catch {
+      setProjects(previous)
+      alert('Nepavyko išsaugoti tvarkos')
+    }
   }
 
   async function handleLogout() {
@@ -102,39 +149,43 @@ export default function AdminPage() {
         </div>
       ) : (
         <div className="space-y-2">
-          {projects.map(p => (
-            <div key={p.id}>
-              {editing?.id === p.id ? (
-                <div className="bg-[#161616] border border-[#4afa8a]/30 rounded-xl p-5">
-                  <p className="text-[13px] font-medium text-white mb-4">Redaguoti</p>
-                  <ProjectForm initial={editing} onSave={handleUpdate} onCancel={() => setEditing(null)} />
-                </div>
-              ) : (
-                <div className="bg-[#161616] border border-[#252525] rounded-xl px-4 py-3 flex items-center gap-3 hover:border-[#333] transition-all">
-                  <span className="text-xl">{p.emoji}</span>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[14px] text-white font-medium truncate">{p.title}</p>
-                    <p className="text-[12px] text-white truncate">{p.description}</p>
-                  </div>
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                    p.status === 'in_progress' ? 'bg-amber-950 text-amber-400' : 'bg-green-950 text-green-400'
-                  }`}>
-                    {p.status === 'in_progress' ? 'WIP' : 'Done'}
-                  </span>
-                  <div className="flex gap-1">
-                    <button onClick={() => setEditing(p)}
-                      className="p-1.5 text-white hover:text-white rounded transition-colors">
-                      <Pencil size={13} />
-                    </button>
-                    <button onClick={() => handleDelete(p.id)}
-                      className="p-1.5 text-white hover:text-red-400 rounded transition-colors">
-                      <Trash2 size={13} />
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={projects.map(p => p.id)} strategy={verticalListSortingStrategy}>
+              {projects.map(p => (
+                <SortableRow key={p.id} id={p.id} disabled={!!editing || creating}>
+                  {editing?.id === p.id ? (
+                    <div className="bg-[#161616] border border-[#4afa8a]/30 rounded-xl p-5">
+                      <p className="text-[13px] font-medium text-white mb-4">Redaguoti</p>
+                      <ProjectForm initial={editing} onSave={handleUpdate} onCancel={() => setEditing(null)} />
+                    </div>
+                  ) : (
+                    <div className="bg-[#161616] border border-[#252525] rounded-xl px-4 py-3 flex items-center gap-3 hover:border-[#333] transition-all">
+                      <span className="text-xl">{p.emoji}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[14px] text-white font-medium truncate">{p.title}</p>
+                        <p className="text-[12px] text-white truncate">{p.description}</p>
+                      </div>
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full ${
+                        p.status === 'in_progress' ? 'bg-amber-950 text-amber-400' : 'bg-green-950 text-green-400'
+                      }`}>
+                        {p.status === 'in_progress' ? 'WIP' : 'Done'}
+                      </span>
+                      <div className="flex gap-1">
+                        <button onClick={() => setEditing(p)}
+                          className="p-1.5 text-white hover:text-white rounded transition-colors">
+                          <Pencil size={13} />
+                        </button>
+                        <button onClick={() => handleDelete(p.id)}
+                          className="p-1.5 text-white hover:text-red-400 rounded transition-colors">
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </SortableRow>
+              ))}
+            </SortableContext>
+          </DndContext>
         </div>
       )}
     </main>

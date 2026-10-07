@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS projects (
   github_url VARCHAR(500),
   live_url VARCHAR(500),
   live_type ENUM('web', 'app') NULL,
+  platform ENUM('app', 'web') NULL,
   status ENUM('shipped', 'in_progress', 'archived') DEFAULT 'shipped',
   sort_order INT DEFAULT 0,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

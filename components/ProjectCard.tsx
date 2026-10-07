@@ -2,6 +2,8 @@ import { Github, Globe, Smartphone } from 'lucide-react'
 import type { Project } from '@/lib/db'
 import { resolveLiveDemoType, type LiveDemoType } from '@/lib/liveDemo'
 import type { t } from '@/lib/translations'
+import PhoneMockup from '@/components/PhoneMockup'
+import LaptopMockup from '@/components/LaptopMockup'
 
 type Props = {
   project: Project
@@ -57,12 +59,16 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
           {project.status === 'in_progress' ? labels.statusInProgress : labels.statusShipped}
         </span>
       </div>
-      {project.image_url ? (
-        <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-black flex items-center justify-center">
-          <img src={project.image_url} alt={project.title} className="w-full h-full object-contain" />
+      {project.image_url && (
+        <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-[#0d0d0d] border border-[#1e1e1e]">
+          {project.platform === 'app' ? (
+            <PhoneMockup src={project.image_url} alt={project.title} />
+          ) : project.platform === 'web' ? (
+            <LaptopMockup src={project.image_url} alt={project.title} />
+          ) : (
+            <img src={project.image_url} alt={project.title} className="w-full h-full object-contain" />
+          )}
         </div>
-      ) : (
-        project.emoji && <span className="text-2xl">{project.emoji}</span>
       )}
 
       <div>

@@ -21,6 +21,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
   const [description, setDescription] = useState(initial?.description || '')
   const [emoji, setEmoji] = useState(initial?.emoji || '🚀')
   const [imageUrl, setImageUrl] = useState(initial?.image_url || '')
+  const [platform, setPlatform] = useState<'app' | 'web' | ''>(initial?.platform || '')
   const [uploading, setUploading] = useState(false)
   const [tags, setTags] = useState<string[]>(initial?.tags || [])
   const [githubUrl, setGithubUrl] = useState(initial?.github_url || '')
@@ -53,6 +54,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
       description,
       emoji,
       image_url: imageUrl,
+      platform: platform || null,
       tags,
       github_url: githubUrl,
       live_url: liveUrl || null,
@@ -91,6 +93,15 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
           className="text-[12px] text-white file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border file:border-[#2a2a2a] file:bg-[#0f0f0f] file:text-white file:text-[12px] hover:file:border-[#444]"
         />
         {uploading && <p className="text-[11px] text-white mt-1">Įkeliama...</p>}
+      </div>
+
+      <div>
+        <p className="text-[12px] text-white mb-2">Nuotraukos rėmelis</p>
+        <select value={platform} onChange={e => setPlatform(e.target.value as 'app' | 'web' | '')} className={inputClass}>
+          <option value="">Be rėmelio</option>
+          <option value="app">App (telefonas)</option>
+          <option value="web">Web (laptopas)</option>
+        </select>
       </div>
 
       <div className="grid grid-cols-[60px_1fr] gap-3">

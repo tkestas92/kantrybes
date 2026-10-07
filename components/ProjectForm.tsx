@@ -100,7 +100,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
         <select value={platform} onChange={e => setPlatform(e.target.value as 'app' | 'web' | '')} className={inputClass}>
           <option value="">Be rėmelio</option>
           <option value="app">App (telefonas)</option>
-          <option value="web">Web (laptopas)</option>
+          <option value="web">Web (naršyklė)</option>
         </select>
       </div>
 

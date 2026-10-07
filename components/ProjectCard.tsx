@@ -3,7 +3,7 @@ import type { Project } from '@/lib/db'
 import { resolveLiveDemoType, type LiveDemoType } from '@/lib/liveDemo'
 import type { t } from '@/lib/translations'
 import PhoneMockup from '@/components/PhoneMockup'
-import LaptopMockup from '@/components/LaptopMockup'
+import BrowserMockup from '@/components/BrowserMockup'
 
 type Props = {
   project: Project
@@ -60,11 +60,13 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
         </span>
       </div>
       {project.image_url && (
-        <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-[#0d0d0d] border border-[#1e1e1e]">
+        <div className={`relative w-full aspect-[4/3] rounded-lg overflow-hidden border ${
+          project.platform ? 'bg-[#0e2a1a] border-[#14361f]' : 'bg-[#0d0d0d] border-[#1e1e1e]'
+        }`}>
           {project.platform === 'app' ? (
             <PhoneMockup src={project.image_url} alt={project.title} />
           ) : project.platform === 'web' ? (
-            <LaptopMockup src={project.image_url} alt={project.title} />
+            <BrowserMockup src={project.image_url} alt={project.title} />
           ) : (
             <img src={project.image_url} alt={project.title} className="w-full h-full object-contain" />
           )}

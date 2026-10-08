@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import ScrollToTop from '@/components/ScrollToTop'
 import PageTransition from '@/components/PageTransition'
 
-export const revalidate = 300
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Kantrybės — DJ Vilniuje',

@@ -10,8 +10,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Kęstas Trybė — Full-stack Developer & AI/ML Engineer',
-  description:
-    'Full-stack ir AI/ML projektai iš Vilniaus — mobilios aplikacijos, backend servisai, machine learning sprendimai.',
+  description: 'Full-stack ir AI/ML kūrėjas iš Vilniaus. Projektai, kodas, kontaktai.',
 }
 
 export default async function DevPage() {

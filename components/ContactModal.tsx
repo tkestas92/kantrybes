@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Check, X } from 'lucide-react'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
@@ -104,6 +105,10 @@ export default function ContactModal({ open, onClose }: Props) {
             {status === 'error' && (
               <p className="text-[12px] text-red-400">Nepavyko išsiųsti. Pabandyk dar kartą arba rašyk tiesiai kestas@kantrybes.lt</p>
             )}
+            <p className="text-[11px] leading-snug text-white/55">
+              {t[lang].contact.consent}{' '}
+              <Link href="/privatumas" onClick={onClose} className="text-[#4afa8a] hover:opacity-85">{t[lang].contact.privacy}</Link>.
+            </p>
             <button
               type="submit"
               disabled={status === 'sending'}

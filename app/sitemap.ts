@@ -5,5 +5,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: 'https://www.kantrybes.lt', lastModified: new Date() },
     { url: 'https://www.kantrybes.lt/dev', lastModified: new Date() },
     { url: 'https://www.kantrybes.lt/dj', lastModified: new Date() },
+    { url: 'https://www.kantrybes.lt/privatumas', lastModified: new Date() },
   ]
 }

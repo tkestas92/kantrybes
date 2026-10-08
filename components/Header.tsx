@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react'
 import { useLang } from '@/components/LangProvider'
 import LangSwitcher from '@/components/LangSwitcher'
 
-type Props = { current: 'dev' | 'dj' }
+type Props = { current?: 'dev' | 'dj' }
 
 export default function Header({ current }: Props) {
   const { lang, setLang } = useLang()

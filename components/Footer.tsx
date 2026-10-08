@@ -3,10 +3,13 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Github, Linkedin, Mail } from 'lucide-react'
 import ContactModal from '@/components/ContactModal'
+import { useLang } from '@/components/LangProvider'
+import { t } from '@/lib/translations'
 
 export default function Footer() {
   const year = new Date().getFullYear()
   const [open, setOpen] = useState(false)
+  const { lang } = useLang()
   return (
     <>
     <footer className="mt-16 pt-6 border-t border-[#1e1e1e] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white">
@@ -23,6 +26,9 @@ export default function Footer() {
         </button>
         <Link href="/dj" className="hover:text-[#4afa8a] transition-colors">
           DJ profilis →
+        </Link>
+        <Link href="/privatumas" className="hover:text-[#4afa8a] transition-colors">
+          {t[lang].footer.privacy}
         </Link>
       </div>
     </footer>

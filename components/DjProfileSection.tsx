@@ -6,6 +6,7 @@ import { Calendar, MapPin, Music2, Ticket } from 'lucide-react'
 import { FaFacebook, FaInstagram, FaPlay, FaTiktok, FaXTwitter } from 'react-icons/fa6'
 import ProfilePhoto from '@/components/ProfilePhoto'
 import DjPhotoLightbox from '@/components/DjPhotoLightbox'
+import ConsentEmbed from '@/components/ConsentEmbed'
 import {
   parseSectionOrder,
   type DjProfile,
@@ -147,7 +148,7 @@ function TikTokCardView({ card }: { card: DjTikTokCard }) {
         href={card.href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`flex h-[180px] w-[min(100%,280px)] shrink-0 snap-start items-center justify-center rounded-2xl bg-[#161616] ${CARD_BORDER}`}
+        className="flex h-full w-full items-center justify-center bg-[#161616]"
       >
         <FaTiktok size={40} color="#fff" aria-hidden />
       </a>
@@ -159,7 +160,7 @@ function TikTokCardView({ card }: { card: DjTikTokCard }) {
       href={card.href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`relative block h-[180px] w-[min(100%,320px)] shrink-0 snap-start overflow-hidden rounded-2xl bg-[#161616] ${CARD_BORDER}`}
+      className="relative block h-full w-full overflow-hidden bg-[#161616]"
     >
       <img src={card.thumbnailUrl} alt={card.title ?? 'TikTok'} className="h-full w-full object-cover" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/70 to-transparent" />
@@ -260,7 +261,7 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
     soundcloud: soundCloudUrl ? (
       <section className="px-6 pt-8">
         <SectionHeader title="SoundCloud" />
-        <div className={`overflow-hidden rounded-2xl bg-[#161616] ${CARD_BORDER}`}>
+        <ConsentEmbed service="SoundCloud" frameClassName="h-[300px] w-full">
           <iframe
             title="SoundCloud player"
             width="100%"
@@ -269,9 +270,9 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
             frameBorder="no"
             allow="autoplay"
             src={getSoundCloudEmbedUrl(soundCloudUrl)}
-            className="block w-full border-0"
+            className="block h-full w-full border-0"
           />
-        </div>
+        </ConsentEmbed>
       </section>
     ) : null,
     youtube:
@@ -280,20 +281,21 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
           <SectionHeader title="YouTube" />
           <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 scrollbar-hide snap-x snap-mandatory">
             {youtubeVideos.map((video) => (
-              <div
+              <ConsentEmbed
                 key={video.id}
-                className={`shrink-0 snap-start w-[min(100%,320px)] overflow-hidden rounded-2xl bg-[#161616] ${CARD_BORDER}`}
+                service="YouTube"
+                thumbnailUrl={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                className="w-[min(100%,320px)] shrink-0 snap-start"
+                frameClassName="aspect-video w-full"
               >
                 <iframe
                   title={`YouTube video ${video.id}`}
-                  width="100%"
-                  height="180"
-                  src={`https://www.youtube.com/embed/${video.id}`}
+                  src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
-                  className="block w-full border-0"
+                  className="block h-full w-full border-0"
                 />
-              </div>
+              </ConsentEmbed>
             ))}
           </div>
         </section>
@@ -304,7 +306,14 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
           <SectionHeader title="TikTok" />
           <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 scrollbar-hide snap-x snap-mandatory">
             {tiktokCards.map((card) => (
-              <TikTokCardView key={card.href} card={card} />
+              <ConsentEmbed
+                key={card.href}
+                service="TikTok"
+                className="w-[min(100%,320px)] shrink-0 snap-start"
+                frameClassName="h-[180px] w-full"
+              >
+                <TikTokCardView card={card} />
+              </ConsentEmbed>
             ))}
           </div>
         </section>

@@ -82,6 +82,48 @@ export const t = {
     contact: {
       successTitle: 'Ačiū už žinutę',
       successText: 'Susisieksiu el. paštu artimiausiu metu.',
+      consent: 'Siųsdamas formą sutinki, kad tavo vardas ir el. paštas būtų naudojami atsakymui. Daugiau:',
+      privacy: 'Privatumas',
+    },
+    footer: {
+      privacy: 'Privatumas',
+    },
+    embed: {
+      play: 'Groti',
+      notice: 'Paspaudus bus įkeltas {service} turinys, kuris gali naudoti slapukus.',
+    },
+    privacy: {
+      title: 'Privatumo informacija',
+      sections: [
+        {
+          heading: 'Kas renka duomenis',
+          body: 'Kęstas Trybė, Vilnius. Kontaktas: tkestas92@gmail.com',
+        },
+        {
+          heading: 'Kokius duomenis renkame',
+          body: 'Tik tai, ką įrašai kontaktų formoje (vardas, el. paštas, žinutė).',
+        },
+        {
+          heading: 'Kodėl',
+          body: 'Kad galėčiau atsakyti į tavo žinutę.',
+        },
+        {
+          heading: 'Kam perduodama',
+          body: 'Žinutė siunčiama per el. pašto paslaugą Resend (duomenų tvarkytojas, gali būti apdorojama už ES ribų taikant standartines sutarties sąlygas).',
+        },
+        {
+          heading: 'Kiek saugoma',
+          body: 'Kol bus atsakyta ir ne ilgiau nei 12 mėnesių.',
+        },
+        {
+          heading: 'Slapukai',
+          body: 'Svetainė nenaudoja analitikos ar reklamos slapukų. Naudojami tik būtini (administratoriaus prisijungimas) ir funkciniai (kalbos pasirinkimas). Pasirinkus groti YouTube, SoundCloud ar TikTok turinį, tų paslaugų teikėjai gali nustatyti savo slapukus.',
+        },
+        {
+          heading: 'Tavo teisės',
+          body: 'Gali paprašyti peržiūrėti, ištaisyti ar ištrinti savo duomenis, parašęs aukščiau nurodytu el. paštu. Taip pat gali pateikti skundą Valstybinei duomenų apsaugos inspekcijai (vdai.lrv.lt).',
+        },
+      ],
     },
   },
   en: {
@@ -165,6 +207,48 @@ export const t = {
     contact: {
       successTitle: 'Thanks for your message',
       successText: "I'll get back to you by email shortly.",
+      consent: 'By sending this form you agree that your name and email will be used to reply. More:',
+      privacy: 'Privacy',
+    },
+    footer: {
+      privacy: 'Privacy',
+    },
+    embed: {
+      play: 'Play',
+      notice: 'Clicking will load {service} content, which may use cookies.',
+    },
+    privacy: {
+      title: 'Privacy information',
+      sections: [
+        {
+          heading: 'Who collects the data',
+          body: 'Kęstas Trybė, Vilnius. Contact: tkestas92@gmail.com',
+        },
+        {
+          heading: 'What data we collect',
+          body: 'Only what you enter in the contact form (name, email, message).',
+        },
+        {
+          heading: 'Why',
+          body: 'So I can reply to your message.',
+        },
+        {
+          heading: 'Who it is shared with',
+          body: 'The message is sent through the email service Resend (data processor, and it may be processed outside the EU under standard contractual clauses).',
+        },
+        {
+          heading: 'How long it is kept',
+          body: 'Until a reply is sent, and for no longer than 12 months.',
+        },
+        {
+          heading: 'Cookies',
+          body: 'The site does not use analytics or advertising cookies. Only essential cookies (administrator login) and functional cookies (language choice) are used. If you choose to play YouTube, SoundCloud or TikTok content, those providers may set their own cookies.',
+        },
+        {
+          heading: 'Your rights',
+          body: 'You can ask to review, correct or delete your data by writing to the email address above. You can also file a complaint with the State Data Protection Inspectorate (vdai.lrv.lt).',
+        },
+      ],
     },
   },
 }

@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from 'react'
 import Image from 'next/image'
 import { Calendar, MapPin, Music2, Ticket } from 'lucide-react'
+import { FaFacebook, FaInstagram, FaPlay, FaTiktok, FaXTwitter } from 'react-icons/fa6'
 import ProfilePhoto from '@/components/ProfilePhoto'
 import DjPhotoLightbox from '@/components/DjPhotoLightbox'
 import {
@@ -128,38 +129,15 @@ const SOCIAL_ICON_BUTTONS: {
   { platform: 'Twitter', label: 'X', bordered: true },
 ]
 
-function SocialBrandIcon({ platform }: { platform: 'Facebook' | 'Instagram' | 'Twitter' }) {
-  const className = 'h-[22px] w-[22px] text-white'
+const SOCIAL_BRAND_ICONS = {
+  Facebook: FaFacebook,
+  Instagram: FaInstagram,
+  Twitter: FaXTwitter,
+} as const
 
-  if (platform === 'Facebook') {
-    return (
-      <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-        <path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07c0 6.04 4.42 11.06 10.2 11.97v-8.47H7.13v-3.5h3.07V9.41c0-3.02 1.8-4.69 4.56-4.69 1.32 0 2.7.23 2.7.23v2.97h-1.52c-1.5 0-1.97.93-1.97 1.88v2.26h3.35l-.53 3.5h-2.82v8.47C19.58 23.13 24 18.11 24 12.07z" />
-      </svg>
-    )
-  }
-
-  if (platform === 'Instagram') {
-    return (
-      <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-        <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.97.24 2.67.52.73.29 1.35.68 1.97 1.3.62.62 1.01 1.24 1.3 1.97.28.7.47 1.5.52 2.67.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.97-.52 2.67-.29.73-.68 1.35-1.3 1.97-.62.62-1.24 1.01-1.97 1.3-.7.28-1.5.47-2.67.52-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.97-.24-2.67-.52a5.3 5.3 0 0 1-1.97-1.3 5.3 5.3 0 0 1-1.3-1.97c-.28-.7-.47-1.5-.52-2.67C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.24-1.97.52-2.67.29-.73.68-1.35 1.3-1.97.62-.62 1.24-1.01 1.97-1.3.7-.28 1.5-.47 2.67-.52C8.42 2.17 8.8 2.16 12 2.16zm0 1.8c-3.15 0-3.52.01-4.75.07-1.01.05-1.56.22-1.93.37-.48.19-.82.41-1.18.77-.36.36-.58.7-.77 1.18-.15.37-.32.92-.37 1.93-.06 1.23-.07 1.6-.07 4.75s.01 3.52.07 4.75c.05 1.01.22 1.56.37 1.93.19.48.41.82.77 1.18.36.36.7.58 1.18.77.37.15.92.32 1.93.37 1.23.06 1.6.07 4.75.07s3.52-.01 4.75-.07c1.01-.05 1.56-.22 1.93-.37.48-.19.82-.41 1.18-.77.36-.36.58-.7.77-1.18.15-.37.32-.92.37-1.93.06-1.23.07-1.6.07-4.75s-.01-3.52-.07-4.75c-.05-1.01-.22-1.56-.37-1.93a3.2 3.2 0 0 0-.77-1.18 3.2 3.2 0 0 0-1.18-.77c-.37-.15-.92-.32-1.93-.37-1.23-.06-1.6-.07-4.75-.07zm0 3.67a4.37 4.37 0 1 1 0 8.74 4.37 4.37 0 0 1 0-8.74zm0 1.8a2.57 2.57 0 1 0 0 5.14 2.57 2.57 0 0 0 0-5.14zm4.9-3.03a1.02 1.02 0 1 1-2.04 0 1.02 1.02 0 0 1 2.04 0z" />
-      </svg>
-    )
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.727-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  )
-}
-
-function TikTokMark() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="h-10 w-10 text-white" aria-hidden>
-      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.77 1.52V6.76a4.85 4.85 0 0 1-1-.07z" />
-    </svg>
-  )
+function SocialBrandIcon({ platform }: { platform: keyof typeof SOCIAL_BRAND_ICONS }) {
+  const Icon = SOCIAL_BRAND_ICONS[platform]
+  return <Icon size={22} color="#fff" aria-hidden />
 }
 
 function TikTokCardView({ card }: { card: DjTikTokCard }) {
@@ -171,7 +149,7 @@ function TikTokCardView({ card }: { card: DjTikTokCard }) {
         rel="noopener noreferrer"
         className={`flex h-[180px] w-[min(100%,280px)] shrink-0 snap-start items-center justify-center rounded-2xl bg-[#161616] ${CARD_BORDER}`}
       >
-        <TikTokMark />
+        <FaTiktok size={40} color="#fff" aria-hidden />
       </a>
     )
   }
@@ -191,9 +169,7 @@ function TikTokCardView({ card }: { card: DjTikTokCard }) {
         </p>
       ) : null}
       <span className="pointer-events-none absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-black/45 text-white">
-        <svg viewBox="0 0 24 24" fill="currentColor" className="ml-0.5 h-6 w-6" aria-hidden>
-          <path d="M8 5v14l11-7z" />
-        </svg>
+        <FaPlay size={24} color="#fff" aria-hidden className="ml-0.5" />
       </span>
     </a>
   )

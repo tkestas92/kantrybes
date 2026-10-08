@@ -5,7 +5,7 @@ import { LangProvider } from '@/components/LangProvider'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.kantrybes.lt'),
-  title: 'Kantrybės — Dev & DJ',
+  title: 'Kęstas Trybė — Full-stack ir AI/ML kūrėjas',
   description: 'Full-stack ir AI/ML kūrėjas iš Vilniaus. Projektai, kodas, kontaktai.',
 }
 

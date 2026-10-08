@@ -3,10 +3,14 @@ import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { LangProvider } from '@/components/LangProvider'
 
+const pageTitle = 'Kęstas Trybė - Full stack ir AI/ML kūrėjas'
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.kantrybes.lt'),
-  title: 'Kęstas Trybė — Full-stack ir AI/ML kūrėjas',
+  title: { absolute: pageTitle },
   description: 'Full-stack ir AI/ML kūrėjas iš Vilniaus. Projektai, kodas, kontaktai.',
+  openGraph: { title: pageTitle },
+  twitter: { title: pageTitle },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

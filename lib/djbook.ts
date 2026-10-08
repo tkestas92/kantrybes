@@ -27,6 +27,7 @@ export type DjReleasePlatform = {
 }
 
 export type DjRelease = {
+  id: string
   title: string
   artist: string
   artworkUrl: string
@@ -87,6 +88,7 @@ const PUBLIC_DJ_PROFILE_QUERY = `
         ticketsUrl
       }
       releases {
+        id
         title
         artist
         artworkUrl
@@ -271,6 +273,15 @@ export async function getPublicDjProfile(username: string): Promise<DjProfile | 
     if (json.errors?.length || !json.data?.publicDjProfile) return null
 
     const profile = json.data.publicDjProfile as Omit<DjProfile, 'tiktokCards'>
+    const releases = (profile.releases ?? []).map((release) => ({
+      id: release.id,
+      title: release.title ?? '',
+      artist: release.artist ?? '',
+      artworkUrl: release.artworkUrl ?? '',
+      songLinkUrl: release.songLinkUrl ?? '',
+      platforms: release.platforms ?? [],
+    }))
+    console.log('[dj releases] fetch length', releases.length)
     const socialLinks = profile.socialLinks ?? []
     let tiktokCards: DjTikTokCard[] = socialLinks
       .filter((link) => link.platform.toLowerCase() === 'tiktok' && link.url)
@@ -286,7 +297,7 @@ export async function getPublicDjProfile(username: string): Promise<DjProfile | 
       socialLinks,
       photos: profile.photos ?? [],
       events: profile.events ?? [],
-      releases: profile.releases ?? [],
+      releases,
       genres: profile.genres ?? [],
       sectionOrder: profile.sectionOrder ?? null,
       tiktokCards,

@@ -189,6 +189,8 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
     return url ? [{ ...item, url }] : []
   })
   const sectionOrder = parseSectionOrder(profile.sectionOrder)
+  const releases = profile.releases
+  console.log('[dj releases] render length', releases.length)
 
   const sections: Record<DjSectionKey, ReactNode> = {
     photos:
@@ -308,17 +310,27 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
         </section>
       ) : null,
     releases:
-      profile.releases.length > 0 ? (
+      releases.length > 0 ? (
         <section className="px-6 pt-8">
           <SectionHeader title={labels.releases} />
-          <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 scrollbar-hide snap-x snap-mandatory">
-            {profile.releases.map((release) => (
+          <div
+            className={
+              releases.length > 2
+                ? 'flex gap-3 overflow-x-auto overflow-y-hidden pb-1 scrollbar-hide snap-x snap-mandatory'
+                : releases.length === 2
+                  ? 'grid grid-cols-2 gap-3'
+                  : 'grid grid-cols-1'
+            }
+          >
+            {releases.map((release) => (
               <a
-                key={`${release.title}-${release.artist}`}
-                href={release.songLinkUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group flex w-[min(100%,72vw)] shrink-0 snap-start items-center gap-3 rounded-[14px] bg-[#161616] p-3 ${CARD_BORDER} hover:bg-[#1a1a1a] transition-colors`}
+                key={release.id}
+                href={release.songLinkUrl || undefined}
+                target={release.songLinkUrl ? '_blank' : undefined}
+                rel={release.songLinkUrl ? 'noopener noreferrer' : undefined}
+                className={`group flex min-w-0 items-center gap-3 rounded-[14px] bg-[#161616] p-3 ${CARD_BORDER} hover:bg-[#1a1a1a] transition-colors ${
+                  releases.length > 2 ? 'w-[240px] shrink-0 snap-start' : ''
+                }`}
               >
                 <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-[#0a0a0a]">
                   {release.artworkUrl ? (

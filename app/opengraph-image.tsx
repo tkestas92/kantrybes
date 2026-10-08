@@ -24,7 +24,7 @@ export default function Image() {
           <span style={{ color: '#4afa8a' }}>Trybė</span>
         </div>
         <div style={{ display: 'flex', marginTop: 36, fontSize: 60, color: '#ffffff' }}>
-          Full-stack · AI/ML · DJ
+          Full-stack · AI/ML
         </div>
       </div>
     ),

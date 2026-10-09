@@ -13,12 +13,14 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <>
-      <main className="min-h-screen bg-[#0f0f0f] px-6 py-12 max-w-3xl mx-auto">
-        <PageTransition>
-          <Header />
-          <PrivacyContent />
-          <Footer />
-        </PageTransition>
+      <main className="min-h-screen bg-[#0f0f0f] px-4 py-12 md:px-6">
+        <div className="mx-auto w-full max-w-[760px]">
+          <PageTransition>
+            <Header />
+            <PrivacyContent />
+            <Footer />
+          </PageTransition>
+        </div>
       </main>
       <ScrollToTop />
     </>

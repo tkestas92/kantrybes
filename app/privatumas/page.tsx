@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ScrollToTop from '@/components/ScrollToTop'
-import PageTransition from '@/components/PageTransition'
 import PrivacyContent from '@/components/PrivacyContent'
 
 export const metadata: Metadata = {
@@ -13,13 +12,11 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <>
-      <main className="min-h-screen bg-[#0f0f0f] px-4 pb-16 pt-20 md:px-6">
+      <main className="min-h-screen bg-[#0f0f0f] px-4 py-12 md:px-6">
         <div className="mx-auto w-full max-w-[680px]">
-          <PageTransition>
-            <Header />
-            <PrivacyContent />
-            <Footer />
-          </PageTransition>
+          <Header />
+          <PrivacyContent />
+          <Footer />
         </div>
       </main>
       <ScrollToTop />

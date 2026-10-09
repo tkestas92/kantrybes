@@ -105,6 +105,7 @@ export const t = {
       contactTitle: 'Turi klausimų?',
       contactNote: 'Parašyk ir atsakysiu.',
       contactPrompt: 'Turi klausimų? Parašyk',
+      ask: 'Klausimai? Rašyk:',
       sections: [
         {
           heading: 'Kas renka duomenis',
@@ -241,6 +242,7 @@ export const t = {
       contactTitle: 'Questions?',
       contactNote: "Write and I'll reply.",
       contactPrompt: 'Questions? Write',
+      ask: 'Questions? Write:',
       sections: [
         {
           heading: 'Who collects the data',

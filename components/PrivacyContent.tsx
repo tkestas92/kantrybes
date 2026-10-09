@@ -2,6 +2,7 @@
 
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
+import { BpmTrigger } from '@/components/useTripleTap'
 
 const LINK_CLASS =
   'text-[#4afa8a] underline decoration-transparent underline-offset-4 transition-colors hover:decoration-[#4afa8a]'
@@ -29,8 +30,21 @@ function withLinks(text: string) {
         </a>
       )
     }
-    return <span key={index}>{part}</span>
+    return <span key={index}>{withName(part)}</span>
   })
+}
+
+function withName(text: string) {
+  const name = 'Kęstas Trybė'
+  const at = text.indexOf(name)
+  if (at < 0) return text
+  return (
+    <>
+      {text.slice(0, at)}
+      <BpmTrigger>{name}</BpmTrigger>
+      {text.slice(at + name.length)}
+    </>
+  )
 }
 
 export default function PrivacyContent() {

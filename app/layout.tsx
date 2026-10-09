@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { LangProvider } from '@/components/LangProvider'
+import BpmProvider from '@/components/BpmProvider'
 
 const pageTitle = 'Kęstas Trybė - Full stack ir AI/ML kūrėjas'
 
@@ -18,7 +19,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="lt">
       <body>
         <GoogleAnalytics />
-        <LangProvider>{children}</LangProvider>
+        <LangProvider>
+          {children}
+          <BpmProvider />
+        </LangProvider>
       </body>
     </html>
   )

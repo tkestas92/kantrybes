@@ -5,6 +5,7 @@ import { Github, Linkedin, Mail } from 'lucide-react'
 import ContactModal from '@/components/ContactModal'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
+import { BpmTrigger } from '@/components/useTripleTap'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -13,7 +14,9 @@ export default function Footer() {
   return (
     <>
     <footer className="mt-16 pt-6 border-t border-[#1e1e1e] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white">
-      <p>© {year} Kęstas Trybė</p>
+      <p>
+        <BpmTrigger>© {year} Kęstas Trybė</BpmTrigger>
+      </p>
       <div className="flex items-center gap-4">
         <a href="https://github.com/tkestas92" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors flex items-center gap-1.5">
           <Github size={13} /> GitHub

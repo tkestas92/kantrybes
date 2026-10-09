@@ -1,7 +1,5 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import NameAnimation from '@/components/NameAnimation'
 import LangSwitcher from '@/components/LangSwitcher'
@@ -9,24 +7,9 @@ import PageTransition from '@/components/PageTransition'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
 
-const BpmTapper = dynamic(() => import('@/components/BpmTapper'), { ssr: false })
-
 export default function Landing() {
   const { lang, setLang } = useLang()
   const labels = t[lang].landing
-  const [bpmOpen, setBpmOpen] = useState(false)
-  const secretRef = useRef({ count: 0, last: 0 })
-
-  function onNameClick() {
-    const now = performance.now()
-    const secret = secretRef.current
-    secret.count = now - secret.last < 600 ? secret.count + 1 : 1
-    secret.last = now
-    if (secret.count >= 3) {
-      secret.count = 0
-      setBpmOpen(true)
-    }
-  }
 
   return (
     <main className="min-h-screen bg-[#0f0f0f] flex flex-col items-center justify-center px-6 relative">
@@ -36,7 +19,7 @@ export default function Landing() {
 
       <PageTransition>
         <div className="flex w-full flex-col items-center">
-          <div className="mb-12" onClick={onNameClick}>
+          <div className="mb-12">
             <NameAnimation />
           </div>
 
@@ -61,7 +44,6 @@ export default function Landing() {
           </div>
         </div>
       </PageTransition>
-      {bpmOpen ? <BpmTapper onClose={() => setBpmOpen(false)} /> : null}
     </main>
   )
 }

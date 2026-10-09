@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { Lang, t } from '@/lib/translations'
 import ContactModal from '@/components/ContactModal'
+import { BpmTrigger } from '@/components/useTripleTap'
 
 type Props = {
   lang: Lang
@@ -101,7 +102,9 @@ export default function WaveCta({ lang }: Props) {
       <p className="text-[13px] text-white leading-relaxed mb-4">{labels.ctaStack}</p>
       <div className="flex flex-row items-center justify-between gap-2">
         <div className="flex items-center gap-0 flex-1 min-w-0">
-          <span className="text-[13px] font-medium text-[#4afa8a] whitespace-nowrap">{labels.ctaTitle}</span>
+          <span className="text-[13px] font-medium text-[#4afa8a] whitespace-nowrap">
+            <BpmTrigger>{labels.ctaTitle}</BpmTrigger>
+          </span>
           <div ref={wrapRef} className="flex-1 mx-2.5 relative" style={{ height: '20px', overflow: 'hidden' }}>
             <canvas ref={canvasRef} height={20} style={{ position: 'absolute', top: 0, left: 0 }} />
           </div>

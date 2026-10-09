@@ -16,6 +16,7 @@ import {
 } from '@/lib/djbook'
 import type { Lang } from '@/lib/translations'
 import { t } from '@/lib/translations'
+import { BpmTrigger } from '@/components/useTripleTap'
 
 type Props = {
   profile: DjProfile
@@ -422,7 +423,7 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 px-6 pb-5">
           <h1 className="text-[32px] font-semibold leading-tight tracking-tight text-white">
-            {profile.djName}
+            <BpmTrigger className="pointer-events-auto">{profile.djName}</BpmTrigger>
           </h1>
           <p className="mt-1 text-[14px] text-white/70">{labels.tagline}</p>
         </div>

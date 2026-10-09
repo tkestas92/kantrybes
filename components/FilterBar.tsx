@@ -41,7 +41,7 @@ export default function FilterBar({ active, onChange, labels }: Props) {
           className={`text-xs px-3.5 py-1.5 rounded-full border transition-all ${
             active === f.key
               ? 'bg-[#4afa8a] text-black border-[#4afa8a] font-medium'
-              : 'border-[#333] text-white hover:text-white hover:bg-[#1e1e1e]'
+              : 'bg-[#0f0f0f] border-[#333] text-white hover:text-white hover:bg-[#1e1e1e]'
           }`}
         >
           {f.label}

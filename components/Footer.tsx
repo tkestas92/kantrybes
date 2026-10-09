@@ -13,7 +13,7 @@ export default function Footer() {
   const { lang } = useLang()
   return (
     <>
-    <footer className="mt-16 pt-6 border-t border-[#1e1e1e] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white">
+    <footer className="mt-16 pt-6 border-t border-[#1e1e1e] bg-[#0f0f0f] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white">
       <div className="flex max-w-full flex-wrap items-center justify-center sm:justify-start">
         <p className="whitespace-nowrap">
           <BpmTrigger>© {year} Kęstas Trybė</BpmTrigger>

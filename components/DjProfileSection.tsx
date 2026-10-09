@@ -381,7 +381,7 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
                 rel="noopener noreferrer"
                 aria-label={button.label}
                 title={button.label}
-                className={`flex h-12 w-12 items-center justify-center rounded-[12px] bg-[rgba(255,255,255,0.06)] ${
+                className={`flex h-12 w-12 items-center justify-center rounded-[12px] bg-[#161616] ${
                   button.bordered ? 'border border-[rgba(255,255,255,0.1)]' : 'border-0'
                 }`}
               >

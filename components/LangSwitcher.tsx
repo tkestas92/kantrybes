@@ -11,7 +11,7 @@ export default function LangSwitcher({ lang, onChange }: Props) {
         <button
           key={l}
           onClick={() => onChange(l)}
-          className={`text-[11px] uppercase tracking-widest px-2 py-1 rounded transition-all ${
+          className={`bg-[#0f0f0f] text-[11px] uppercase tracking-widest px-2 py-1 rounded transition-all ${
             lang === l
               ? 'text-[#4afa8a] border border-[#4afa8a]/40'
               : 'text-white hover:text-gray-400'

@@ -9,7 +9,7 @@ export default function EmailButton() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 text-[13px] text-white border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
+        className="flex items-center gap-2 bg-[#0f0f0f] text-[13px] text-white border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
       >
         <Mail size={15} /> Email
       </button>

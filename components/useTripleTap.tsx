@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react'
 
 export const OPEN_BPM_EVENT = 'open-bpm'
+export const CLOSE_BPM_EVENT = 'close-bpm'
 const BPM_SEEN_KEY = 'bpm-opened'
 
 export const BPM_COPY = {
@@ -44,14 +45,6 @@ export function markBpmSeen() {
   }
 }
 
-function bpmAlreadySeen() {
-  try {
-    return sessionStorage.getItem(BPM_SEEN_KEY) === '1'
-  } catch {
-    return false
-  }
-}
-
 function pointerCanHover() {
   return window.matchMedia('(hover: hover) and (pointer: fine)').matches
 }
@@ -62,8 +55,9 @@ export function useBpmHint() {
   const textRef = useRef<string | null>(null)
   const timers = useRef<number[]>([])
   const fadeTimer = useRef<number | null>(null)
-  const seenRef = useRef(false)
   const hoveringRef = useRef(false)
+  const hostRef = useRef<Element | null>(null)
+  const pointRef = useRef({ x: 0, y: 0 })
   const generation = useRef(0)
   const hideRef = useRef<() => void>(() => {})
 
@@ -98,11 +92,11 @@ export function useBpmHint() {
   }
 
   function dismissPhone(token: number) {
-    if (seenRef.current || generation.current !== token) return
+    if (generation.current !== token) return
     setOpaque(false)
     fadeTimer.current = window.setTimeout(() => {
       fadeTimer.current = null
-      if (seenRef.current || generation.current !== token) return
+      if (generation.current !== token) return
       textRef.current = null
       setText(null)
       setOpaque(true)
@@ -126,7 +120,7 @@ export function useBpmHint() {
   }
 
   function reveal(next: string, token: number) {
-    if (seenRef.current || generation.current !== token) return
+    if (generation.current !== token) return
     if (textRef.current === null) {
       textRef.current = next
       setText(next)
@@ -140,32 +134,61 @@ export function useBpmHint() {
     setOpaque(false)
     fadeTimer.current = window.setTimeout(() => {
       fadeTimer.current = null
-      if (seenRef.current || generation.current !== token) return
+      if (generation.current !== token) return
       textRef.current = next
       setText(next)
       setOpaque(true)
     }, HINT_FADE_MS)
   }
 
+  function pointerOverHost() {
+    const host = hostRef.current
+    if (!host) return false
+    const { x, y } = pointRef.current
+    const hit = document.elementFromPoint(x, y)
+    return hit !== null && (hit === host || host.contains(hit))
+  }
+
+  function restartIdle() {
+    hide()
+    if (!pointerCanHover() || !pointerOverHost()) {
+      hoveringRef.current = false
+      return
+    }
+    hoveringRef.current = true
+    armIdle(
+      generation.current,
+      BPM_HINTS.map((hint) => hint.delay),
+    )
+  }
+  const restartRef = useRef(restartIdle)
+  restartRef.current = restartIdle
+
   useEffect(() => {
-    seenRef.current = bpmAlreadySeen()
     function onOpen() {
-      seenRef.current = true
       hideRef.current()
     }
+    function onClose() {
+      restartRef.current()
+    }
+    function track(event: PointerEvent) {
+      pointRef.current = { x: event.clientX, y: event.clientY }
+    }
     window.addEventListener(OPEN_BPM_EVENT, onOpen)
+    window.addEventListener(CLOSE_BPM_EVENT, onClose)
+    window.addEventListener('pointermove', track)
     return () => {
       window.removeEventListener(OPEN_BPM_EVENT, onOpen)
+      window.removeEventListener(CLOSE_BPM_EVENT, onClose)
+      window.removeEventListener('pointermove', track)
       clearTimers()
     }
   }, [])
 
-  function alreadyFound() {
-    return seenRef.current || bpmAlreadySeen()
-  }
-
-  function onEnter() {
-    if (!pointerCanHover() || alreadyFound()) return
+  function onEnter(event: MouseEvent) {
+    if (!pointerCanHover()) return
+    if (event.currentTarget instanceof Element) hostRef.current = event.currentTarget
+    pointRef.current = { x: event.clientX, y: event.clientY }
     hoveringRef.current = true
     hide()
     armIdle(
@@ -181,7 +204,6 @@ export function useBpmHint() {
   }
 
   function onProgress(count: number) {
-    if (alreadyFound()) return
     if (count === 0) {
       if (hoveringRef.current && pointerCanHover()) resumeIdle()
       return

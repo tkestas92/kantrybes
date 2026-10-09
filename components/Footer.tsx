@@ -7,13 +7,18 @@ import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
 import { BpmTrigger } from '@/components/useTripleTap'
 
-export default function Footer() {
+type Props = { innerClassName?: string }
+
+const DEFAULT_INNER = 'mx-auto flex w-full max-w-3xl flex-col items-center justify-between gap-4 px-6 pb-6 pt-6 text-[12px] text-white sm:flex-row'
+
+export default function Footer({ innerClassName }: Props) {
   const year = new Date().getFullYear()
   const [open, setOpen] = useState(false)
   const { lang } = useLang()
   return (
     <>
-    <footer className="mt-16 pt-6 border-t border-[#1e1e1e] bg-[#0f0f0f] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white">
+    <footer className="mt-16 w-full border-t border-[#262626] bg-[var(--surface-solid)]">
+    <div className={innerClassName ?? DEFAULT_INNER}>
       <div className="flex max-w-full flex-wrap items-center justify-center sm:justify-start">
         <p className="whitespace-nowrap">
           <BpmTrigger>© {year} Kęstas Trybė</BpmTrigger>
@@ -37,6 +42,7 @@ export default function Footer() {
           DJ profilis →
         </Link>
       </div>
+    </div>
     </footer>
     <ContactModal open={open} onClose={() => setOpen(false)} />
     </>

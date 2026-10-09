@@ -16,15 +16,15 @@ export const metadata: Metadata = {
 export default async function DjPage() {
   const profile = await getPublicDjProfile('kantrybes')
   return (
-    <>
-      <main className="min-h-screen px-6 py-12 max-w-3xl mx-auto">
+    <div className="flex min-h-screen flex-col">
+      <Header current="dj" />
+      <main className="mx-auto w-full max-w-3xl flex-1 px-6">
         <PageTransition>
-          <Header current="dj" />
           <DjPageClient profile={profile} />
-          <Footer />
         </PageTransition>
       </main>
+      <Footer />
       <ScrollToTop />
-    </>
+    </div>
   )
 }

@@ -4,20 +4,25 @@ import { ArrowLeft } from 'lucide-react'
 import { useLang } from '@/components/LangProvider'
 import LangSwitcher from '@/components/LangSwitcher'
 
-type Props = { current?: 'dev' | 'dj' }
+type Props = {
+  current?: 'dev' | 'dj'
+  innerClassName?: string
+}
 
-export default function Header({ current }: Props) {
+const DEFAULT_INNER = 'mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-6 py-4'
+
+export default function Header({ current, innerClassName }: Props) {
   const { lang, setLang } = useLang()
   return (
-    <header className="border-b border-[#1e1e1e] mb-8">
-      <div className="flex items-center justify-between py-4">
-        <Link href="/" className="inline-flex items-center gap-1.5 bg-[#0f0f0f] text-[12px] text-white hover:text-gray-400 transition-colors">
+    <header className="relative z-10 mb-8 w-full border-b border-[#262626] bg-[var(--surface-solid)]">
+      <div className={innerClassName ?? DEFAULT_INNER}>
+        <Link href="/" className="inline-flex items-center gap-1.5 bg-[var(--surface-solid)] text-[12px] text-white hover:text-gray-400 transition-colors">
           <ArrowLeft size={13} /> kantrybes.lt
         </Link>
         <div className="flex items-center gap-4">
-          <nav className="flex items-center gap-1 text-[12px]">
-            <Link href="/dev" className={`px-3 py-1.5 rounded-md transition-colors ${current === 'dev' ? 'text-[#4afa8a] bg-[#161616]' : 'bg-[#0f0f0f] text-white hover:text-gray-400'}`}>Dev</Link>
-            <Link href="/dj" className={`px-3 py-1.5 rounded-md transition-colors ${current === 'dj' ? 'text-[#4afa8a] bg-[#161616]' : 'bg-[#0f0f0f] text-white hover:text-gray-400'}`}>DJ</Link>
+          <nav className="flex items-center gap-1 bg-[var(--surface-solid)] text-[12px]">
+            <Link href="/dev" className={`px-3 py-1.5 rounded-md transition-colors ${current === 'dev' ? 'text-[#4afa8a] bg-[var(--surface-card)]' : 'bg-[var(--surface-solid)] text-white hover:text-gray-400'}`}>Dev</Link>
+            <Link href="/dj" className={`px-3 py-1.5 rounded-md transition-colors ${current === 'dj' ? 'text-[#4afa8a] bg-[var(--surface-card)]' : 'bg-[var(--surface-solid)] text-white hover:text-gray-400'}`}>DJ</Link>
           </nav>
           <LangSwitcher lang={lang} onChange={setLang} />
         </div>

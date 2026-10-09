@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useLang } from '@/components/LangProvider'
-import { t } from '@/lib/translations'
+import { BPM_COPY } from '@/components/useTripleTap'
 
 type Props = { onClose: () => void }
 
@@ -19,8 +18,6 @@ function genreKey(bpm: number): 'downtempo' | 'house' | 'houseTechno' | 'techno'
 }
 
 export default function BpmTapper({ onClose }: Props) {
-  const { lang } = useLang()
-  const copy = t[lang].bpm
   const dialogRef = useRef<HTMLDivElement>(null)
   const tapRef = useRef<HTMLButtonElement>(null)
   const tapsRef = useRef<number[]>([])
@@ -138,14 +135,14 @@ export default function BpmTapper({ onClose }: Props) {
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label={copy.dialog}
+        aria-label={BPM_COPY.dialog}
         className="fixed bottom-0 left-0 right-0 w-full max-w-full max-h-[85dvh] overflow-x-hidden overflow-y-auto rounded-t-[16px] border border-[#232323] bg-[#161616] px-6 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:bottom-auto sm:left-1/2 sm:right-auto sm:top-1/2 sm:max-h-none sm:w-full sm:max-w-[320px] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:overflow-visible sm:rounded-2xl sm:p-6"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           data-bpm-action="close"
-          aria-label={copy.close}
+          aria-label={BPM_COPY.close}
           onClick={() => onCloseRef.current()}
           className="absolute right-4 top-3 text-[16px] leading-none text-white"
         >
@@ -156,9 +153,9 @@ export default function BpmTapper({ onClose }: Props) {
           {bpm === null ? '--' : bpm}
         </p>
         {genre ? (
-          <p className="mt-3 text-center font-mono text-[12px] text-[#4afa8a]">{copy[genre]}</p>
+          <p className="mt-3 text-center font-mono text-[12px] text-[#4afa8a]">{BPM_COPY.genres[genre]}</p>
         ) : null}
-        <p className="mt-3 text-center text-[14px] text-white/70">{copy.hint}</p>
+        <p className="mt-3 text-center text-[14px] text-white/70">{BPM_COPY.hint}</p>
 
         <button
           ref={tapRef}
@@ -168,7 +165,7 @@ export default function BpmTapper({ onClose }: Props) {
           className="mx-auto mt-6 flex h-[120px] w-[120px] max-h-[160px] max-w-[160px] items-center justify-center rounded-full border border-[#4afa8a] text-[14px] font-medium tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4afa8a]"
           style={{ backgroundColor: pressed ? 'rgba(74,250,138,0.2)' : '#0f0f0f' }}
         >
-          {copy.tap}
+          {BPM_COPY.tap}
         </button>
 
         <div className="mt-6 flex items-center justify-center gap-6">
@@ -178,7 +175,7 @@ export default function BpmTapper({ onClose }: Props) {
             onClick={reset}
             className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a] sm:min-h-0 sm:min-w-0 sm:px-0"
           >
-            {copy.reset}
+            {BPM_COPY.reset}
           </button>
           <button
             type="button"
@@ -186,7 +183,7 @@ export default function BpmTapper({ onClose }: Props) {
             onClick={() => onCloseRef.current()}
             className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a] sm:min-h-0 sm:min-w-0 sm:px-0"
           >
-            {copy.close}
+            {BPM_COPY.close}
           </button>
         </div>
       </div>

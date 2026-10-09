@@ -5,10 +5,24 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 export const OPEN_BPM_EVENT = 'open-bpm'
 const BPM_SEEN_KEY = 'bpm-opened'
 
+export const BPM_COPY = {
+  dialog: 'BPM',
+  hint: 'Tap the beat',
+  tap: 'TAP',
+  reset: 'Reset',
+  close: 'Close',
+  genres: {
+    downtempo: 'downtempo',
+    house: 'house',
+    houseTechno: 'house / techno',
+    techno: 'techno',
+  },
+} as const
+
 export const BPM_HINTS = [
   { delay: 500, text: 'tap tap tap' },
-  { delay: 3000, text: 'na, paspausk' },
-  { delay: 6000, text: 'trys kartus, rimtai' },
+  { delay: 3000, text: 'go on, click it' },
+  { delay: 6000, text: 'three times, seriously' },
 ] as const
 
 export function requestOpenBpm() {

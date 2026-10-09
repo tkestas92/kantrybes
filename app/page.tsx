@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import NameAnimation from '@/components/NameAnimation'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import ContentColumn from '@/components/ContentColumn'
 import PageTransition from '@/components/PageTransition'
 import { useLang } from '@/components/LangProvider'
@@ -14,7 +15,7 @@ export default function Landing() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
+      <Header homeLink={false} />
       <ContentColumn center solid={false}>
         <PageTransition>
           <div className="flex w-full flex-col items-center">
@@ -44,6 +45,7 @@ export default function Landing() {
           </div>
         </PageTransition>
       </ContentColumn>
+      <Footer />
     </div>
   )
 }

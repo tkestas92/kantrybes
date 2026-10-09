@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Github, Linkedin, Mail } from 'lucide-react'
 import ContactModal from '@/components/ContactModal'
 import { useLang } from '@/components/LangProvider'
@@ -15,6 +16,7 @@ export default function Footer({ innerClassName }: Props) {
   const year = new Date().getFullYear()
   const [open, setOpen] = useState(false)
   const { lang } = useLang()
+  const onDj = usePathname() === '/dj'
   return (
     <>
     <footer className="mt-16 w-full border-t border-[#262626] bg-[var(--surface-solid)]">
@@ -38,8 +40,8 @@ export default function Footer({ innerClassName }: Props) {
         <button type="button" onClick={() => setOpen(true)} className="hover:text-gray-400 transition-colors flex items-center gap-1.5">
           <Mail size={13} /> Email
         </button>
-        <Link href="/dj" className="hover:text-[#4afa8a] transition-colors">
-          DJ profilis →
+        <Link href={onDj ? '/dev' : '/dj'} className="hover:text-[#4afa8a] transition-colors">
+          {onDj ? 'Dev' : 'DJ profilis →'}
         </Link>
       </div>
     </div>

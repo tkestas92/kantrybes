@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ScrollToTop from '@/components/ScrollToTop'
 import PageTransition from '@/components/PageTransition'
+import ContentColumn from '@/components/ContentColumn'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,11 +19,11 @@ export default async function DevPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header current="dev" />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-6">
+      <ContentColumn connectFooter>
         <PageTransition>
           <DevPageClient projects={projects} />
         </PageTransition>
-      </main>
+      </ContentColumn>
       <Footer />
       <ScrollToTop />
     </div>

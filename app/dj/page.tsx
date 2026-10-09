@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ScrollToTop from '@/components/ScrollToTop'
 import PageTransition from '@/components/PageTransition'
+import ContentColumn from '@/components/ContentColumn'
 
 export const revalidate = 60
 
@@ -18,11 +19,11 @@ export default async function DjPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header current="dj" />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-6">
+      <ContentColumn connectFooter>
         <PageTransition>
           <DjPageClient profile={profile} />
         </PageTransition>
-      </main>
+      </ContentColumn>
       <Footer />
       <ScrollToTop />
     </div>

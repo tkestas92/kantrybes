@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import NameAnimation from '@/components/NameAnimation'
 import Header from '@/components/Header'
+import ContentColumn from '@/components/ContentColumn'
 import PageTransition from '@/components/PageTransition'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
@@ -13,8 +14,8 @@ export default function Landing() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header innerClassName="mx-auto flex w-full items-center justify-between gap-4 px-6 py-4" />
-      <main className="flex flex-1 flex-col items-center justify-center px-6">
+      <Header />
+      <ContentColumn center>
         <PageTransition>
           <div className="flex w-full flex-col items-center">
             <div className="mb-12">
@@ -42,7 +43,7 @@ export default function Landing() {
             </div>
           </div>
         </PageTransition>
-      </main>
+      </ContentColumn>
     </div>
   )
 }

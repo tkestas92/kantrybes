@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 
 const CELL = 48
-const BG = '#0f0f0f'
+const BG_FALLBACK = '#0f0f0f'
 const LINE = '#262626'
 const FILL = '74, 250, 138'
 const SPEED = 0.3
@@ -38,6 +38,7 @@ export default function GridBackground() {
     const waves: Wave[] = []
     let lastSpawn = 0
     let raf = 0
+    let solid = BG_FALLBACK
     let reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 
@@ -45,7 +46,12 @@ export default function GridBackground() {
       return window.innerWidth < 640
     }
 
+    function readSolid() {
+      solid = getComputedStyle(document.documentElement).getPropertyValue('--surface-solid').trim() || BG_FALLBACK
+    }
+
     function resize() {
+      readSolid()
       const rect = canvas.getBoundingClientRect()
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
       width = rect.width
@@ -81,7 +87,7 @@ export default function GridBackground() {
     }
 
     function paint(now: number) {
-      ctx.fillStyle = BG
+      ctx.fillStyle = solid
       ctx.fillRect(0, 0, width, height)
 
       if (!reduced) {

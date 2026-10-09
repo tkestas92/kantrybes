@@ -45,7 +45,7 @@ export default function ContactModal({ open, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+      className="surface-solid fixed inset-0 flex items-center justify-center z-50 p-4"
       onClick={handleClose}
     >
       <div
@@ -71,7 +71,7 @@ export default function ContactModal({ open, onClose }: Props) {
 
         {status === 'sent' ? (
           <div className="flex flex-col items-center text-center">
-            <div className="w-11 h-11 rounded-full border border-[#4afa8a]/35 bg-[#4afa8a]/10 flex items-center justify-center mb-4">
+            <div className="surface-solid flex h-11 w-11 items-center justify-center rounded-full border border-[#4afa8a] mb-4">
               <Check size={20} className="text-[#4afa8a]" />
             </div>
             <p className="text-[16px] font-medium text-[#f0f0f0] mb-1.5">{t[lang].contact.successTitle}</p>

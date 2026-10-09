@@ -62,14 +62,14 @@ function CertificateModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+      className="surface-solid fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-label={cert.title}
     >
       <button
         type="button"
-        className="absolute inset-0 bg-black/80"
+        className="surface-solid absolute inset-0"
         onClick={onClose}
         aria-label={closeLabel}
       />

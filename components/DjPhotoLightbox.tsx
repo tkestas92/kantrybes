@@ -57,7 +57,7 @@ export default function DjPhotoLightbox({ photos, index, alt, onClose, onIndexCh
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+      className="surface-solid fixed inset-0 z-50 flex items-center justify-center"
       onClick={onClose}
       role="dialog"
       aria-modal="true"

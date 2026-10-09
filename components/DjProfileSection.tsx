@@ -30,7 +30,7 @@ function SectionHeader({ title }: { title: string }) {
   return (
     <div className="flex items-center gap-3 mb-4">
       <span className="text-[11px] text-white uppercase tracking-widest">{title}</span>
-      <div className="flex-1 h-px bg-white/[0.07]" />
+      <div className="h-px flex-1 bg-[#262626]" />
     </div>
   )
 }
@@ -164,13 +164,13 @@ function TikTokCardView({ card }: { card: DjTikTokCard }) {
       className="relative block h-full w-full overflow-hidden bg-[#161616]"
     >
       <img src={card.thumbnailUrl} alt={card.title ?? 'TikTok'} className="h-full w-full object-cover" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/70 to-transparent" />
+      <div className="surface-solid pointer-events-none absolute inset-x-0 top-0 h-16" />
       {card.title ? (
         <p className="pointer-events-none absolute left-3 right-3 top-3 text-[13px] font-bold leading-snug text-white line-clamp-2">
           {card.title}
         </p>
       ) : null}
-      <span className="pointer-events-none absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-black/45 text-white">
+      <span className="surface-solid pointer-events-none absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-white">
         <FaPlay size={24} color="#fff" aria-hidden className="ml-0.5" />
       </span>
     </a>

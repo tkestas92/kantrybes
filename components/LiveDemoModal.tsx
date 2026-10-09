@@ -37,20 +37,20 @@ export default function LiveDemoModal({ url, title, type, labels, onClose }: Pro
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+      className="surface-solid fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-label={`${title} ${subtitle}`}
     >
       <button
         type="button"
-        className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+        className="surface-solid absolute inset-0"
         onClick={onClose}
         aria-label={labels.closeDemo}
       />
 
       <div
-        className={`relative z-10 flex w-full flex-col overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#111] shadow-2xl ${
+        className={`surface-card relative z-10 flex w-full flex-col overflow-hidden rounded-2xl border border-[#2a2a2a] shadow-2xl ${
           isApp ? 'max-w-[420px]' : 'max-w-6xl'
         }`}
       >

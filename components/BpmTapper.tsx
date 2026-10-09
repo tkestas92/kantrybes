@@ -129,8 +129,8 @@ export default function BpmTapper({ onClose }: Props) {
   const genre = bpm === null ? null : genreKey(bpm)
 
   return createPortal(
-    <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-black/70" onClick={() => onCloseRef.current()} />
+    <div className="surface-solid fixed inset-0 z-50">
+      <div className="surface-solid absolute inset-0" onClick={() => onCloseRef.current()} />
       <div
         ref={dialogRef}
         role="dialog"
@@ -164,7 +164,7 @@ export default function BpmTapper({ onClose }: Props) {
           aria-label={BPM_COPY.tap}
           onClick={registerTap}
           className="flex h-[120px] w-[120px] max-h-[160px] max-w-[160px] shrink-0 items-center justify-center rounded-full border border-[#4afa8a] text-[14px] font-medium tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4afa8a]"
-          style={{ backgroundColor: pressed ? 'rgba(74,250,138,0.2)' : '#0f0f0f' }}
+          style={{ backgroundColor: pressed ? '#1a3d2c' : 'var(--surface-solid)' }}
         >
           {BPM_COPY.tap}
         </button>
@@ -175,7 +175,7 @@ export default function BpmTapper({ onClose }: Props) {
             data-bpm-action="reset"
             aria-label={BPM_COPY.reset}
             onClick={reset}
-            className="inline-flex min-h-11 min-w-11 items-center justify-center px-3 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
+            className="surface-card inline-flex min-h-11 min-w-11 items-center justify-center px-3 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
           >
             {BPM_COPY.reset}
           </button>
@@ -184,7 +184,7 @@ export default function BpmTapper({ onClose }: Props) {
             data-bpm-action="close"
             aria-label={BPM_COPY.close}
             onClick={() => onCloseRef.current()}
-            className="inline-flex min-h-11 min-w-11 items-center justify-center px-3 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
+            className="surface-card inline-flex min-h-11 min-w-11 items-center justify-center px-3 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
           >
             {BPM_COPY.close}
           </button>

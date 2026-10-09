@@ -26,11 +26,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="lt">
       <body>
         <GridBackground />
-        <GoogleAnalytics />
-        <LangProvider>
-          {children}
-          <BpmProvider />
-        </LangProvider>
+        <div className="relative z-0">
+          <GoogleAnalytics />
+          <LangProvider>
+            {children}
+            <BpmProvider />
+          </LangProvider>
+        </div>
       </body>
     </html>
   )

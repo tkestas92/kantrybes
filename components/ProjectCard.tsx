@@ -90,7 +90,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
           ) : (
             <img src={thumb} alt={project.title} className="w-full h-full object-contain" />
           )}
-          <span className="absolute bottom-2 right-2 rounded-md bg-black/60 p-1.5 text-white opacity-0 group-hover/media:opacity-100 transition-opacity pointer-events-none">
+          <span className="surface-solid pointer-events-none absolute bottom-2 right-2 rounded-md p-1.5 text-white opacity-0 transition-opacity group-hover/media:opacity-100">
             <ZoomIn size={14} />
           </span>
         </div>

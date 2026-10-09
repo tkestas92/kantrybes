@@ -46,8 +46,7 @@ export default function ConsentEmbed({
                 className="absolute inset-0 h-full w-full object-cover"
               />
             ) : null}
-            <span className="absolute inset-0 bg-black/50" />
-            <span className="relative text-[13px] font-medium text-white">{service}</span>
+            <span className="surface-solid relative rounded-md px-3 py-1 text-[13px] font-medium text-white">{service}</span>
             <span className="relative rounded-lg bg-[#4afa8a] px-4 py-2 text-[13px] font-medium text-black hover:opacity-85">
               {copy.play}
             </span>

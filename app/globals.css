@@ -3,16 +3,37 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --surface-solid: #0f0f0f;
+  --surface-card: #161616;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  background-color: #0f0f0f;
+  background-color: var(--surface-solid);
   color: #f0f0f0;
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   isolation: isolate;
+}
+
+@layer base {
+  :is(a, button, input, textarea, select, [role='button'], header, footer, nav) {
+    background-color: var(--surface-solid);
+  }
+}
+
+@layer components {
+  .surface-solid {
+    background-color: var(--surface-solid);
+  }
+
+  .surface-card {
+    background-color: var(--surface-card);
+  }
 }
 
 ::-webkit-scrollbar {

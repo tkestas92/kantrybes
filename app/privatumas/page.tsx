@@ -5,7 +5,7 @@ import ScrollToTop from '@/components/ScrollToTop'
 import PrivacyContent from '@/components/PrivacyContent'
 
 export const metadata: Metadata = {
-  title: 'Privatumas',
+  title: 'Privatumo politika',
   description: 'Privatumo informacija. Kęstas Trybė, Vilnius.',
 }
 

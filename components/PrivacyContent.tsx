@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
 import { BpmTrigger } from '@/components/useTripleTap'
@@ -50,6 +51,10 @@ function withName(text: string) {
 export default function PrivacyContent() {
   const { lang } = useLang()
   const copy = t[lang].privacy
+
+  useEffect(() => {
+    document.title = copy.title
+  }, [copy.title])
 
   return (
     <article>

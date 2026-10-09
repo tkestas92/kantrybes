@@ -14,10 +14,16 @@ export default function Footer() {
   return (
     <>
     <footer className="mt-16 pt-6 border-t border-[#1e1e1e] flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white">
-      <p>
-        <BpmTrigger>© {year} Kęstas Trybė</BpmTrigger>
-      </p>
-      <div className="flex items-center gap-4">
+      <div className="flex max-w-full flex-wrap items-center justify-center sm:justify-start">
+        <p className="whitespace-nowrap">
+          <BpmTrigger>© {year} Kęstas Trybė</BpmTrigger>
+        </p>
+        <Link href="/privatumas" className="inline-flex items-center whitespace-nowrap hover:text-[#4afa8a] transition-colors">
+          <span aria-hidden="true" className="mx-3 text-white">·</span>
+          {t[lang].footer.privacy}
+        </Link>
+      </div>
+      <div className="flex max-w-full flex-wrap items-center justify-center gap-4">
         <a href="https://github.com/tkestas92" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors flex items-center gap-1.5">
           <Github size={13} /> GitHub
         </a>
@@ -29,9 +35,6 @@ export default function Footer() {
         </button>
         <Link href="/dj" className="hover:text-[#4afa8a] transition-colors">
           DJ profilis →
-        </Link>
-        <Link href="/privatumas" className="hover:text-[#4afa8a] transition-colors">
-          {t[lang].footer.privacy}
         </Link>
       </div>
     </footer>

@@ -97,14 +97,14 @@ export const t = {
       privacy: 'Privatumas',
     },
     footer: {
-      privacy: 'Privatumas',
+      privacy: 'Privatumo politika',
     },
     embed: {
       play: 'Groti',
       notice: 'Paspaudus bus įkeltas {service} turinys, kuris gali naudoti slapukus.',
     },
     privacy: {
-      title: 'Privatumo informacija',
+      title: 'Privatumo politika',
       kicker: 'Privatumas',
       heroTitle: 'Renkame tik tai, ką pats įrašai formoje.',
       heroSub: 'Jokios analitikos, jokios reklamos, jokių slapukų juostų.',
@@ -245,14 +245,14 @@ export const t = {
       privacy: 'Privacy',
     },
     footer: {
-      privacy: 'Privacy',
+      privacy: 'Privacy policy',
     },
     embed: {
       play: 'Play',
       notice: 'Clicking will load {service} content, which may use cookies.',
     },
     privacy: {
-      title: 'Privacy information',
+      title: 'Privacy policy',
       kicker: 'Privacy',
       heroTitle: 'We only collect what you type into the form.',
       heroSub: 'No analytics, no ads, no cookie banners.',

@@ -17,7 +17,7 @@ export default async function DjPage() {
   const profile = await getPublicDjProfile('kantrybes')
   return (
     <>
-      <main className="min-h-screen bg-[#0a0a0a] px-6 py-12 max-w-3xl mx-auto">
+      <main className="min-h-screen px-6 py-12 max-w-3xl mx-auto">
         <PageTransition>
           <Header current="dj" />
           <DjPageClient profile={profile} />

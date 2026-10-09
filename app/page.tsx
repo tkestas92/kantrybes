@@ -12,7 +12,7 @@ export default function Landing() {
   const labels = t[lang].landing
 
   return (
-    <main className="min-h-screen bg-[#0f0f0f] flex flex-col items-center justify-center px-6 relative">
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 relative">
       <div className="absolute top-6 right-6">
         <LangSwitcher lang={lang} onChange={setLang} />
       </div>

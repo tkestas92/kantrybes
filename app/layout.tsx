@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import GridBackground from '@/components/GridBackground'
 import { LangProvider } from '@/components/LangProvider'
 import BpmProvider from '@/components/BpmProvider'
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="lt">
       <body>
+        <GridBackground />
         <GoogleAnalytics />
         <LangProvider>
           {children}

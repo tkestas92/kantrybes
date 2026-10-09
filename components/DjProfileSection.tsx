@@ -394,7 +394,7 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
   }
 
   return (
-    <div className="-mx-6 bg-[#0a0a0a] pb-10 text-white">
+    <div className="-mx-6 pb-10 text-white">
       {/* Hero */}
       <section className="relative w-full h-[50vh] min-h-[280px] max-h-[520px] overflow-hidden bg-[#161616]">
         {heroPhoto ? (
@@ -417,7 +417,7 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background: 'linear-gradient(to bottom, transparent 35%, rgba(10, 10, 10, 0.55) 65%, #0a0a0a 100%)',
+            background: 'linear-gradient(to bottom, transparent 35%, rgba(15, 15, 15, 0.55) 65%, #0f0f0f 100%)',
           }}
         />
 

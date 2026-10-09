@@ -12,6 +12,7 @@ body {
   color: #f0f0f0;
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
+  isolation: isolate;
 }
 
 ::-webkit-scrollbar {

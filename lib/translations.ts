@@ -94,7 +94,7 @@ export const t = {
       successTitle: 'Ačiū už žinutę',
       successText: 'Susisieksiu el. paštu artimiausiu metu.',
       consent: 'Siųsdamas formą sutinki, kad tavo vardas ir el. paštas būtų naudojami atsakymui. Daugiau:',
-      privacy: 'Privatumas',
+      privacy: 'Privatumo politika',
     },
     footer: {
       privacy: 'Privatumo politika',
@@ -242,7 +242,7 @@ export const t = {
       successTitle: 'Thanks for your message',
       successText: "I'll get back to you by email shortly.",
       consent: 'By sending this form you agree that your name and email will be used to reply. More:',
-      privacy: 'Privacy',
+      privacy: 'Privacy policy',
     },
     footer: {
       privacy: 'Privacy policy',

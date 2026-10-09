@@ -19,8 +19,8 @@ export default function NameAnimation() {
   const topRef = useRef<HTMLDivElement>(null)
   const botRef = useRef<HTMLDivElement>(null)
   const modeRef = useRef(0)
-  const onSecret = useTripleTap(requestOpenBpm)
   const hint = useBpmHint()
+  const onSecret = useTripleTap(requestOpenBpm, hint.onProgress)
 
   useEffect(() => {
     function playCycle() {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react'
 
 export const OPEN_BPM_EVENT = 'open-bpm'
 const BPM_SEEN_KEY = 'bpm-opened'
@@ -19,11 +19,15 @@ export const BPM_COPY = {
   },
 } as const
 
+const TAP_GAP_MS = 600
+
 export const BPM_HINTS = [
   { delay: 500, text: 'tap tap tap' },
   { delay: 3000, text: 'go on, click it' },
   { delay: 6000, text: 'three times, seriously' },
 ] as const
+
+const PROGRESS_HINTS = ['two more', 'one more'] as const
 
 export function requestOpenBpm() {
   window.dispatchEvent(new Event(OPEN_BPM_EVENT))
@@ -56,6 +60,7 @@ export function useBpmHint() {
   const timers = useRef<number[]>([])
   const fadeTimer = useRef<number | null>(null)
   const seenRef = useRef(false)
+  const hoveringRef = useRef(false)
   const generation = useRef(0)
   const hideRef = useRef<() => void>(() => {})
 
@@ -77,6 +82,28 @@ export function useBpmHint() {
   }
   hideRef.current = hide
 
+  function armIdle(token: number, delays: readonly number[]) {
+    BPM_HINTS.forEach((hint, index) => {
+      timers.current.push(window.setTimeout(() => reveal(hint.text, token), delays[index]))
+    })
+  }
+
+  function showProgress(next: string) {
+    clearTimers()
+    generation.current += 1
+    reveal(next, generation.current)
+  }
+
+  function resumeIdle() {
+    clearTimers()
+    generation.current += 1
+    const first = BPM_HINTS[0].delay
+    armIdle(
+      generation.current,
+      BPM_HINTS.map((hint) => hint.delay - first),
+    )
+  }
+
   function reveal(next: string, token: number) {
     if (seenRef.current || generation.current !== token) return
     if (textRef.current === null) {
@@ -85,7 +112,10 @@ export function useBpmHint() {
       setOpaque(true)
       return
     }
-    if (textRef.current === next) return
+    if (textRef.current === next) {
+      setOpaque(true)
+      return
+    }
     setOpaque(false)
     fadeTimer.current = window.setTimeout(() => {
       fadeTimer.current = null
@@ -109,18 +139,46 @@ export function useBpmHint() {
     }
   }, [])
 
-  function onEnter() {
-    if (!pointerCanHover() || seenRef.current || bpmAlreadySeen()) return
-    hide()
-    const token = generation.current
-    for (const hint of BPM_HINTS) {
-      timers.current.push(
-        window.setTimeout(() => reveal(hint.text, token), hint.delay)
-      )
-    }
+  function canHint() {
+    return pointerCanHover() && !seenRef.current && !bpmAlreadySeen()
   }
 
-  return { onEnter, onLeave: hide, text, opaque }
+  function onEnter() {
+    if (!canHint()) return
+    hoveringRef.current = true
+    hide()
+    armIdle(
+      generation.current,
+      BPM_HINTS.map((hint) => hint.delay),
+    )
+  }
+
+  function onLeave(event: MouseEvent) {
+    if (pointerStillOver(event)) return
+    hoveringRef.current = false
+    hide()
+  }
+
+  function onProgress(count: number) {
+    if (!canHint()) return
+    if (count === 0) {
+      if (hoveringRef.current) resumeIdle()
+      return
+    }
+    hoveringRef.current = true
+    if (count === 1 || count === 2) showProgress(PROGRESS_HINTS[count - 1])
+  }
+
+  return { onEnter, onLeave, onProgress, text, opaque }
+}
+
+function pointerStillOver(event: MouseEvent) {
+  const el = event.currentTarget
+  if (!(el instanceof Element)) return false
+  const next = event.relatedTarget
+  if (next instanceof Node && el.contains(next)) return true
+  const hit = document.elementFromPoint(event.clientX, event.clientY)
+  return hit !== null && el.contains(hit)
 }
 
 export function BpmHint({ text, opaque }: { text: string | null; opaque: boolean }) {
@@ -140,19 +198,42 @@ export function BpmHint({ text, opaque }: { text: string | null; opaque: boolean
   )
 }
 
-export function useTripleTap(onTrigger: () => void) {
+export function useTripleTap(onTrigger: () => void, onProgress?: (count: number) => void) {
   const state = useRef({ count: 0, last: 0 })
   const triggerRef = useRef(onTrigger)
+  const progressRef = useRef(onProgress)
+  const resetTimer = useRef<number | null>(null)
   triggerRef.current = onTrigger
+  progressRef.current = onProgress
+
+  useEffect(() => {
+    return () => {
+      if (resetTimer.current !== null) window.clearTimeout(resetTimer.current)
+    }
+  }, [])
 
   return function onClick() {
     const now = performance.now()
     const secret = state.current
-    secret.count = now - secret.last < 600 ? secret.count + 1 : 1
+    secret.count = now - secret.last < TAP_GAP_MS ? secret.count + 1 : 1
     secret.last = now
-    if (secret.count < 3) return
-    secret.count = 0
-    triggerRef.current()
+    if (resetTimer.current !== null) {
+      window.clearTimeout(resetTimer.current)
+      resetTimer.current = null
+    }
+    if (secret.count >= 3) {
+      secret.count = 0
+      secret.last = 0
+      triggerRef.current()
+      return
+    }
+    progressRef.current?.(secret.count)
+    resetTimer.current = window.setTimeout(() => {
+      resetTimer.current = null
+      secret.count = 0
+      secret.last = 0
+      progressRef.current?.(0)
+    }, TAP_GAP_MS)
   }
 }
 
@@ -163,8 +244,8 @@ export function BpmTrigger({
   children: ReactNode
   className?: string
 }) {
-  const onClick = useTripleTap(requestOpenBpm)
   const hint = useBpmHint()
+  const onClick = useTripleTap(requestOpenBpm, hint.onProgress)
   return (
     <span
       onClick={onClick}

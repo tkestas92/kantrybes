@@ -37,13 +37,3 @@ body {
   height: 0;
   background: transparent;
 }
-
-.bpm-hint {
-  display: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .bpm-hint {
-    display: block;
-  }
-}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { BpmHint, requestOpenBpm, useBpmHint, useTripleTap } from '@/components/useTripleTap'
+import { BpmHint, useBpmName } from '@/components/useTripleTap'
 
 const TOP_TEXT = 'Kęstas Trybė'
 const WORD = 'Kantrybės'
@@ -19,8 +19,7 @@ export default function NameAnimation() {
   const topRef = useRef<HTMLDivElement>(null)
   const botRef = useRef<HTMLDivElement>(null)
   const modeRef = useRef(0)
-  const hint = useBpmHint()
-  const onSecret = useTripleTap(requestOpenBpm, hint.onProgress)
+  const bpm = useBpmName()
 
   useEffect(() => {
     function playCycle() {
@@ -38,6 +37,7 @@ export default function NameAnimation() {
         s.textContent = ch === ' ' ? '\u00A0' : ch
         s.style.opacity = '0'
         s.style.display = 'inline-block'
+        s.style.pointerEvents = 'none'
         topEl.appendChild(s)
         letterSpans.push(s)
       })
@@ -59,6 +59,7 @@ export default function NameAnimation() {
         s.style.display = 'inline-block'
         s.style.position = 'relative'
         s.style.opacity = '0'
+        s.style.pointerEvents = 'none'
 
         if (mode === 0) {
           const fx = Math.round((Math.random() - 0.5) * 2 * (250 + Math.random() * 200))
@@ -100,9 +101,9 @@ export default function NameAnimation() {
 
   return (
     <div
-      onClick={onSecret}
-      onMouseEnter={hint.onEnter}
-      onMouseLeave={hint.onLeave}
+      onClick={bpm.onClick}
+      onMouseEnter={bpm.onMouseEnter}
+      onMouseLeave={bpm.onMouseLeave}
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -112,7 +113,7 @@ export default function NameAnimation() {
         width: '100%',
       }}
     >
-      <BpmHint text={hint.text} opaque={hint.opaque} />
+      <BpmHint text={bpm.text} opaque={bpm.opaque} />
       <div
         ref={topRef}
         style={{
@@ -127,6 +128,7 @@ export default function NameAnimation() {
           width: '100%',
           display: 'flex',
           justifyContent: 'center',
+          pointerEvents: 'none',
         }}
       />
       <div
@@ -140,6 +142,7 @@ export default function NameAnimation() {
           justifyContent: 'center',
           minHeight: 48,
           width: '100%',
+          pointerEvents: 'none',
         }}
       />
     </div>

@@ -7,6 +7,7 @@ const BPM_SEEN_KEY = 'bpm-opened'
 
 export const BPM_COPY = {
   dialog: 'BPM',
+  empty: '--',
   hint: 'Tap the beat',
   tap: 'TAP',
   reset: 'Reset',
@@ -20,6 +21,8 @@ export const BPM_COPY = {
 } as const
 
 const TAP_GAP_MS = 600
+const HINT_FADE_MS = 150
+const PHONE_HINT_MS = 1500
 
 export const BPM_HINTS = [
   { delay: 500, text: 'tap tap tap' },
@@ -94,6 +97,24 @@ export function useBpmHint() {
     reveal(next, generation.current)
   }
 
+  function dismissPhone(token: number) {
+    if (seenRef.current || generation.current !== token) return
+    setOpaque(false)
+    fadeTimer.current = window.setTimeout(() => {
+      fadeTimer.current = null
+      if (seenRef.current || generation.current !== token) return
+      textRef.current = null
+      setText(null)
+      setOpaque(true)
+    }, HINT_FADE_MS)
+  }
+
+  function showPhoneProgress(next: string) {
+    showProgress(next)
+    const token = generation.current
+    timers.current.push(window.setTimeout(() => dismissPhone(token), PHONE_HINT_MS))
+  }
+
   function resumeIdle() {
     clearTimers()
     generation.current += 1
@@ -123,7 +144,7 @@ export function useBpmHint() {
       textRef.current = next
       setText(next)
       setOpaque(true)
-    }, 150)
+    }, HINT_FADE_MS)
   }
 
   useEffect(() => {
@@ -139,12 +160,12 @@ export function useBpmHint() {
     }
   }, [])
 
-  function canHint() {
-    return pointerCanHover() && !seenRef.current && !bpmAlreadySeen()
+  function alreadyFound() {
+    return seenRef.current || bpmAlreadySeen()
   }
 
   function onEnter() {
-    if (!canHint()) return
+    if (!pointerCanHover() || alreadyFound()) return
     hoveringRef.current = true
     hide()
     armIdle(
@@ -160,13 +181,19 @@ export function useBpmHint() {
   }
 
   function onProgress(count: number) {
-    if (!canHint()) return
+    if (alreadyFound()) return
     if (count === 0) {
-      if (hoveringRef.current) resumeIdle()
+      if (hoveringRef.current && pointerCanHover()) resumeIdle()
       return
     }
-    hoveringRef.current = true
-    if (count === 1 || count === 2) showProgress(PROGRESS_HINTS[count - 1])
+    if (count !== 1 && count !== 2) return
+    const next = PROGRESS_HINTS[count - 1]
+    if (pointerCanHover()) {
+      hoveringRef.current = true
+      showProgress(next)
+      return
+    }
+    showPhoneProgress(next)
   }
 
   return { onEnter, onLeave, onProgress, text, opaque }
@@ -237,6 +264,18 @@ export function useTripleTap(onTrigger: () => void, onProgress?: (count: number)
   }
 }
 
+export function useBpmName() {
+  const hint = useBpmHint()
+  const onClick = useTripleTap(requestOpenBpm, hint.onProgress)
+  return {
+    onClick,
+    onMouseEnter: hint.onEnter,
+    onMouseLeave: hint.onLeave,
+    text: hint.text,
+    opaque: hint.opaque,
+  }
+}
+
 export function BpmTrigger({
   children,
   className,
@@ -244,16 +283,15 @@ export function BpmTrigger({
   children: ReactNode
   className?: string
 }) {
-  const hint = useBpmHint()
-  const onClick = useTripleTap(requestOpenBpm, hint.onProgress)
+  const bpm = useBpmName()
   return (
     <span
-      onClick={onClick}
-      onMouseEnter={hint.onEnter}
-      onMouseLeave={hint.onLeave}
+      onClick={bpm.onClick}
+      onMouseEnter={bpm.onMouseEnter}
+      onMouseLeave={bpm.onMouseLeave}
       className={['relative', className].filter(Boolean).join(' ')}
     >
-      <BpmHint text={hint.text} opaque={hint.opaque} />
+      <BpmHint text={bpm.text} opaque={bpm.opaque} />
       {children}
     </span>
   )

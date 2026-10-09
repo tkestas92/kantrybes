@@ -95,9 +95,15 @@ export const t = {
     privacy: {
       title: 'Privatumo informacija',
       kicker: 'Privatumas',
+      heroTitle: 'Renkame tik tai, ką pats įrašai formoje.',
+      heroSub: 'Jokios analitikos, jokios reklamos, jokių slapukų juostų.',
       intro: 'Trumpai ir aiškiai: ką renkame, kam ir kiek laiko.',
       updated: 'Atnaujinta: 2026-10-09',
       highlights: ['Slapukų juostos nėra', 'Tik tai, ką įrašai formoje', 'Ištrinu paprašius'],
+      expandAll: 'Išskleisti visus',
+      collapseAll: 'Suskleisti visus',
+      contactTitle: 'Turi klausimų?',
+      contactNote: 'Parašyk ir atsakysiu.',
       contactPrompt: 'Turi klausimų? Parašyk',
       sections: [
         {
@@ -225,9 +231,15 @@ export const t = {
     privacy: {
       title: 'Privacy information',
       kicker: 'Privacy',
+      heroTitle: 'We only collect what you type into the form.',
+      heroSub: 'No analytics, no ads, no cookie banners.',
       intro: 'Short and plain: what we collect, why, and for how long.',
       updated: 'Updated: 2026-10-09',
       highlights: ['No cookie banner', 'Only what you enter in the form', 'Deleted when you ask'],
+      expandAll: 'Expand all',
+      collapseAll: 'Collapse all',
+      contactTitle: 'Questions?',
+      contactNote: "Write and I'll reply.",
       contactPrompt: 'Questions? Write',
       sections: [
         {

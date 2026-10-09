@@ -15,7 +15,7 @@ export default function Landing() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header homeLink={false} />
+      <Header variant="landing" />
       <ContentColumn center solid={false}>
         <PageTransition>
           <div className="flex w-full flex-col items-center">
@@ -45,7 +45,7 @@ export default function Landing() {
           </div>
         </PageTransition>
       </ContentColumn>
-      <Footer />
+      <Footer variant="landing" />
     </div>
   )
 }

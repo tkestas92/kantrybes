@@ -8,20 +8,22 @@ import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
 import { BpmTrigger } from '@/components/useTripleTap'
 
-type Props = { innerClassName?: string }
+type Props = { innerClassName?: string; variant?: 'landing' }
 
 const DEFAULT_INNER = 'mx-auto flex w-full max-w-3xl flex-col items-center justify-between gap-4 px-6 pb-6 pt-6 text-[12px] text-white sm:flex-row'
+const LANDING_INNER = 'mx-auto flex w-full max-w-3xl items-center justify-center px-6 pb-6 pt-6 text-[12px] text-white'
 
-export default function Footer({ innerClassName }: Props) {
+export default function Footer({ innerClassName, variant }: Props) {
   const year = new Date().getFullYear()
   const [open, setOpen] = useState(false)
   const { lang } = useLang()
   const onDj = usePathname() === '/dj'
+  const landing = variant === 'landing'
   return (
     <>
     <footer className="mt-16 w-full border-t border-[#262626] bg-[var(--surface-solid)]">
-    <div className={innerClassName ?? DEFAULT_INNER}>
-      <div className="flex max-w-full flex-wrap items-center justify-center sm:justify-start">
+    <div className={innerClassName ?? (landing ? LANDING_INNER : DEFAULT_INNER)}>
+      <div className={`flex max-w-full flex-wrap items-center justify-center${landing ? '' : ' sm:justify-start'}`}>
         <p className="whitespace-nowrap">
           <BpmTrigger>© {year} Kęstas Trybė</BpmTrigger>
         </p>
@@ -30,6 +32,7 @@ export default function Footer({ innerClassName }: Props) {
           {t[lang].footer.privacy}
         </Link>
       </div>
+      {landing ? null : (
       <div className="flex max-w-full flex-wrap items-center justify-center gap-4">
         <a href="https://github.com/tkestas92" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors flex items-center gap-1.5">
           <Github size={13} /> GitHub
@@ -44,9 +47,10 @@ export default function Footer({ innerClassName }: Props) {
           {onDj ? 'Dev' : 'DJ profilis →'}
         </Link>
       </div>
+      )}
     </div>
     </footer>
-    <ContactModal open={open} onClose={() => setOpen(false)} />
+    {landing ? null : <ContactModal open={open} onClose={() => setOpen(false)} />}
     </>
   )
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { OPEN_BPM_EVENT } from '@/components/useTripleTap'
+import { OPEN_BPM_EVENT, markBpmSeen } from '@/components/useTripleTap'
 
 const BpmTapper = dynamic(() => import('@/components/BpmTapper'), { ssr: false })
 
@@ -11,6 +11,7 @@ export default function BpmProvider() {
 
   useEffect(() => {
     function onOpen() {
+      markBpmSeen()
       setOpen((current) => current || true)
     }
     window.addEventListener(OPEN_BPM_EVENT, onOpen)

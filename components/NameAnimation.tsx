@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { requestOpenBpm, useTripleTap } from '@/components/useTripleTap'
+import { BpmHint, requestOpenBpm, useBpmHint, useTripleTap } from '@/components/useTripleTap'
 
 const TOP_TEXT = 'Kęstas Trybė'
 const WORD = 'Kantrybės'
@@ -20,6 +20,7 @@ export default function NameAnimation() {
   const botRef = useRef<HTMLDivElement>(null)
   const modeRef = useRef(0)
   const onSecret = useTripleTap(requestOpenBpm)
+  const hint = useBpmHint()
 
   useEffect(() => {
     function playCycle() {
@@ -100,6 +101,8 @@ export default function NameAnimation() {
   return (
     <div
       onClick={onSecret}
+      onMouseEnter={hint.onEnter}
+      onMouseLeave={hint.onLeave}
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -109,6 +112,7 @@ export default function NameAnimation() {
         width: '100%',
       }}
     >
+      <BpmHint text={hint.text} opaque={hint.opaque} />
       <div
         ref={topRef}
         style={{

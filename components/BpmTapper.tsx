@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
 
@@ -130,17 +131,15 @@ export default function BpmTapper({ onClose }: Props) {
 
   const genre = bpm === null ? null : genreKey(bpm)
 
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
-      onClick={() => onCloseRef.current()}
-    >
+  return createPortal(
+    <div className="fixed inset-0 z-50">
+      <div className="absolute inset-0 bg-black/70" onClick={() => onCloseRef.current()} />
       <div
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={copy.dialog}
-        className="relative w-full max-w-[320px] rounded-2xl border border-[#232323] bg-[#161616] p-6"
+        className="fixed bottom-0 left-0 right-0 w-full max-w-full max-h-[85dvh] overflow-x-hidden overflow-y-auto rounded-t-[16px] border border-[#232323] bg-[#161616] px-6 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:bottom-auto sm:left-1/2 sm:right-auto sm:top-1/2 sm:max-h-none sm:w-full sm:max-w-[320px] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:overflow-visible sm:rounded-2xl sm:p-6"
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -166,7 +165,7 @@ export default function BpmTapper({ onClose }: Props) {
           type="button"
           data-bpm-action="tap"
           onClick={registerTap}
-          className="mx-auto mt-6 flex h-[120px] w-[120px] items-center justify-center rounded-full border border-[#4afa8a] text-[14px] font-medium tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4afa8a]"
+          className="mx-auto mt-6 flex h-[120px] w-[120px] max-h-[160px] max-w-[160px] items-center justify-center rounded-full border border-[#4afa8a] text-[14px] font-medium tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4afa8a]"
           style={{ backgroundColor: pressed ? 'rgba(74,250,138,0.2)' : '#0f0f0f' }}
         >
           {copy.tap}
@@ -177,7 +176,7 @@ export default function BpmTapper({ onClose }: Props) {
             type="button"
             data-bpm-action="reset"
             onClick={reset}
-            className="text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a] sm:min-h-0 sm:min-w-0 sm:px-0"
           >
             {copy.reset}
           </button>
@@ -185,12 +184,13 @@ export default function BpmTapper({ onClose }: Props) {
             type="button"
             data-bpm-action="close"
             onClick={() => onCloseRef.current()}
-            className="text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a] sm:min-h-0 sm:min-w-0 sm:px-0"
           >
             {copy.close}
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

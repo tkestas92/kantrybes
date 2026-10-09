@@ -1,10 +1,16 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { LangProvider } from '@/components/LangProvider'
 import BpmProvider from '@/components/BpmProvider'
 
 const pageTitle = 'Kęstas Trybė - Full stack ir AI/ML kūrėjas'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.kantrybes.lt'),

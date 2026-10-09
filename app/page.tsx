@@ -15,7 +15,7 @@ export default function Landing() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <ContentColumn center>
+      <ContentColumn center solid={false}>
         <PageTransition>
           <div className="flex w-full flex-col items-center">
             <div className="mb-12">

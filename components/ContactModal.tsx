@@ -49,8 +49,9 @@ export default function ContactModal({ open, onClose }: Props) {
       onClick={handleClose}
     >
       <div
-        className={`bg-[#161616] border border-[#2a2a2a] rounded-xl w-full max-w-md relative ${status === 'sent' ? 'pt-10 pb-8 px-6' : 'p-6'}`}
+        className={`pointer-events-auto relative z-10 w-full max-w-md select-text rounded-xl border border-[#2a2a2a] bg-[#161616] ${status === 'sent' ? 'pt-10 pb-8 px-6' : 'p-6'}`}
         onClick={e => e.stopPropagation()}
+        onMouseDown={e => e.stopPropagation()}
       >
         {status === 'sent' ? (
           <button

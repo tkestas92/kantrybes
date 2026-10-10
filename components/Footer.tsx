@@ -44,7 +44,7 @@ export default function Footer({ innerClassName, variant }: Props) {
           <Mail size={13} /> Email
         </button>
         <Link href={onDj ? '/dev' : '/dj'} className="hover:text-[#4afa8a] transition-colors">
-          {onDj ? 'Dev' : 'DJ profilis →'}
+          {onDj ? 'Dev →' : 'DJ profilis →'}
         </Link>
       </div>
       )}

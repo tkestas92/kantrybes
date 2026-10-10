@@ -59,3 +59,61 @@ body {
   height: 0;
   background: transparent;
 }
+
+.cv-page {
+  position: relative;
+  width: 100%;
+  background: #fff;
+}
+
+.cv-text-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: clip;
+  line-height: 1;
+  text-size-adjust: none;
+  transform-origin: 0 0;
+  cursor: text;
+  pointer-events: auto;
+  user-select: text;
+  -webkit-user-select: text;
+  -webkit-touch-callout: default;
+}
+
+.cv-text-layer :is(span, br) {
+  position: absolute;
+  color: transparent;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0% 0%;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.cv-text-layer ::selection {
+  background: rgba(74, 250, 138, 0.45);
+}
+
+.cv-links {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.cv-link {
+  position: absolute;
+  display: block;
+  background: transparent;
+  pointer-events: auto;
+}
+
+.cv-link:focus-visible {
+  outline: 2px solid #4afa8a;
+  outline-offset: 1px;
+}
+
+.cv-pages.is-selecting .cv-link {
+  pointer-events: none;
+}

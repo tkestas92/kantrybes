@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useGridPulse } from '@/components/GridPulse'
 
 const CELL = 48
 const BG_FALLBACK = '#0f0f0f'
@@ -19,7 +20,11 @@ const DESKTOP_MAX = 3
 type Wave = { x: number; y: number; born: number }
 
 export default function GridBackground() {
+  const { enabled } = useGridPulse()
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const enabledRef = useRef(enabled)
+  const apiRef = useRef<null | { enable: () => void; disable: () => void }>(null)
+  enabledRef.current = enabled
 
   useEffect(() => {
     const node = canvasRef.current
@@ -38,6 +43,7 @@ export default function GridBackground() {
     const waves: Wave[] = []
     let lastSpawn = 0
     let raf = 0
+    let pulsing = false
     let solid = BG_FALLBACK
     let reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -90,7 +96,7 @@ export default function GridBackground() {
       ctx.fillStyle = solid
       ctx.fillRect(0, 0, width, height)
 
-      if (!reduced) {
+      if (!reduced && pulsing) {
         for (let i = 0; i < touched.length; i++) alphas[touched[i]] = 0
         touched.length = 0
 
@@ -157,7 +163,7 @@ export default function GridBackground() {
     }
 
     function start() {
-      if (reduced || document.visibilityState === 'hidden' || raf) return
+      if (reduced || !pulsing || document.visibilityState === 'hidden' || raf) return
       raf = requestAnimationFrame(frame)
     }
 
@@ -189,9 +195,23 @@ export default function GridBackground() {
       start()
     }
 
+    function enable() {
+      pulsing = true
+      lastSpawn = 0
+      start()
+    }
+
+    function disable() {
+      pulsing = false
+      waves.length = 0
+      stop()
+      paint(performance.now())
+    }
+
+    apiRef.current = { enable, disable }
     resize()
     paint(performance.now())
-    start()
+    if (enabledRef.current) enable()
 
     const observer = new ResizeObserver(onResize)
     observer.observe(canvas)
@@ -199,12 +219,20 @@ export default function GridBackground() {
     motionQuery.addEventListener('change', onMotion)
 
     return () => {
+      apiRef.current = null
       stop()
       observer.disconnect()
       document.removeEventListener('visibilitychange', onVisibility)
       motionQuery.removeEventListener('change', onMotion)
     }
   }, [])
+
+  useEffect(() => {
+    const api = apiRef.current
+    if (!api) return
+    if (enabled) api.enable()
+    else api.disable()
+  }, [enabled])
 
   return (
     <canvas

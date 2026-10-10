@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, type ReactNode } from 'react'
+import { useGridPulse } from '@/components/GridPulse'
 import Image from 'next/image'
 import { Calendar, MapPin, Music2, Ticket } from 'lucide-react'
 import { FaFacebook, FaInstagram, FaPlay, FaTiktok, FaXTwitter } from 'react-icons/fa6'
@@ -179,6 +180,7 @@ function TikTokCardView({ card }: { card: DjTikTokCard }) {
 
 export default function DjProfileSection({ profile, labels, lang }: Props) {
   const [photoIndex, setPhotoIndex] = useState<number | null>(null)
+  const { onGenreTap } = useGridPulse()
   const photos = [...profile.photos].sort((a, b) => a.sortOrder - b.sortOrder)
   const heroPhoto = photos[0] ?? null
   const galleryPhotos = heroPhoto ? photos.slice(1) : photos
@@ -440,7 +442,8 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
             {profile.genres.map((genre) => (
               <span
                 key={genre}
-                className={`text-[11px] px-3 py-1.5 rounded-full font-medium bg-[#161616] text-gray-300 ${CARD_BORDER}`}
+                onClick={onGenreTap}
+                className={`select-none text-[11px] px-3 py-1.5 rounded-full font-medium bg-[#161616] text-gray-300 ${CARD_BORDER}`}
               >
                 {genre}
               </span>

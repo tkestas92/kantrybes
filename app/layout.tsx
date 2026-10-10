@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import GridBackground from '@/components/GridBackground'
+import { GridPulseProvider } from '@/components/GridPulse'
 import { LangProvider } from '@/components/LangProvider'
 import BpmProvider from '@/components/BpmProvider'
 
@@ -25,14 +26,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="lt">
       <body>
-        <GridBackground />
-        <div className="relative z-0">
-          <GoogleAnalytics />
-          <LangProvider>
-            {children}
-            <BpmProvider />
-          </LangProvider>
-        </div>
+        <GridPulseProvider>
+          <GridBackground />
+          <div className="relative z-0">
+            <GoogleAnalytics />
+            <LangProvider>
+              {children}
+              <BpmProvider />
+            </LangProvider>
+          </div>
+        </GridPulseProvider>
       </body>
     </html>
   )

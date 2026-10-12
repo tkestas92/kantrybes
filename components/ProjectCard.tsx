@@ -14,6 +14,7 @@ type Props = {
   labels: {
     statusInProgress: string
     statusShipped: string
+    statusArchived: string
     github: string
     filters: (typeof t)['lt']['filters']
     liveDemo: (typeof t)['lt']['liveDemo']
@@ -81,7 +82,11 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
               : 'bg-green-950 text-green-400'
           }`}
         >
-          {project.status === 'in_progress' ? labels.statusInProgress : labels.statusShipped}
+          {project.status === 'in_progress'
+            ? labels.statusInProgress
+            : project.status === 'archived'
+              ? labels.statusArchived
+              : labels.statusShipped}
         </span>
       </div>
       {project.image_url && (

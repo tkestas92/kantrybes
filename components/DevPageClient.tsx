@@ -72,6 +72,7 @@ export default function DevPageClient({ projects }: Props) {
               filterAll: labels.allFilter,
               statusInProgress: labels.inProgress,
               statusShipped: labels.shipped,
+              statusArchived: labels.archived,
               github: labels.github,
             },
             liveDemo: t[lang].liveDemo,

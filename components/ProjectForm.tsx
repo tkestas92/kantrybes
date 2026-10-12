@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { Project } from '@/lib/db'
+import { t } from '@/lib/translations'
 import { uploadImage } from '@/lib/cloudinary'
 
 const ALL_TAGS = ['go', 'rn', 'py', 'kt', 'ml', 'devops', 'linux', 'docker', 'bash', 'iot']
@@ -212,9 +213,9 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
         value={status}
         onChange={e => setStatus(e.target.value as Project['status'])}
       >
-        <option value="shipped">Baigtas</option>
-        <option value="in_progress">In progress</option>
-        <option value="archived">Archyvuotas</option>
+        <option value="shipped">{t.lt.dev.shipped}</option>
+        <option value="in_progress">{t.lt.dev.inProgress}</option>
+        <option value="archived">{t.lt.dev.archived}</option>
       </select>
 
       <div className="flex gap-2 pt-2">

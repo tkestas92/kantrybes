@@ -20,6 +20,7 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable'
 import type { Project } from '@/lib/db'
+import { t } from '@/lib/translations'
 import ProjectForm from '@/components/ProjectForm'
 import SortableRow from '@/components/SortableRow'
 
@@ -168,7 +169,11 @@ export default function AdminPage() {
                       <span className={`text-[10px] px-2 py-0.5 rounded-full ${
                         p.status === 'in_progress' ? 'bg-amber-950 text-amber-400' : 'bg-green-950 text-green-400'
                       }`}>
-                        {p.status === 'in_progress' ? 'WIP' : 'Done'}
+                        {p.status === 'in_progress'
+                          ? t.lt.dev.inProgress
+                          : p.status === 'archived'
+                            ? t.lt.dev.archived
+                            : t.lt.dev.shipped}
                       </span>
                       <div className="flex gap-1">
                         <button onClick={() => setEditing(p)}

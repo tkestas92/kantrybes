@@ -14,6 +14,7 @@ type Labels = {
     filterAll: string
     statusInProgress: string
     statusShipped: string
+    statusArchived: string
     github: string
   }
   liveDemo: (typeof t)['lt']['liveDemo']

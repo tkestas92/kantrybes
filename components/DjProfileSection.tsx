@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from 'react'
 import { useGridPulse } from '@/components/GridPulse'
 import Image from 'next/image'
-import { Calendar, MapPin, Music2, Ticket } from 'lucide-react'
+import { Music2 } from 'lucide-react'
 import { FaFacebook, FaInstagram, FaPlay, FaTiktok, FaXTwitter } from 'react-icons/fa6'
 import ProfilePhoto from '@/components/ProfilePhoto'
 import DjPhotoLightbox from '@/components/DjPhotoLightbox'
@@ -36,32 +36,55 @@ function SectionHeader({ title }: { title: string }) {
   )
 }
 
-function formatEventDate(date: string, startTime: string, lang: Lang): string {
-  const [hours, minutes] = startTime.split(':')
-  const d = new Date(`${date}T${hours}:${minutes}:00`)
-  return d.toLocaleDateString(lang === 'lt' ? 'lt-LT' : 'en-GB', {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+const MONTHS_LT = ['SAU', 'VAS', 'KOV', 'BAL', 'GEG', 'BIR', 'LIE', 'RGP', 'RGS', 'SPA', 'LAP', 'GRU'] as const
+
+function eventDateParts(date: string): { day: string; month: string; stamp: string } | null {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(date)
+  if (!match) return null
+  const monthIndex = Number(match[2]) - 1
+  const day = Number(match[3])
+  if (monthIndex < 0 || monthIndex > 11 || day < 1 || day > 31) return null
+  return {
+    day: String(day),
+    month: MONTHS_LT[monthIndex],
+    stamp: `${match[1]}-${match[2]}-${match[3]}`,
+  }
 }
 
-function formatEventTime(startTime: string): string {
-  const [hours, minutes] = startTime.split(':')
-  return `${hours}:${minutes}`
+function todayStamp(): string {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Vilnius',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date())
+  const year = parts.find((part) => part.type === 'year')?.value ?? '0000'
+  const month = parts.find((part) => part.type === 'month')?.value ?? '01'
+  const day = parts.find((part) => part.type === 'day')?.value ?? '01'
+  return `${year}-${month}-${day}`
+}
+
+function formatEventTime(startTime: string | null | undefined): string | null {
+  if (!startTime) return null
+  const match = /^(\d{1,2}):(\d{2})/.exec(startTime.trim())
+  if (!match) return null
+  return `${match[1].padStart(2, '0')}:${match[2]}`
 }
 
 function getUpcomingEvents(events: DjProfile['events']) {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
+  const today = todayStamp()
 
   return events
     .filter((event) => {
       if (event.eventStatus !== 'CONFIRMED' && event.eventStatus !== 'PENDING') return false
-      return new Date(`${event.date}T00:00:00`) >= today
+      const parts = eventDateParts(event.date)
+      return parts !== null && parts.stamp >= today
     })
-    .sort((a, b) => a.date.localeCompare(b.date) || a.startTime.localeCompare(b.startTime))
+    .sort((a, b) => {
+      const stampA = eventDateParts(a.date)?.stamp ?? ''
+      const stampB = eventDateParts(b.date)?.stamp ?? ''
+      return stampA.localeCompare(stampB) || (a.startTime || '').localeCompare(b.startTime || '')
+    })
 }
 
 function findSocialUrl(links: DjSocialLink[], platform: string): string | null {
@@ -178,7 +201,7 @@ function TikTokCardView({ card }: { card: DjTikTokCard }) {
   )
 }
 
-export default function DjProfileSection({ profile, labels, lang }: Props) {
+export default function DjProfileSection({ profile, labels }: Props) {
   const [photoIndex, setPhotoIndex] = useState<number | null>(null)
   const { onGenreTap } = useGridPulse()
   const photos = [...profile.photos].sort((a, b) => a.sortOrder - b.sortOrder)
@@ -224,40 +247,39 @@ export default function DjProfileSection({ profile, labels, lang }: Props) {
         <section className="px-6 pt-8">
           <SectionHeader title={labels.events} />
           <div className="flex flex-col gap-3">
-            {upcomingEvents.map((event) => (
-              <div
-                key={`${event.date}-${event.startTime}-${event.title}`}
-                className={`bg-[#161616] rounded-2xl px-5 py-4 ${CARD_BORDER}`}
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <p className="text-[14px] font-medium text-white">{event.title}</p>
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[12px] text-white">
-                      <span className="inline-flex items-center gap-1">
-                        <MapPin size={12} />
-                        {event.venue}
-                      </span>
-                      <span className="inline-flex items-center gap-1">
-                        <Calendar size={12} />
-                        {formatEventDate(event.date, event.startTime, lang)}
-                      </span>
-                      <span>{formatEventTime(event.startTime)}</span>
-                    </div>
+            {upcomingEvents.map((event) => {
+              const parts = eventDateParts(event.date)
+              if (!parts) return null
+              const time = formatEventTime(event.startTime)
+              return (
+                <div
+                  key={event.id}
+                  className={`flex items-center gap-4 rounded-[16px] bg-[#161616] p-4 ${CARD_BORDER}`}
+                >
+                  <div className="flex w-12 shrink-0 flex-col items-center">
+                    <span className="text-[28px] font-bold leading-none text-white">{parts.day}</span>
+                    <span className="mt-1 text-[10px] tracking-wide text-[#8a8a8a]">{parts.month}</span>
                   </div>
-                  {event.ticketsUrl && (
-                    <a
-                      href={event.ticketsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`shrink-0 flex items-center gap-1.5 text-[12px] text-gray-300 bg-[#0a0a0a] rounded-xl px-3 py-1.5 ${CARD_BORDER} hover:text-white transition-colors`}
-                    >
-                      <Ticket size={13} />
-                      {labels.tickets}
-                    </a>
-                  )}
+                  <div className="min-w-0">
+                    <p className="text-[15px] font-bold text-white">{event.title}</p>
+                    <p className="mt-1 flex flex-wrap items-baseline gap-x-2 text-[13px] text-[#8a8a8a]">
+                      <span>{event.venue}</span>
+                      {time ? <span className="text-[12px]">{time}</span> : null}
+                    </p>
+                    {event.ticketsUrl ? (
+                      <a
+                        href={event.ticketsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1.5 inline-block text-[12px] text-white/80 underline-offset-2 hover:text-white hover:underline"
+                      >
+                        {labels.tickets}
+                      </a>
+                    ) : null}
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </section>
       ) : null,

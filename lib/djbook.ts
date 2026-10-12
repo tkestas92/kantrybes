@@ -12,6 +12,7 @@ export type DjSocialLink = {
 }
 
 export type DjEvent = {
+  id: string
   title: string
   venue: string
   date: string
@@ -80,6 +81,7 @@ const PUBLIC_DJ_PROFILE_QUERY = `
       socialLinks { platform url }
       sectionOrder
       events {
+        id
         title
         venue
         date

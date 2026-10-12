@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Github, Globe, Smartphone, ZoomIn } from 'lucide-react'
 import type { Project } from '@/lib/db'
 import { useLang } from '@/components/LangProvider'
@@ -55,6 +55,33 @@ function localizedText(project: Project, lang: Lang) {
   }
 }
 
+function descriptionHeights(el: HTMLElement) {
+  const width = el.getBoundingClientRect().width
+  const clone = el.cloneNode(true) as HTMLElement
+  clone.style.cssText = `position:absolute;visibility:hidden;pointer-events:none;width:${width}px;height:auto;max-height:none;overflow:visible;display:block;-webkit-line-clamp:unset;`
+  clone.className = el.className.replace(/\bline-clamp-3\b/, '').trim()
+  document.body.appendChild(clone)
+  const full = clone.offsetHeight
+  clone.style.display = '-webkit-box'
+  clone.style.webkitBoxOrient = 'vertical'
+  clone.style.webkitLineClamp = '3'
+  clone.style.overflow = 'hidden'
+  const clamped = clone.offsetHeight
+  clone.remove()
+  return { full, clamped }
+}
+
+function rowSiblings(card: HTMLElement) {
+  const grid = card.parentElement
+  if (!grid) return []
+  const cards = [...grid.children] as HTMLElement[]
+  const cols = window.matchMedia('(min-width: 640px)').matches ? 2 : 1
+  const index = cards.indexOf(card)
+  if (index < 0) return []
+  const start = Math.floor(index / cols) * cols
+  return cards.slice(start, start + cols).filter((item) => item !== card)
+}
+
 export default function ProjectCard({ project, labels, onLiveClick }: Props) {
   const { lang } = useLang()
   const text = localizedText(project, lang)
@@ -68,13 +95,95 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
 
   const tagLabels = TAG_LABELS
   const [zoom, setZoom] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [needsMore, setNeedsMore] = useState(false)
+  const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined)
+  const cardRef = useRef<HTMLDivElement>(null)
+  const descRef = useRef<HTMLParagraphElement>(null)
+  const heightsRef = useRef({ full: 0, clamped: 0 })
   const thumb = cld(project.image_url, 'f_auto,q_auto,w_900')
   const full = cld(project.image_url, 'f_auto,q_auto,w_1800')
 
+  useLayoutEffect(() => {
+    setOpen(false)
+    setMaxHeight(undefined)
+    const el = descRef.current
+    if (!el) return
+    const measure = () => {
+      const next = descriptionHeights(el)
+      heightsRef.current = next
+      setNeedsMore(next.full > next.clamped + 1)
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(el.parentElement ?? el)
+    return () => {
+      observer.disconnect()
+      const card = cardRef.current
+      if (!card) return
+      rowSiblings(card).forEach((sibling) => {
+        sibling.style.height = ''
+        sibling.style.alignSelf = ''
+      })
+    }
+  }, [text.description])
+
+  useEffect(() => {
+    const onResize = () => {
+      const grid = cardRef.current?.parentElement
+      if (!grid) return
+      ;[...grid.children].forEach((node) => {
+        const sibling = node as HTMLElement
+        sibling.style.height = ''
+        sibling.style.alignSelf = ''
+      })
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  function lockSiblings(lock: boolean) {
+    const card = cardRef.current
+    if (!card) return
+    rowSiblings(card).forEach((sibling) => {
+      if (sibling.dataset.expanded === 'true') return
+      if (lock) {
+        sibling.style.height = `${sibling.getBoundingClientRect().height}px`
+        sibling.style.alignSelf = 'start'
+      } else {
+        sibling.style.height = ''
+        sibling.style.alignSelf = ''
+      }
+    })
+  }
+
+  function toggleDescription() {
+    const { full: fullHeight, clamped } = heightsRef.current
+    if (!open) {
+      lockSiblings(true)
+      setMaxHeight(clamped)
+      setOpen(true)
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setMaxHeight(fullHeight))
+      })
+      return
+    }
+    setMaxHeight(clamped)
+    window.setTimeout(() => {
+      setOpen(false)
+      setMaxHeight(undefined)
+      lockSiblings(false)
+    }, 300)
+  }
+
   return (
     <>
-    <div className="bg-[#161616] border border-[#252525] rounded-xl p-5 hover:border-[#333] hover:bg-[#1e1e1e] transition-all duration-200 flex flex-col gap-4">
-      <div className="flex justify-end">
+    <div
+      ref={cardRef}
+      data-expanded={open ? 'true' : 'false'}
+      className="flex h-full flex-col gap-4 rounded-xl border border-[#252525] bg-[#161616] p-5 transition-[background-color,border-color] duration-200 hover:border-[#333] hover:bg-[#1e1e1e]"
+    >
+      <div className="flex shrink-0 justify-end">
         <span
           className={`text-xs px-2.5 py-1 rounded-full font-medium ${
             project.status === 'in_progress'
@@ -91,7 +200,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
       </div>
       {project.image_url && (
         <div
-          className={`relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-[#1e1e1e] group/media cursor-zoom-in ${project.platform ? '' : 'bg-[#0d0d0d]'}`}
+          className={`relative aspect-[4/3] w-full shrink-0 cursor-zoom-in overflow-hidden rounded-lg border border-[#1e1e1e] group/media ${project.platform ? '' : 'bg-[#0d0d0d]'}`}
           style={project.platform ? GRID_BG : undefined}
           role="button"
           tabIndex={0}
@@ -113,10 +222,27 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
       )}
 
       <div>
-        <h3 className="text-[15px] font-medium text-white mb-1.5">{text.title}</h3>
-        <p className="text-[13px] text-white leading-relaxed">{text.description}</p>
+        <h3 className="mb-1.5 text-[15px] font-medium text-white">{text.title}</h3>
+        <p
+          ref={descRef}
+          style={open ? { maxHeight } : undefined}
+          className={`overflow-hidden text-[13px] leading-relaxed text-white transition-[max-height] duration-300 ease-out ${open ? '' : 'line-clamp-3'}`}
+        >
+          {text.description}
+        </p>
+        {needsMore && (
+          <button
+            type="button"
+            onClick={toggleDescription}
+            aria-expanded={open}
+            className="mt-1 text-[12px] text-white/70 transition-colors hover:text-white"
+          >
+            {open ? t[lang].dev.less : t[lang].dev.more}
+          </button>
+        )}
       </div>
 
+      <div className="mt-auto flex flex-col gap-4">
       <div className="flex flex-wrap gap-1.5">
         {project.tags.map((tag) => (
           <span
@@ -128,7 +254,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
         ))}
       </div>
 
-      <div className="flex gap-2 mt-auto">
+      <div className="flex gap-2">
         {project.github_url && (
           <a
             href={project.github_url}
@@ -159,6 +285,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
             </a>
           )
         )}
+      </div>
       </div>
     </div>
     {zoom && project.image_url && (

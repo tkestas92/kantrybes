@@ -27,6 +27,8 @@ export const t = {
       github: 'GitHub',
       close: 'Uždaryti',
       viewPhoto: 'Peržiūrėti {title} nuotrauką',
+      more: 'Daugiau',
+      less: 'Mažiau',
       cvLoading: 'Kraunama...',
       cvError: 'Nepavyko parodyti CV.',
       certItems: [
@@ -187,6 +189,8 @@ export const t = {
       github: 'GitHub',
       close: 'Close',
       viewPhoto: 'View the {title} photo',
+      more: 'More',
+      less: 'Less',
       cvLoading: 'Loading...',
       cvError: "Couldn't show the CV.",
       certItems: [

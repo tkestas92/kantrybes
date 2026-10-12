@@ -3,7 +3,9 @@
 CREATE TABLE IF NOT EXISTS projects (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
+  title_en VARCHAR(255) NULL,
   description TEXT NOT NULL,
+  description_en TEXT NULL,
   emoji VARCHAR(10) DEFAULT '🚀',
   tags JSON,
   github_url VARCHAR(500),

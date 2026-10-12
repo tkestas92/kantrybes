@@ -3,7 +3,9 @@ import mysql from 'mysql2/promise'
 export type Project = {
   id: number
   title: string
+  title_en: string | null
   description: string
+  description_en: string | null
   emoji: string
   image_url: string | null
   platform: 'app' | 'web' | null
@@ -45,9 +47,17 @@ export function getPool(): mysql.Pool {
 }
 
 // tags saugomi DB kaip JSON string, šitos funkcijos konvertuoja į/iš array
+function blankToNull(value: string | null | undefined): string | null {
+  if (value == null) return null
+  const trimmed = value.trim()
+  return trimmed ? trimmed : null
+}
+
 function rowToProject(row: any): Project {
   return {
     ...row,
+    title_en: row.title_en ?? null,
+    description_en: row.description_en ?? null,
     tags: typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags,
   }
 }
@@ -61,11 +71,13 @@ export async function getAllProjects(): Promise<Project[]> {
 export async function createProject(data: Partial<Project>): Promise<Project> {
   const pool = getPool()
   const [result] = await pool.query(
-    `INSERT INTO projects (title, description, emoji, image_url, platform, tags, github_url, live_url, live_type, status, sort_order)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO projects (title, title_en, description, description_en, emoji, image_url, platform, tags, github_url, live_url, live_type, status, sort_order)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       data.title,
+      blankToNull(data.title_en),
       data.description,
+      blankToNull(data.description_en),
       data.emoji || '🚀',
       data.image_url || null,
       data.platform || null,
@@ -88,7 +100,9 @@ export async function updateProject(id: number, data: Partial<Project>): Promise
   const values: any[] = []
 
   if (data.title !== undefined) { fields.push('title = ?'); values.push(data.title) }
+  if (data.title_en !== undefined) { fields.push('title_en = ?'); values.push(blankToNull(data.title_en)) }
   if (data.description !== undefined) { fields.push('description = ?'); values.push(data.description) }
+  if (data.description_en !== undefined) { fields.push('description_en = ?'); values.push(blankToNull(data.description_en)) }
   if (data.emoji !== undefined) { fields.push('emoji = ?'); values.push(data.emoji) }
   if (data.image_url !== undefined) { fields.push('image_url = ?'); values.push(data.image_url) }
   if (data.platform !== undefined) { fields.push('platform = ?'); values.push(data.platform) }

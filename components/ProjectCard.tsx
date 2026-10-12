@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Github, Globe, Smartphone, ZoomIn } from 'lucide-react'
 import type { Project } from '@/lib/db'
+import { useLang } from '@/components/LangProvider'
+import type { Lang, t } from '@/lib/translations'
 import { resolveLiveDemoType, type LiveDemoType } from '@/lib/liveDemo'
-import type { t } from '@/lib/translations'
 import PhoneMockup from '@/components/PhoneMockup'
 import BrowserMockup from '@/components/BrowserMockup'
 import ImageLightbox from '@/components/ImageLightbox'
@@ -45,7 +46,17 @@ const GRID_BG = {
   backgroundSize: '16px 16px',
 } as const
 
+function localizedText(project: Project, lang: Lang) {
+  if (lang !== 'en') return { title: project.title, description: project.description }
+  return {
+    title: project.title_en?.trim() || project.title,
+    description: project.description_en?.trim() || project.description,
+  }
+}
+
 export default function ProjectCard({ project, labels, onLiveClick }: Props) {
+  const { lang } = useLang()
+  const text = localizedText(project, lang)
   const liveType = resolveLiveDemoType(project)
   const liveLabel = liveType
     ? liveType === 'app'
@@ -79,16 +90,16 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
           style={project.platform ? GRID_BG : undefined}
           role="button"
           tabIndex={0}
-          aria-label={`Peržiūrėti ${project.title} nuotrauką`}
+          aria-label={`Peržiūrėti ${text.title} nuotrauką`}
           onClick={() => setZoom(true)}
           onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setZoom(true) } }}
         >
           {project.platform === 'app' ? (
-            <PhoneMockup src={thumb} alt={project.title} />
+            <PhoneMockup src={thumb} alt={text.title} />
           ) : project.platform === 'web' ? (
-            <BrowserMockup src={thumb} alt={project.title} />
+            <BrowserMockup src={thumb} alt={text.title} />
           ) : (
-            <img src={thumb} alt={project.title} className="w-full h-full object-contain" />
+            <img src={thumb} alt={text.title} className="w-full h-full object-contain" />
           )}
           <span className="surface-solid pointer-events-none absolute bottom-2 right-2 rounded-md p-1.5 text-white opacity-0 transition-opacity group-hover/media:opacity-100">
             <ZoomIn size={14} />
@@ -97,8 +108,8 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
       )}
 
       <div>
-        <h3 className="text-[15px] font-medium text-white mb-1.5">{project.title}</h3>
-        <p className="text-[13px] text-white leading-relaxed">{project.description}</p>
+        <h3 className="text-[15px] font-medium text-white mb-1.5">{text.title}</h3>
+        <p className="text-[13px] text-white leading-relaxed">{text.description}</p>
       </div>
 
       <div className="flex flex-wrap gap-1.5">
@@ -127,7 +138,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
           onLiveClick ? (
             <button
               type="button"
-              onClick={() => onLiveClick(project.live_url!, project.title, liveType)}
+              onClick={() => onLiveClick(project.live_url!, text.title, liveType)}
               className="flex items-center gap-1.5 text-[12px] text-white border border-[#2a2a2a] rounded-md px-3 py-1.5 hover:text-white hover:border-[#444] transition-all"
             >
               <LiveIcon size={13} /> {liveLabel}
@@ -146,7 +157,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
       </div>
     </div>
     {zoom && project.image_url && (
-      <ImageLightbox src={full} alt={project.title} onClose={() => setZoom(false)} />
+      <ImageLightbox src={full} alt={text.title} onClose={() => setZoom(false)} />
     )}
     </>
   )

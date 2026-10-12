@@ -18,7 +18,9 @@ type Props = {
 
 export default function ProjectForm({ initial, onSave, onCancel }: Props) {
   const [title, setTitle] = useState(initial?.title || '')
+  const [titleEn, setTitleEn] = useState(initial?.title_en || '')
   const [description, setDescription] = useState(initial?.description || '')
+  const [descriptionEn, setDescriptionEn] = useState(initial?.description_en || '')
   const [emoji, setEmoji] = useState(initial?.emoji || '🚀')
   const [imageUrl, setImageUrl] = useState(initial?.image_url || '')
   const [platform, setPlatform] = useState<'app' | 'web' | ''>(initial?.platform || '')
@@ -51,7 +53,9 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
     setLoading(true)
     await onSave({
       title,
+      title_en: titleEn,
       description,
+      description_en: descriptionEn,
       emoji,
       image_url: imageUrl,
       platform: platform || null,
@@ -104,18 +108,39 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
         </select>
       </div>
 
-      <div className="grid grid-cols-[60px_1fr] gap-3">
-        <input className={inputClass} value={emoji} onChange={e => setEmoji(e.target.value)} placeholder="🚀" />
-        <input className={inputClass} value={title} onChange={e => setTitle(e.target.value)} placeholder="Projekto pavadinimas" required />
+      <div>
+        <p className="text-[12px] text-white mb-2">Pavadinimas (LT)</p>
+        <div className="grid grid-cols-[60px_1fr] gap-3">
+          <input className={inputClass} value={emoji} onChange={e => setEmoji(e.target.value)} placeholder="🚀" />
+          <input className={inputClass} value={title} onChange={e => setTitle(e.target.value)} placeholder="Projekto pavadinimas" required />
+        </div>
       </div>
 
-      <textarea
-        className={`${inputClass} resize-none h-20`}
-        value={description}
-        onChange={e => setDescription(e.target.value)}
-        placeholder="Trumpas aprašymas..."
-        required
-      />
+      <div>
+        <p className="text-[12px] text-white mb-2">Pavadinimas (EN)</p>
+        <input className={inputClass} value={titleEn} onChange={e => setTitleEn(e.target.value)} placeholder="Project title" />
+      </div>
+
+      <div>
+        <p className="text-[12px] text-white mb-2">Aprašymas (LT)</p>
+        <textarea
+          className={`${inputClass} resize-none h-20`}
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+          placeholder="Trumpas aprašymas..."
+          required
+        />
+      </div>
+
+      <div>
+        <p className="text-[12px] text-white mb-2">Aprašymas (EN)</p>
+        <textarea
+          className={`${inputClass} resize-none h-20`}
+          value={descriptionEn}
+          onChange={e => setDescriptionEn(e.target.value)}
+          placeholder="Short description..."
+        />
+      </div>
 
       <div>
         <p className="text-[12px] text-white mb-2">Technologijos</p>

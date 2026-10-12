@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { resolvePhotoUrl, type DjPhoto } from '@/lib/djbook'
+import { useLang } from '@/components/LangProvider'
+import { t } from '@/lib/translations'
 
 type Props = {
   photos: DjPhoto[]
@@ -14,6 +16,7 @@ type Props = {
 }
 
 export default function DjPhotoLightbox({ photos, index, alt, onClose, onIndexChange }: Props) {
+  const { lang } = useLang()
   const touchStartX = useRef<number | null>(null)
   const [mounted, setMounted] = useState(false)
   const photo = photos[index]
@@ -66,7 +69,7 @@ export default function DjPhotoLightbox({ photos, index, alt, onClose, onIndexCh
       <button
         type="button"
         onClick={onClose}
-        aria-label="Close"
+        aria-label={t[lang].dj.close}
         className="absolute top-4 right-4 z-10 text-white/70 hover:text-white p-2"
       >
         <X size={22} />
@@ -74,7 +77,7 @@ export default function DjPhotoLightbox({ photos, index, alt, onClose, onIndexCh
 
       <button
         type="button"
-        aria-label="Previous photo"
+        aria-label={t[lang].dj.prevPhoto}
         disabled={!hasPrev}
         onClick={(event) => {
           event.stopPropagation()
@@ -110,7 +113,7 @@ export default function DjPhotoLightbox({ photos, index, alt, onClose, onIndexCh
 
       <button
         type="button"
-        aria-label="Next photo"
+        aria-label={t[lang].dj.nextPhoto}
         disabled={!hasNext}
         onClick={(event) => {
           event.stopPropagation()

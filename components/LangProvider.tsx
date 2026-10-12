@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { Lang } from '@/lib/translations'
 
 const LangCtx = createContext<{ lang: Lang; setLang: (l: Lang) => void }>({
@@ -10,6 +10,9 @@ const LangCtx = createContext<{ lang: Lang; setLang: (l: Lang) => void }>({
 
 export function LangProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<Lang>('lt')
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
   return <LangCtx.Provider value={{ lang, setLang }}>{children}</LangCtx.Provider>
 }
 

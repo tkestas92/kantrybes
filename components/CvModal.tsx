@@ -9,12 +9,14 @@ type Props = {
   src: string
   closeLabel: string
   openNewTabLabel: string
+  loadingLabel: string
+  errorLabel: string
   onClose: () => void
 }
 
 type PdfTextLayer = { cancel: () => void }
 
-export default function CvModal({ title, src, closeLabel, openNewTabLabel, onClose }: Props) {
+export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadingLabel, errorLabel, onClose }: Props) {
   const pagesRef = useRef<HTMLDivElement>(null)
   const loadingRef = useRef<HTMLParagraphElement>(null)
   const [error, setError] = useState(false)
@@ -188,10 +190,10 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, onClo
         </div>
         <div className="min-h-0 flex-1 select-text overflow-auto bg-[#0f0f0f] p-3">
           {error ? (
-            <p className="p-6 text-center text-[13px] text-white select-text">Nepavyko parodyti CV.</p>
+            <p className="p-6 text-center text-[13px] text-white select-text">{errorLabel}</p>
           ) : (
             <>
-              <p ref={loadingRef} className="p-6 text-center text-[13px] text-white">Kraunama...</p>
+              <p ref={loadingRef} className="p-6 text-center text-[13px] text-white">{loadingLabel}</p>
               <div ref={pagesRef} className="cv-pages flex flex-col gap-3" />
             </>
           )}

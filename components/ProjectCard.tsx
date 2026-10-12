@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Github, Globe, Smartphone, ZoomIn } from 'lucide-react'
 import type { Project } from '@/lib/db'
 import { useLang } from '@/components/LangProvider'
-import type { Lang, t } from '@/lib/translations'
+import { t, type Lang } from '@/lib/translations'
 import { resolveLiveDemoType, type LiveDemoType } from '@/lib/liveDemo'
 import PhoneMockup from '@/components/PhoneMockup'
 import BrowserMockup from '@/components/BrowserMockup'
@@ -90,7 +90,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
           style={project.platform ? GRID_BG : undefined}
           role="button"
           tabIndex={0}
-          aria-label={`Peržiūrėti ${text.title} nuotrauką`}
+          aria-label={t[lang].dev.viewPhoto.replace('{title}', text.title)}
           onClick={() => setZoom(true)}
           onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setZoom(true) } }}
         >

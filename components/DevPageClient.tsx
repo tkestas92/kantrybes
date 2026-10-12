@@ -94,6 +94,8 @@ export default function DevPageClient({ projects }: Props) {
           src="/cv.pdf"
           closeLabel={labels.close}
           openNewTabLabel={t[lang].liveDemo.openNewTab}
+          loadingLabel={labels.cvLoading}
+          errorLabel={labels.cvError}
           onClose={() => setCvOpen(false)}
         />
       )}

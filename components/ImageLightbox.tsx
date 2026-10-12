@@ -2,10 +2,13 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
+import { useLang } from '@/components/LangProvider'
+import { t } from '@/lib/translations'
 
 type Props = { src: string; alt: string; onClose: () => void }
 
 export default function ImageLightbox({ src, alt, onClose }: Props) {
+  const { lang } = useLang()
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', onKey)
@@ -42,7 +45,7 @@ export default function ImageLightbox({ src, alt, onClose }: Props) {
       <button
         type="button"
         onClick={onClose}
-        aria-label="Uždaryti"
+        aria-label={t[lang].dev.close}
         className="absolute top-4 right-4 text-white/70 hover:text-white p-2"
       >
         <X size={22} />

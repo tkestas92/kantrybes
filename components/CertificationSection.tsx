@@ -104,22 +104,22 @@ export default function CertificationSection({ labels }: Props) {
           <span className="text-xs text-white uppercase tracking-widest">{labels.section}</span>
           <div className="flex-1 h-px bg-[#1e1e1e]" />
         </div>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {certificates.map((cert, index) => (
             <div
               key={cert.image}
-              className="bg-[#161616] border border-[#252525] rounded-xl px-5 py-4 flex items-center gap-4 hover:border-[#333] transition-all"
+              className="flex flex-col gap-3 rounded-xl border border-[#252525] bg-[#161616] p-5 transition-all hover:border-[#333] sm:flex-row sm:items-center sm:justify-between sm:gap-4"
             >
-              <div className="flex-1 min-w-0">
+              <div className="min-w-0">
                 <p className="text-[14px] font-medium text-white">{cert.title}</p>
-                <p className="text-[12px] text-white mt-0.5">{cert.subtitle}</p>
+                <p className="mt-0.5 text-[12px] leading-[21px] text-white">{cert.subtitle}</p>
               </div>
-              <div className="flex flex-col items-end gap-2 shrink-0">
-                <span className={`text-[10px] border rounded-full px-2.5 py-1 ${cert.tagClassName}`}>{cert.tag}</span>
+              <div className="flex flex-wrap items-center gap-2 sm:shrink-0 sm:flex-nowrap sm:gap-3">
+                <span className={`inline-flex h-9 shrink-0 items-center whitespace-nowrap rounded-full border px-2.5 text-[10px] ${cert.tagClassName}`}>{cert.tag}</span>
                 <button
                   type="button"
                   onClick={() => setOpenIndex(index)}
-                  className="flex items-center gap-1.5 text-[12px] text-white border border-[#2a2a2a] rounded-lg px-3 py-1.5 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
+                  className="flex h-9 min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-[#2a2a2a] px-3 text-[12px] text-white transition-all hover:border-[#4afa8a] hover:bg-[#0e2a1a] hover:text-[#4afa8a] sm:flex-none sm:justify-start"
                 >
                   <FileText size={13} />
                   {labels.button}

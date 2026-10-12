@@ -46,13 +46,6 @@ export const t = {
         },
       ],
     },
-    filters: {
-      go: 'Go',
-      rn: 'React Native',
-      py: 'Python',
-      kt: 'Kotlin',
-      ml: 'ML / AI',
-    },
     liveDemo: {
       appButton: 'Live app',
       appSubtitle: 'Mobili aplikacija',
@@ -207,13 +200,6 @@ export const t = {
           alt: 'Vilnius CODING School certificate — Manual Testing Course',
         },
       ],
-    },
-    filters: {
-      go: 'Go',
-      rn: 'React Native',
-      py: 'Python',
-      kt: 'Kotlin',
-      ml: 'ML / AI',
     },
     liveDemo: {
       appButton: 'Live app',

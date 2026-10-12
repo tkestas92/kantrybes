@@ -4,12 +4,7 @@ import { useState } from 'react'
 import type { Project } from '@/lib/db'
 import { t } from '@/lib/translations'
 import { uploadImage } from '@/lib/cloudinary'
-
-const ALL_TAGS = ['go', 'rn', 'py', 'kt', 'ml', 'devops', 'linux', 'docker', 'bash', 'iot']
-const TAG_LABELS: Record<string, string> = {
-  go: 'Go', rn: 'React Native', py: 'Python', kt: 'Kotlin', ml: 'ML / AI', devops: 'DevOps',
-  linux: 'Linux', docker: 'Docker', bash: 'Bash', iot: 'IoT'
-}
+import { PROJECT_TAGS, normalizeTags } from '@/lib/tags'
 
 type Props = {
   initial?: Partial<Project>
@@ -26,7 +21,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
   const [imageUrl, setImageUrl] = useState(initial?.image_url || '')
   const [platform, setPlatform] = useState<'app' | 'web' | ''>(initial?.platform || '')
   const [uploading, setUploading] = useState(false)
-  const [tags, setTags] = useState<string[]>(initial?.tags || [])
+  const [tags, setTags] = useState<string[]>(normalizeTags(initial?.tags))
   const [githubUrl, setGithubUrl] = useState(initial?.github_url || '')
   const [liveUrl, setLiveUrl] = useState(initial?.live_url || '')
   const [liveType, setLiveType] = useState<Project['live_type']>(initial?.live_type || null)
@@ -60,7 +55,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
       emoji,
       image_url: imageUrl,
       platform: platform || null,
-      tags,
+      tags: normalizeTags(tags),
       github_url: githubUrl,
       live_url: liveUrl || null,
       live_type: liveUrl ? liveType : null,
@@ -146,18 +141,18 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
       <div>
         <p className="text-[12px] text-white mb-2">Technologijos</p>
         <div className="flex flex-wrap gap-2">
-          {ALL_TAGS.map(tag => (
+          {PROJECT_TAGS.map(tag => (
             <button
-              key={tag}
+              key={tag.label}
               type="button"
-              onClick={() => toggleTag(tag)}
+              onClick={() => toggleTag(tag.label)}
               className={`text-xs px-3 py-1 rounded border transition-all ${
-                tags.includes(tag)
+                tags.includes(tag.label)
                   ? 'bg-[#4afa8a] text-black border-[#4afa8a] font-medium'
                   : 'border-[#2a2a2a] text-white hover:border-[#444]'
               }`}
             >
-              {TAG_LABELS[tag]}
+              {tag.label}
             </button>
           ))}
         </div>

@@ -1,36 +1,18 @@
 'use client'
 
-const FILTER_KEYS = ['all', 'go', 'rn', 'py', 'kt', 'ml', 'devops', 'linux', 'docker', 'bash', 'iot'] as const
-
-type FilterLabels = {
-  filterAll: string
-  go: string
-  rn: string
-  py: string
-  kt: string
-  ml: string
+type TagOption = {
+  label: string
 }
 
 type Props = {
   active: string
   onChange: (key: string) => void
-  labels: FilterLabels
+  filterAll: string
+  tags: TagOption[]
 }
 
-export default function FilterBar({ active, onChange, labels }: Props) {
-  const filters = [
-    { key: 'all', label: labels.filterAll },
-    { key: 'go', label: labels.go },
-    { key: 'rn', label: labels.rn },
-    { key: 'py', label: labels.py },
-    { key: 'kt', label: labels.kt },
-    { key: 'ml', label: labels.ml },
-    { key: 'devops', label: 'DevOps' },
-    { key: 'linux', label: 'Linux' },
-    { key: 'docker', label: 'Docker' },
-    { key: 'bash', label: 'Bash' },
-    { key: 'iot', label: 'IoT' },
-  ]
+export default function FilterBar({ active, onChange, filterAll, tags }: Props) {
+  const filters = [{ key: 'all', label: filterAll }, ...tags.map((tag) => ({ key: tag.label, label: tag.label }))]
 
   return (
     <div className="flex flex-wrap gap-2">
@@ -50,5 +32,3 @@ export default function FilterBar({ active, onChange, labels }: Props) {
     </div>
   )
 }
-
-export { FILTER_KEYS }

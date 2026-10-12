@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { Project } from '@/lib/db'
+import { PROJECT_TAGS, normalizeTags } from '@/lib/tags'
 import ProjectCard from './ProjectCard'
 import FilterBar from './FilterBar'
 import LiveDemoModal from './LiveDemoModal'
@@ -9,7 +10,6 @@ import type { LiveDemoType } from '@/lib/liveDemo'
 import type { t } from '@/lib/translations'
 
 type Labels = {
-  filters: (typeof t)['lt']['filters']
   projects: {
     filterAll: string
     statusInProgress: string
@@ -29,23 +29,25 @@ export default function ProjectGrid({ projects, labels }: Props) {
   const [filter, setFilter] = useState('all')
   const [liveDemo, setLiveDemo] = useState<{ url: string; title: string; type: LiveDemoType } | null>(null)
 
-  const filtered = filter === 'all' ? projects : projects.filter((p) => p.tags.includes(filter))
-
-  const filterLabels = {
-    filterAll: labels.projects.filterAll,
-    ...labels.filters,
-  }
+  const visibleProjects = projects.map((project) => ({ ...project, tags: normalizeTags(project.tags) }))
+  const filtered = filter === 'all' ? visibleProjects : visibleProjects.filter((project) => project.tags.some((tag) => tag === filter))
+  const usedTags = new Set(visibleProjects.flatMap((project) => project.tags))
+  const filterTags = PROJECT_TAGS.filter((tag) => usedTags.has(tag.label))
 
   const cardLabels = {
     ...labels.projects,
-    filters: labels.filters,
     liveDemo: labels.liveDemo,
   }
 
   return (
     <div>
       <div className="mb-5">
-        <FilterBar active={filter} onChange={setFilter} labels={filterLabels} />
+        <FilterBar
+          active={filter}
+          onChange={setFilter}
+          filterAll={labels.projects.filterAll}
+          tags={filterTags}
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
         {filtered.map((p) => (

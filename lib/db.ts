@@ -1,4 +1,5 @@
 import mysql from 'mysql2/promise'
+import { normalizeTags } from './tags'
 
 export type Project = {
   id: number
@@ -58,7 +59,7 @@ function rowToProject(row: any): Project {
     ...row,
     title_en: row.title_en ?? null,
     description_en: row.description_en ?? null,
-    tags: typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags,
+    tags: normalizeTags(typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags),
   }
 }
 
@@ -81,7 +82,7 @@ export async function createProject(data: Partial<Project>): Promise<Project> {
       data.emoji || '🚀',
       data.image_url || null,
       data.platform || null,
-      JSON.stringify(data.tags || []),
+      JSON.stringify(normalizeTags(data.tags)),
       data.github_url || null,
       data.live_url || null,
       data.live_type || null,
@@ -106,7 +107,7 @@ export async function updateProject(id: number, data: Partial<Project>): Promise
   if (data.emoji !== undefined) { fields.push('emoji = ?'); values.push(data.emoji) }
   if (data.image_url !== undefined) { fields.push('image_url = ?'); values.push(data.image_url) }
   if (data.platform !== undefined) { fields.push('platform = ?'); values.push(data.platform) }
-  if (data.tags !== undefined) { fields.push('tags = ?'); values.push(JSON.stringify(data.tags)) }
+  if (data.tags !== undefined) { fields.push('tags = ?'); values.push(JSON.stringify(normalizeTags(data.tags))) }
   if (data.github_url !== undefined) { fields.push('github_url = ?'); values.push(data.github_url) }
   if (data.live_url !== undefined) { fields.push('live_url = ?'); values.push(data.live_url) }
   if (data.live_type !== undefined) { fields.push('live_type = ?'); values.push(data.live_type) }

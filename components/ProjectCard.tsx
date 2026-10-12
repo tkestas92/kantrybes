@@ -8,6 +8,7 @@ import PhoneMockup from '@/components/PhoneMockup'
 import BrowserMockup from '@/components/BrowserMockup'
 import ImageLightbox from '@/components/ImageLightbox'
 import { cld } from '@/lib/cloudinary'
+import { CARD_TAG_LIMIT, normalizeTags, tagClass } from '@/lib/tags'
 
 type Props = {
   project: Project
@@ -16,28 +17,9 @@ type Props = {
     statusShipped: string
     statusArchived: string
     github: string
-    filters: (typeof t)['lt']['filters']
     liveDemo: (typeof t)['lt']['liveDemo']
   }
   onLiveClick?: (url: string, title: string, type: LiveDemoType) => void
-}
-
-const TAG_STYLES: Record<string, string> = {
-  go: 'bg-blue-950 text-blue-400',
-  rn: 'bg-purple-950 text-purple-400',
-  py: 'bg-green-950 text-green-400',
-  kt: 'bg-red-950 text-red-400',
-  ml: 'bg-amber-950 text-amber-400',
-  devops: 'bg-stone-950 text-stone-300',
-  linux: 'bg-slate-950 text-slate-300',
-  docker: 'bg-sky-950 text-sky-400',
-  bash: 'bg-lime-950 text-lime-400',
-  iot: 'bg-cyan-950 text-cyan-400',
-}
-
-const TAG_LABELS: Record<string, string> = {
-  go: 'Go', rn: 'React Native', py: 'Python', kt: 'Kotlin', ml: 'ML / AI', devops: 'DevOps',
-  linux: 'Linux', docker: 'Docker', bash: 'Bash', iot: 'IoT',
 }
 
 const GRID_BG = {
@@ -93,7 +75,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
     : 'Live'
   const LiveIcon = liveType === 'app' ? Smartphone : Globe
 
-  const tagLabels = TAG_LABELS
+  const tags = normalizeTags(project.tags).slice(0, CARD_TAG_LIMIT)
   const [zoom, setZoom] = useState(false)
   const [open, setOpen] = useState(false)
   const [needsMore, setNeedsMore] = useState(false)
@@ -244,12 +226,12 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
 
       <div className="mt-auto flex flex-col gap-4">
       <div className="flex flex-wrap gap-1.5">
-        {project.tags.map((tag) => (
+        {tags.map((tag) => (
           <span
             key={tag}
-            className={`text-[11px] px-2 py-0.5 rounded font-medium ${TAG_STYLES[tag] || 'bg-gray-800 text-white'}`}
+            className={`text-[11px] px-2 py-0.5 rounded font-medium ${tagClass(tag)}`}
           >
-            {tagLabels[tag] || tag}
+            {tag}
           </span>
         ))}
       </div>

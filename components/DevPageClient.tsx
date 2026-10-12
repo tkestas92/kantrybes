@@ -67,7 +67,6 @@ export default function DevPageClient({ projects }: Props) {
         <ProjectGrid
           projects={projects}
           labels={{
-            filters: t[lang].filters,
             projects: {
               filterAll: labels.allFilter,
               statusInProgress: labels.inProgress,

@@ -28,7 +28,6 @@ export default function Landing() {
                 href="/dev"
                 className="group bg-[#161616] border border-[#252525] rounded-xl p-8 flex flex-col items-center gap-3 hover:border-[#4afa8a]/30 hover:bg-[#1e1e1e] transition-all"
               >
-                <span className="text-3xl">💻</span>
                 <span className="text-white font-medium text-[15px]">{labels.devTitle}</span>
                 <span className="text-white text-[12px] text-center">{labels.devDesc}</span>
               </Link>
@@ -37,7 +36,6 @@ export default function Landing() {
                 href="/dj"
                 className="group bg-[#161616] border border-[#252525] rounded-xl p-8 flex flex-col items-center gap-3 hover:border-[#4afa8a]/30 hover:bg-[#1e1e1e] transition-all"
               >
-                <span className="text-3xl">🎧</span>
                 <span className="text-white font-medium text-[15px]">{labels.djTitle}</span>
                 <span className="text-white text-[12px] text-center">{labels.djDesc}</span>
               </Link>

@@ -24,14 +24,12 @@ type Props = {
 
 const CERT_META = [
   {
-    icon: '🤖',
     tagClassName: 'text-[#4afa8a] border-[#4afa8a]/30',
     image: '/certificates/codeacademy-ai-python.png',
     width: 723,
     height: 1024,
   },
   {
-    icon: '🧪',
     tagClassName: 'text-blue-400 border-blue-400/30',
     image: '/certificates/vilnius-coding-manual-testing.png',
     width: 1024,
@@ -112,7 +110,6 @@ export default function CertificationSection({ labels }: Props) {
               key={cert.image}
               className="bg-[#161616] border border-[#252525] rounded-xl px-5 py-4 flex items-center gap-4 hover:border-[#333] transition-all"
             >
-              <div className="text-2xl">{cert.icon}</div>
               <div className="flex-1 min-w-0">
                 <p className="text-[14px] font-medium text-white">{cert.title}</p>
                 <p className="text-[12px] text-white mt-0.5">{cert.subtitle}</p>

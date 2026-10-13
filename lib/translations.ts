@@ -134,7 +134,7 @@ export const t = {
       sections: [
         {
           heading: 'Kas renka duomenis',
-          body: 'Kęstas Trybė, Vilnius. Kontaktas: tkestas92@gmail.com',
+          body: 'Kęstas Trybė, Vilnius. Kontaktas: kestas@kantrybes.lt',
         },
         {
           heading: 'Kokius duomenis renkame',
@@ -308,7 +308,7 @@ export const t = {
       sections: [
         {
           heading: 'Who collects the data',
-          body: 'Kęstas Trybė, Vilnius. Contact: tkestas92@gmail.com',
+          body: 'Kęstas Trybė, Vilnius. Contact: kestas@kantrybes.lt',
         },
         {
           heading: 'What data we collect',

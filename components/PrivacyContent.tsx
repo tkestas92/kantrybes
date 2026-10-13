@@ -10,11 +10,11 @@ const LINK_CLASS =
   'text-[#4afa8a] underline decoration-transparent underline-offset-4 transition-colors hover:decoration-[#4afa8a]'
 
 function withLinks(text: string, onCookies: () => void) {
-  const parts = text.split(/(tkestas92@gmail.com|vdai\.lrv\.lt|Slapukų nustatymai|Cookie settings)/g)
+  const parts = text.split(/(kestas@kantrybes.lt|vdai\.lrv\.lt|Slapukų nustatymai|Cookie settings)/g)
   return parts.map((part, index) => {
-    if (part === 'tkestas92@gmail.com') {
+    if (part === 'kestas@kantrybes.lt') {
       return (
-        <a key={index} href="mailto:tkestas92@gmail.com" className={LINK_CLASS}>
+        <a key={index} href="mailto:kestas@kantrybes.lt" className={LINK_CLASS}>
           {part}
         </a>
       )
@@ -81,8 +81,8 @@ export default function PrivacyContent() {
 
       <p className="mt-10 text-[16px] leading-[1.7] text-[rgba(255,255,255,0.85)]">
         {copy.ask}{' '}
-        <a href="mailto:tkestas92@gmail.com" className={LINK_CLASS}>
-          tkestas92@gmail.com
+        <a href="mailto:kestas@kantrybes.lt" className={LINK_CLASS}>
+          kestas@kantrybes.lt
         </a>
       </p>
     </article>

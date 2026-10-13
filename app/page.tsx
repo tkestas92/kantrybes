@@ -24,7 +24,7 @@ export default function Landing() {
               </div>
               <Link
                 href="/dev"
-                className="group flex w-full flex-col items-center gap-3 rounded-xl border border-[#252525] bg-[#161616] p-8 text-center transition-all hover:border-[#4afa8a]/30 hover:bg-[#1e1e1e] sm:w-[13.5rem]"
+                className="group mx-auto flex w-[216px] flex-col items-center gap-3 rounded-xl border border-[#252525] bg-[#161616] p-8 text-center transition-all hover:border-[#4afa8a]/30 hover:bg-[#1e1e1e]"
               >
                 <span className="text-[15px] font-medium text-white">{labels.devTitle}</span>
                 <span className="text-center text-[12px] text-white">{labels.devDesc}</span>

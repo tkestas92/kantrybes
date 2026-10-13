@@ -11,10 +11,10 @@ export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Kęstas Trybė — DJBook',
-  description: 'Buvęs DJ ir renginių vedėjas. Iš šios patirties gimė DJBook.',
+  description: 'DJBook demo: taip programoje atrodo DJ viešas profilis.',
   openGraph: {
     title: 'Kęstas Trybė — DJBook',
-    description: 'Buvęs DJ ir renginių vedėjas. Iš šios patirties gimė DJBook.',
+    description: 'DJBook demo: taip programoje atrodo DJ viešas profilis.',
   },
 }
 

@@ -53,7 +53,7 @@ export const t = {
       publicProfile: 'Demo profilis',
     },
     dj: {
-      former: 'Buvęs DJ ir renginių vedėjas. Iš šios patirties gimė DJBook.',
+      former: 'DJBook demo: taip programoje atrodo DJ viešas profilis.',
       back: 'kantrybes.lt',
       djbook: 'DJBook programa · pavadinimas dar neparinktas',
       loadError: 'Nepavyko užkrauti profilio. Bandykite vėliau.',
@@ -238,7 +238,7 @@ export const t = {
       publicProfile: 'Demo profile',
     },
     dj: {
-      former: 'Former DJ and event MC. This is where DJBook came from.',
+      former: "DJBook demo: how a DJ's public profile looks in the app.",
       back: 'kantrybes.lt',
       djbook: 'DJBook app · name in progress',
       loadError: 'Could not load the profile. Try again later.',

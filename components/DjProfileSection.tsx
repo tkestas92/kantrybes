@@ -36,9 +36,10 @@ function SectionHeader({ title }: { title: string }) {
   )
 }
 
-const MONTHS_LT = ['SAU', 'VAS', 'KOV', 'BAL', 'GEG', 'BIR', 'LIE', 'RGP', 'RGS', 'SPA', 'LAP', 'GRU'] as const
-
-function eventDateParts(date: string): { day: string; month: string; stamp: string } | null {
+function eventDateParts(
+  date: string,
+  months?: readonly string[]
+): { day: string; month: string; stamp: string } | null {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(date)
   if (!match) return null
   const monthIndex = Number(match[2]) - 1
@@ -46,7 +47,7 @@ function eventDateParts(date: string): { day: string; month: string; stamp: stri
   if (monthIndex < 0 || monthIndex > 11 || day < 1 || day > 31) return null
   return {
     day: String(day),
-    month: MONTHS_LT[monthIndex],
+    month: months?.[monthIndex] ?? '',
     stamp: `${match[1]}-${match[2]}-${match[3]}`,
   }
 }
@@ -147,12 +148,12 @@ function getSoundCloudEmbedUrl(profileUrl: string) {
 
 const SOCIAL_ICON_BUTTONS: {
   platform: 'Facebook' | 'Instagram' | 'Twitter'
-  label: string
+  labelKey: 'socialFacebook' | 'socialInstagram' | 'socialX'
   bordered: boolean
 }[] = [
-  { platform: 'Facebook', label: 'Facebook', bordered: false },
-  { platform: 'Instagram', label: 'Instagram', bordered: false },
-  { platform: 'Twitter', label: 'X', bordered: true },
+  { platform: 'Facebook', labelKey: 'socialFacebook', bordered: false },
+  { platform: 'Instagram', labelKey: 'socialInstagram', bordered: false },
+  { platform: 'Twitter', labelKey: 'socialX', bordered: true },
 ]
 
 const SOCIAL_BRAND_ICONS = {
@@ -166,7 +167,7 @@ function SocialBrandIcon({ platform }: { platform: keyof typeof SOCIAL_BRAND_ICO
   return <Icon size={22} color="#fff" aria-hidden />
 }
 
-function TikTokCardView({ card }: { card: DjTikTokCard }) {
+function TikTokCardView({ card, fallbackAlt }: { card: DjTikTokCard; fallbackAlt: string }) {
   if (!card.thumbnailUrl) {
     return (
       <a
@@ -187,7 +188,7 @@ function TikTokCardView({ card }: { card: DjTikTokCard }) {
       rel="noopener noreferrer"
       className="relative block h-full w-full overflow-hidden bg-[#161616]"
     >
-      <img src={card.thumbnailUrl} alt={card.title ?? 'TikTok'} className="h-full w-full object-cover" />
+      <img src={card.thumbnailUrl} alt={card.title ?? fallbackAlt} className="h-full w-full object-cover" />
       <div className="surface-solid pointer-events-none absolute inset-x-0 top-0 h-16" />
       {card.title ? (
         <p className="pointer-events-none absolute left-3 right-3 top-3 text-[13px] font-bold leading-snug text-white line-clamp-2">
@@ -248,7 +249,7 @@ export default function DjProfileSection({ profile, labels }: Props) {
           <SectionHeader title={labels.events} />
           <div className="flex flex-col gap-3">
             {upcomingEvents.map((event) => {
-              const parts = eventDateParts(event.date)
+              const parts = eventDateParts(event.date, labels.months)
               if (!parts) return null
               const time = formatEventTime(event.startTime)
               return (
@@ -285,10 +286,10 @@ export default function DjProfileSection({ profile, labels }: Props) {
       ) : null,
     soundcloud: soundCloudUrl ? (
       <section className="px-6 pt-8">
-        <SectionHeader title="SoundCloud" />
-        <ConsentEmbed service="SoundCloud" href={soundCloudUrl} frameClassName="h-[300px] w-full">
+        <SectionHeader title={labels.soundcloud} />
+        <ConsentEmbed service={labels.soundcloud} href={soundCloudUrl} frameClassName="h-[300px] w-full">
           <iframe
-            title="SoundCloud player"
+            title={labels.soundcloudPlayer}
             width="100%"
             height="300"
             scrolling="no"
@@ -303,18 +304,18 @@ export default function DjProfileSection({ profile, labels }: Props) {
     youtube:
       youtubeVideos.length > 0 ? (
         <section className="px-6 pt-8">
-          <SectionHeader title="YouTube" />
+          <SectionHeader title={labels.youtube} />
           <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 scrollbar-hide snap-x snap-mandatory">
             {youtubeVideos.map((video) => (
               <ConsentEmbed
                 key={video.id}
-                service="YouTube"
+                service={labels.youtube}
                 href={`https://www.youtube.com/watch?v=${video.id}`}
                 className="w-[min(100%,320px)] shrink-0 snap-start"
                 frameClassName="aspect-video w-full"
               >
                 <iframe
-                  title={`YouTube video ${video.id}`}
+                  title={`${labels.youtubeVideo} ${video.id}`}
                   src={`https://www.youtube-nocookie.com/embed/${video.id}`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
@@ -328,17 +329,17 @@ export default function DjProfileSection({ profile, labels }: Props) {
     tiktok:
       tiktokCards.length > 0 ? (
         <section className="px-6 pt-8">
-          <SectionHeader title="TikTok" />
+          <SectionHeader title={labels.tiktok} />
           <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 scrollbar-hide snap-x snap-mandatory">
             {tiktokCards.map((card) => (
               <ConsentEmbed
                 key={card.href}
-                service="TikTok"
+                service={labels.tiktok}
                 href={card.href}
                 className="w-[min(100%,320px)] shrink-0 snap-start"
                 frameClassName="h-[180px] w-full"
               >
-                <TikTokCardView card={card} />
+                <TikTokCardView card={card} fallbackAlt={labels.tiktok} />
               </ConsentEmbed>
             ))}
           </div>
@@ -404,8 +405,8 @@ export default function DjProfileSection({ profile, labels }: Props) {
                 href={button.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={button.label}
-                title={button.label}
+                aria-label={labels[button.labelKey]}
+                title={labels[button.labelKey]}
                 className={`flex h-12 w-12 items-center justify-center rounded-[12px] bg-[#161616] ${
                   button.bordered ? 'border border-[rgba(255,255,255,0.1)]' : 'border-0'
                 }`}

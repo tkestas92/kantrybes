@@ -98,8 +98,7 @@ export default function WaveCta({ lang }: Props) {
       onMouseEnter={startStream}
       onMouseLeave={stopStream}
     >
-      <p className="text-[13px] text-white font-medium mb-2">{labels.ctaHeader}</p>
-      <p className="text-[13px] text-white leading-relaxed mb-4">{labels.ctaStack}</p>
+      <p className="mb-5 text-[13px] font-medium text-white">{labels.ctaHeader}</p>
       <div className="flex flex-row items-center justify-between gap-2">
         <div className="flex items-center gap-0 flex-1 min-w-0">
           <span className="text-[13px] font-medium text-[#4afa8a] whitespace-nowrap">

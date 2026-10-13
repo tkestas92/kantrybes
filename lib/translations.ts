@@ -53,11 +53,9 @@ export const t = {
       publicProfile: 'Demo profilis',
     },
     dj: {
-      former: 'DJBook demo: taip programoje atrodo DJ viešas profilis.',
       back: 'kantrybes.lt',
       djbook: 'DJBook programa · pavadinimas dar neparinktas',
       loadError: 'Nepavyko užkrauti profilio. Bandykite vėliau.',
-      tagline: 'DJ · Vilnius',
       gallery: 'Galerija',
       events: 'Artimiausi renginiai',
       releases: 'Leidiniai',
@@ -238,11 +236,9 @@ export const t = {
       publicProfile: 'Demo profile',
     },
     dj: {
-      former: "DJBook demo: how a DJ's public profile looks in the app.",
       back: 'kantrybes.lt',
       djbook: 'DJBook app · name in progress',
       loadError: 'Could not load the profile. Try again later.',
-      tagline: 'DJ · Vilnius',
       gallery: 'Gallery',
       events: 'Upcoming events',
       releases: 'Releases',

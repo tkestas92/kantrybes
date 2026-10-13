@@ -26,7 +26,6 @@ export default function DjPageClient({ profile }: Props) {
           <div className="mb-4">
             <NameAnimation />
           </div>
-          <p className="text-[15px] text-white leading-relaxed mb-2 max-w-lg">{labels.former}</p>
         </section>
       )}
 

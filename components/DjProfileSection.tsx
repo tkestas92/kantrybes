@@ -457,7 +457,7 @@ export default function DjProfileSection({ profile, labels }: Props) {
       {/* Bio & genres */}
       <section className="px-6 pb-2">
         <p className="text-[15px] text-white leading-relaxed whitespace-pre-line">
-          {profile.bio}
+          {labels.bio}
         </p>
 
         {profile.genres.length > 0 && (

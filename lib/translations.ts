@@ -53,6 +53,9 @@ export const t = {
       publicProfile: 'Demo profilis',
     },
     dj: {
+      bio: `DJ Kantrybės (tikrasis vardas – Kęstas Trybė) yra elektroninės muzikos selektorius ir didžėjus iš Vilniaus.
+Muzikiniu požiūriu jo pasirodymams būdingas gilus, atmosferinis ir ritmiškas skambesys, kuriame persipina minimal, deep house bei techno elementai, įkvėpti tokių atlikėjų kaip Ricardo Villalobos ar Jimi Jules. Jo pseudonimas („Kantrybės“) puikiai atspindi ir jo grojimo filosofiją – gebėjimą neskubant, sluoksnis po sluoksnio auginti pasirodymo energiją, hipnotizuoti šokių aikštelę ir kurti ilgą, vientisą muzikinę istoriją.
+Dažniausiai siejamas su Vilniaus loftų kultūra ir alternatyviomis elektroninės muzikos erdvėmis, kur vertinama ne komercinė mada, o kokybiškas, gilus skambesys bei techninė precizika.`,
       back: 'kantrybes.lt',
       djbook: 'DJBook programa · pavadinimas dar neparinktas',
       loadError: 'Nepavyko užkrauti profilio. Bandykite vėliau.',
@@ -236,6 +239,9 @@ export const t = {
       publicProfile: 'Demo profile',
     },
     dj: {
+      bio: `DJ Kantrybės (real name Kęstas Trybė) is an electronic music selector and DJ from Vilnius.
+Musically, his sets are known for a deep, atmospheric and rhythmic sound that blends elements of minimal, deep house and techno, inspired by artists such as Ricardo Villalobos and Jimi Jules. His stage name (“Kantrybės”, Lithuanian for “patience”) reflects his playing philosophy: building a set’s energy unhurriedly, layer by layer, hypnotizing the dance floor and telling one long, seamless musical story.
+He is most often associated with Vilnius’s loft culture and alternative electronic music venues, where quality, depth and technical precision matter more than commercial trends.`,
       back: 'kantrybes.lt',
       djbook: 'DJBook app · name in progress',
       loadError: 'Could not load the profile. Try again later.',

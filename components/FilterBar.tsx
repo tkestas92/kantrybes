@@ -1,6 +1,6 @@
 'use client'
 
-import TagChip from '@/components/TagChip'
+import { tagStyle } from '@/lib/tags'
 
 type TagOption = {
   label: string
@@ -13,28 +13,38 @@ type Props = {
   tags: TagOption[]
 }
 
+const FILTER_BUTTON =
+  'inline-flex shrink-0 snap-start items-center justify-center whitespace-nowrap rounded-md border px-3 py-1.5 text-center text-[13px] font-medium'
+
 export default function FilterBar({ active, onChange, filterAll, tags }: Props) {
   const filters = [{ key: 'all', label: filterAll }, ...tags.map((tag) => ({ key: tag.label, label: tag.label }))]
 
   return (
-    <div className="flex flex-wrap gap-2">
-      {filters.map((f) =>
-        f.key === 'all' ? (
-          <button
-            key={f.key}
-            onClick={() => onChange(f.key)}
-            className={`rounded-md px-3 py-1 text-xs font-medium transition-all ${
-              active === f.key
-                ? 'bg-[#4afa8a] text-black'
-                : 'border border-[#333] bg-[#0f0f0f] text-white hover:bg-[#1e1e1e]'
-            }`}
-          >
-            {f.label}
-          </button>
-        ) : (
-          <TagChip key={f.key} label={f.label} active={active === f.key} onClick={() => onChange(f.key)} />
-        )
-      )}
+    <div className="relative min-w-0 max-w-full">
+      <div className="flex w-full min-w-0 max-w-full gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory sm:grid sm:grid-cols-4 sm:overflow-visible lg:flex lg:flex-nowrap lg:justify-center lg:overflow-visible">
+        {filters.map((filter) => {
+          const isActive = active === filter.key
+          const colored = !isActive && filter.key !== 'all'
+          return (
+            <button
+              key={filter.key}
+              type="button"
+              onClick={() => onChange(filter.key)}
+              style={colored ? tagStyle(filter.label) : undefined}
+              className={`${FILTER_BUTTON} sm:w-full lg:w-auto ${
+                isActive
+                  ? 'border-transparent bg-[#4afa8a] text-black'
+                  : filter.key === 'all'
+                    ? 'border-[#333] bg-[#0f0f0f] text-white hover:bg-[#1e1e1e]'
+                    : 'border-transparent'
+              }`}
+            >
+              {filter.label}
+            </button>
+          )
+        })}
+      </div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0f0f0f] to-transparent sm:hidden" />
     </div>
   )
 }

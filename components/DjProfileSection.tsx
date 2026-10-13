@@ -447,7 +447,7 @@ export default function DjProfileSection({ profile, labels }: Props) {
           }}
         />
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 px-6 pb-5">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 px-6 pb-4">
           <h1 className="text-[32px] font-semibold leading-tight tracking-tight text-white">
             <BpmTrigger className="pointer-events-auto">{profile.djName}</BpmTrigger>
           </h1>
@@ -455,7 +455,7 @@ export default function DjProfileSection({ profile, labels }: Props) {
       </section>
 
       {/* Bio & genres */}
-      <section className="px-6 pt-5 pb-2">
+      <section className="px-6 pb-2">
         <p className="text-[15px] text-white leading-relaxed whitespace-pre-line">
           {profile.bio}
         </p>

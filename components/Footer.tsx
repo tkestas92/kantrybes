@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Github, Linkedin, Mail } from 'lucide-react'
 import ContactModal from '@/components/ContactModal'
+import { useConsent } from '@/components/ConsentProvider'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
 import { BpmTrigger } from '@/components/useTripleTap'
@@ -17,6 +18,7 @@ export default function Footer({ innerClassName, variant }: Props) {
   const year = new Date().getFullYear()
   const [open, setOpen] = useState(false)
   const { lang } = useLang()
+  const { openSettings } = useConsent()
   const onDj = usePathname() === '/dj'
   const landing = variant === 'landing'
   return (
@@ -31,6 +33,14 @@ export default function Footer({ innerClassName, variant }: Props) {
           <span aria-hidden="true" className="mx-3 text-white">·</span>
           {t[lang].footer.privacy}
         </Link>
+        <button
+          type="button"
+          onClick={openSettings}
+          className="inline-flex items-center whitespace-nowrap bg-transparent hover:text-[#4afa8a] transition-colors"
+        >
+          <span aria-hidden="true" className="mx-3 text-white">·</span>
+          {t[lang].footer.cookies}
+        </button>
       </div>
       {landing ? null : (
       <div className="flex max-w-full flex-wrap items-center justify-center gap-4">

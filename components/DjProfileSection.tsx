@@ -286,7 +286,7 @@ export default function DjProfileSection({ profile, labels }: Props) {
     soundcloud: soundCloudUrl ? (
       <section className="px-6 pt-8">
         <SectionHeader title="SoundCloud" />
-        <ConsentEmbed service="SoundCloud" frameClassName="h-[300px] w-full">
+        <ConsentEmbed service="SoundCloud" href={soundCloudUrl} frameClassName="h-[300px] w-full">
           <iframe
             title="SoundCloud player"
             width="100%"
@@ -309,13 +309,13 @@ export default function DjProfileSection({ profile, labels }: Props) {
               <ConsentEmbed
                 key={video.id}
                 service="YouTube"
-                thumbnailUrl={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                href={`https://www.youtube.com/watch?v=${video.id}`}
                 className="w-[min(100%,320px)] shrink-0 snap-start"
                 frameClassName="aspect-video w-full"
               >
                 <iframe
                   title={`YouTube video ${video.id}`}
-                  src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1`}
+                  src={`https://www.youtube-nocookie.com/embed/${video.id}`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                   className="block h-full w-full border-0"
@@ -334,6 +334,7 @@ export default function DjProfileSection({ profile, labels }: Props) {
               <ConsentEmbed
                 key={card.href}
                 service="TikTok"
+                href={card.href}
                 className="w-[min(100%,320px)] shrink-0 snap-start"
                 frameClassName="h-[180px] w-full"
               >

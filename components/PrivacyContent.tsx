@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useConsent } from '@/components/ConsentProvider'
 import { useLang } from '@/components/LangProvider'
 import { t } from '@/lib/translations'
 import { BpmTrigger } from '@/components/useTripleTap'
@@ -8,8 +9,8 @@ import { BpmTrigger } from '@/components/useTripleTap'
 const LINK_CLASS =
   'text-[#4afa8a] underline decoration-transparent underline-offset-4 transition-colors hover:decoration-[#4afa8a]'
 
-function withLinks(text: string) {
-  const parts = text.split(/(tkestas92@gmail.com|vdai\.lrv\.lt)/g)
+function withLinks(text: string, onCookies: () => void) {
+  const parts = text.split(/(tkestas92@gmail.com|vdai\.lrv\.lt|Slapukų nustatymai|Cookie settings)/g)
   return parts.map((part, index) => {
     if (part === 'tkestas92@gmail.com') {
       return (
@@ -31,6 +32,13 @@ function withLinks(text: string) {
         </a>
       )
     }
+    if (part === 'Slapukų nustatymai' || part === 'Cookie settings') {
+      return (
+        <button key={index} type="button" onClick={onCookies} className={`${LINK_CLASS} bg-transparent`}>
+          {part}
+        </button>
+      )
+    }
     return <span key={index}>{withName(part)}</span>
   })
 }
@@ -50,6 +58,7 @@ function withName(text: string) {
 
 export default function PrivacyContent() {
   const { lang } = useLang()
+  const { openSettings } = useConsent()
   const copy = t[lang].privacy
 
   useEffect(() => {
@@ -65,7 +74,7 @@ export default function PrivacyContent() {
         <section key={section.heading}>
           <h2 className="mt-10 text-[20px] font-semibold text-white">{section.heading}</h2>
           <p className="mt-2 text-[16px] leading-[1.7] text-[rgba(255,255,255,0.85)] [overflow-wrap:anywhere]">
-            {withLinks(section.body)}
+            {withLinks(section.body, openSettings)}
           </p>
         </section>
       ))}

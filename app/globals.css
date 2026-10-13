@@ -18,6 +18,12 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   isolation: isolate;
+  padding-bottom: var(--consent-bar, 0px);
+}
+
+/* Unlayered so it wins over Tailwind's min-h-screen while the consent bar is open. */
+.min-h-screen {
+  min-height: calc(100vh - var(--consent-bar, 0px));
 }
 
 @layer base {

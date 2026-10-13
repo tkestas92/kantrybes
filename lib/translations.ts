@@ -93,7 +93,20 @@ export const t = {
     },
     footer: {
       privacy: 'Privatumo politika',
+      cookies: 'Slapukų nustatymai',
       backToDev: '← Dev',
+    },
+    consent: {
+      banner:
+        'Naudojame Google Analytics lankomumui matyti ir įterpiame YouTube, SoundCloud bei TikTok turinį. Jie gali naudoti slapukus. Daugiau:',
+      privacy: 'Privatumo politika',
+      accept: 'Sutinku',
+      decline: 'Atmesti',
+      settingsTitle: 'Slapukų nustatymai',
+      accepted: 'Sutikta',
+      declined: 'Atmesta',
+      unset: 'Nepasirinkta',
+      close: 'Uždaryti',
     },
     notFound: {
       title: 'Puslapis nerastas',
@@ -101,17 +114,17 @@ export const t = {
       home: 'Grįžti į pradžią',
     },
     embed: {
-      play: 'Groti',
-      notice: 'Paspaudus bus įkeltas {service} turinys, kuris gali naudoti slapukus.',
+      open: 'Atidaryti {service} ↗',
+      enable: 'Įjungti slapukus',
     },
     privacy: {
       title: 'Privatumo politika',
       kicker: 'Privatumas',
       heroTitle: 'Renkame tik tai, ką pats įrašai formoje.',
-      heroSub: 'Jokios analitikos, jokios reklamos, jokių slapukų juostų.',
+      heroSub: 'Analitika ir įterpiniai tik su sutikimu.',
       intro: 'Trumpai ir aiškiai: ką renkame, kam ir kiek laiko.',
-      updated: 'Atnaujinta: 2026-10-09',
-      highlights: ['Slapukų juostos nėra', 'Tik tai, ką įrašai formoje', 'Ištrinu paprašius'],
+      updated: 'Atnaujinta: 2026-10-13',
+      highlights: ['Analitika tik su sutikimu', 'Tik tai, ką įrašai formoje', 'Ištrinu paprašius'],
       expandAll: 'Išskleisti visus',
       collapseAll: 'Suskleisti visus',
       contactTitle: 'Turi klausimų?',
@@ -132,16 +145,28 @@ export const t = {
           body: 'Kad galėčiau atsakyti į tavo žinutę.',
         },
         {
+          heading: 'Teisinis pagrindas',
+          body: 'Analitikai ir trečiųjų šalių turiniui teisinis pagrindas yra sutikimas (BDAR 6 str. 1 d. a p.). Kontaktų formai teisinis pagrindas yra teisėtas interesas atsakyti į jūsų žinutę arba jūsų prašymas, kad atsakyčiau.',
+        },
+        {
           heading: 'Kam perduodama',
-          body: 'Žinutė siunčiama per el. pašto paslaugą Resend (duomenų tvarkytojas, gali būti apdorojama už ES ribų taikant standartines sutarties sąlygas).',
+          body: 'Žinutė siunčiama per el. pašto paslaugą Resend (duomenų tvarkytojas, gali būti apdorojama už ES ribų taikant standartines sutarties sąlygas). Cloudflare nukreipia svetainės srautą ir gali apdoroti IP adresus techniniais tikslais, saugumui ir spartai.',
         },
         {
           heading: 'Kiek saugoma',
           body: 'Kol bus atsakyta ir ne ilgiau nei 12 mėnesių.',
         },
         {
-          heading: 'Slapukai',
-          body: 'Svetainė nenaudoja analitikos ar reklamos slapukų. Naudojami tik būtini (administratoriaus prisijungimas) ir funkciniai (kalbos pasirinkimas). Pasirinkus groti YouTube, SoundCloud ar TikTok turinį, tų paslaugų teikėjai gali nustatyti savo slapukus.',
+          heading: 'Slapukai ir sutikimas',
+          body: 'Būtini ir funkciniai slapukai (administratoriaus prisijungimas, kalbos pasirinkimas, jūsų slapukų pasirinkimas) naudojami be sutikimo. Analitikos slapukai ir trečiųjų šalių turinys įkeliami tik jums sutikus. Sutikimą galite bet kada pakeisti ar atšaukti paspaudę Slapukų nustatymai puslapio apačioje. Sutikimas galioja 6 mėnesius.',
+        },
+        {
+          heading: 'Google Analytics',
+          body: 'Naudojame Google Analytics (Google LLC) lankomumui matyti, tik gavus sutikimą. Nustatomi slapukai _ga ir _ga_* (iki 2 metų). Duomenys gali būti perduodami už ES ribų (JAV) taikant Duomenų privatumo sistemą (DPF) arba standartines sutarties sąlygas. Duomenys saugomi ne ilgiau nei 14 mėnesių.',
+        },
+        {
+          heading: 'Trečiųjų šalių turinys',
+          body: 'YouTube (Google), SoundCloud ir TikTok įterpiniai įkeliami tik jums sutikus ir šių paslaugų teikėjai gali nustatyti savo slapukus bei gauti jūsų IP adresą. Neleidus rodomos tik nuorodos į jų svetaines.',
         },
         {
           heading: 'Tavo teisės',
@@ -242,7 +267,20 @@ export const t = {
     },
     footer: {
       privacy: 'Privacy policy',
+      cookies: 'Cookie settings',
       backToDev: '← Dev',
+    },
+    consent: {
+      banner:
+        'We use Google Analytics to measure visits and we embed YouTube, SoundCloud and TikTok. They may use cookies. More:',
+      privacy: 'Privacy policy',
+      accept: 'Accept',
+      decline: 'Decline',
+      settingsTitle: 'Cookie settings',
+      accepted: 'Accepted',
+      declined: 'Declined',
+      unset: 'Not chosen',
+      close: 'Close',
     },
     notFound: {
       title: 'Page not found',
@@ -250,17 +288,17 @@ export const t = {
       home: 'Back home',
     },
     embed: {
-      play: 'Play',
-      notice: 'Clicking will load {service} content, which may use cookies.',
+      open: 'Open {service} ↗',
+      enable: 'Enable cookies',
     },
     privacy: {
       title: 'Privacy policy',
       kicker: 'Privacy',
       heroTitle: 'We only collect what you type into the form.',
-      heroSub: 'No analytics, no ads, no cookie banners.',
+      heroSub: 'Analytics and embeds load only with consent.',
       intro: 'Short and plain: what we collect, why, and for how long.',
-      updated: 'Updated: 2026-10-09',
-      highlights: ['No cookie banner', 'Only what you enter in the form', 'Deleted when you ask'],
+      updated: 'Updated: 2026-10-13',
+      highlights: ['Analytics only with consent', 'Only what you enter in the form', 'Deleted when you ask'],
       expandAll: 'Expand all',
       collapseAll: 'Collapse all',
       contactTitle: 'Questions?',
@@ -281,16 +319,28 @@ export const t = {
           body: 'So I can reply to your message.',
         },
         {
+          heading: 'Legal basis',
+          body: 'Analytics and third-party content rely on consent (GDPR Article 6(1)(a)). The contact form relies on legitimate interest in replying to you, or on your request for a reply.',
+        },
+        {
           heading: 'Who it is shared with',
-          body: 'The message is sent through the email service Resend (data processor, and it may be processed outside the EU under standard contractual clauses).',
+          body: 'The message is sent through the email service Resend (a data processor; it may be processed outside the EU under standard contractual clauses). Cloudflare routes the site’s traffic and may process IP addresses for technical purposes, security and speed.',
         },
         {
           heading: 'How long it is kept',
           body: 'Until a reply is sent, and for no longer than 12 months.',
         },
         {
-          heading: 'Cookies',
-          body: 'The site does not use analytics or advertising cookies. Only essential cookies (administrator login) and functional cookies (language choice) are used. If you choose to play YouTube, SoundCloud or TikTok content, those providers may set their own cookies.',
+          heading: 'Cookies and consent',
+          body: 'Essential and functional cookies (administrator login, language choice, and your cookie choice) are used without consent. Analytics cookies and third-party content load only after you agree. You can change or withdraw consent at any time by choosing Cookie settings at the bottom of the page. Consent lasts for 6 months.',
+        },
+        {
+          heading: 'Google Analytics',
+          body: 'We use Google Analytics (Google LLC) to see how the site is used, and only after you agree. It sets _ga and _ga_* cookies (for up to 2 years). Data may be transferred outside the EU, to the United States, under the EU-US Data Privacy Framework (DPF) or standard contractual clauses. Data is kept for no longer than 14 months.',
+        },
+        {
+          heading: 'Third-party content',
+          body: 'YouTube (Google), SoundCloud and TikTok embeds load only after you agree. Those providers may set their own cookies and receive your IP address. If you decline, the page shows links to their sites instead.',
         },
         {
           heading: 'Your rights',

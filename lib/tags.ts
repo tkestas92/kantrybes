@@ -1,14 +1,14 @@
 export const PROJECT_TAGS = [
-  { label: 'Python', className: 'bg-green-950 text-green-400' },
-  { label: 'ML / AI', className: 'bg-amber-950 text-amber-400' },
-  { label: 'TypeScript', className: 'bg-indigo-950 text-indigo-300' },
-  { label: 'Next.js', className: 'bg-white/15 text-zinc-100' },
-  { label: 'React Native', className: 'bg-purple-950 text-purple-400' },
-  { label: 'Kotlin', className: 'bg-red-950 text-red-400' },
-  { label: 'Go', className: 'bg-blue-950 text-blue-400' },
-  { label: 'MySQL', className: 'bg-orange-950 text-orange-300' },
-  { label: 'Docker', className: 'bg-sky-950 text-sky-400' },
-  { label: 'Linux / DevOps', className: 'bg-slate-950 text-slate-300' },
+  { label: 'Python', color: '#4ade80' },
+  { label: 'ML / AI', color: '#fb923c' },
+  { label: 'TypeScript', color: '#22d3ee' },
+  { label: 'Next.js', color: '#e4e4e7' },
+  { label: 'React Native', color: '#c084fc' },
+  { label: 'Kotlin', color: '#f87171' },
+  { label: 'Go', color: '#60a5fa' },
+  { label: 'MySQL', color: '#2dd4bf' },
+  { label: 'Docker', color: '#2496ed' },
+  { label: 'Linux / DevOps', color: '#facc15' },
 ] as const
 
 export type ProjectTag = (typeof PROJECT_TAGS)[number]['label']
@@ -45,6 +45,15 @@ export function normalizeTags(input: string[] | null | undefined): ProjectTag[] 
   return PROJECT_TAGS.map((tag) => tag.label).filter((label) => found.has(label))
 }
 
-export function tagClass(label: string): string {
-  return PROJECT_TAGS.find((tag) => tag.label === label)?.className ?? 'bg-gray-800 text-white'
+function withAlpha(hex: string, alpha: number): string {
+  const value = hex.replace('#', '')
+  const r = parseInt(value.slice(0, 2), 16)
+  const g = parseInt(value.slice(2, 4), 16)
+  const b = parseInt(value.slice(4, 6), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
+export function tagStyle(label: string): { backgroundColor: string; color: string } {
+  const color = PROJECT_TAGS.find((tag) => tag.label === label)?.color ?? '#e5e5e5'
+  return { backgroundColor: withAlpha(color, 0.18), color }
 }

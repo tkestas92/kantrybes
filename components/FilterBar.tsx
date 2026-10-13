@@ -1,5 +1,7 @@
 'use client'
 
+import TagChip from '@/components/TagChip'
+
 type TagOption = {
   label: string
 }
@@ -16,19 +18,23 @@ export default function FilterBar({ active, onChange, filterAll, tags }: Props) 
 
   return (
     <div className="flex flex-wrap gap-2">
-      {filters.map((f) => (
-        <button
-          key={f.key}
-          onClick={() => onChange(f.key)}
-          className={`text-xs px-3.5 py-1.5 rounded-full border transition-all ${
-            active === f.key
-              ? 'bg-[#4afa8a] text-black border-[#4afa8a] font-medium'
-              : 'bg-[#0f0f0f] border-[#333] text-white hover:text-white hover:bg-[#1e1e1e]'
-          }`}
-        >
-          {f.label}
-        </button>
-      ))}
+      {filters.map((f) =>
+        f.key === 'all' ? (
+          <button
+            key={f.key}
+            onClick={() => onChange(f.key)}
+            className={`rounded-md px-3 py-1 text-xs font-medium transition-all ${
+              active === f.key
+                ? 'bg-[#4afa8a] text-black'
+                : 'border border-[#333] bg-[#0f0f0f] text-white hover:bg-[#1e1e1e]'
+            }`}
+          >
+            {f.label}
+          </button>
+        ) : (
+          <TagChip key={f.key} label={f.label} active={active === f.key} onClick={() => onChange(f.key)} />
+        )
+      )}
     </div>
   )
 }

@@ -5,6 +5,7 @@ import type { Project } from '@/lib/db'
 import { t } from '@/lib/translations'
 import { uploadImage } from '@/lib/cloudinary'
 import { PROJECT_TAGS, normalizeTags } from '@/lib/tags'
+import TagChip from '@/components/TagChip'
 
 type Props = {
   initial?: Partial<Project>
@@ -144,18 +145,12 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
         <p className="text-[12px] text-white mb-2">Technologijos</p>
         <div className="flex flex-wrap gap-2">
           {PROJECT_TAGS.map(tag => (
-            <button
+            <TagChip
               key={tag.label}
-              type="button"
+              label={tag.label}
+              selected={tags.includes(tag.label)}
               onClick={() => toggleTag(tag.label)}
-              className={`text-xs px-3 py-1 rounded border transition-all ${
-                tags.includes(tag.label)
-                  ? 'bg-[#4afa8a] text-black border-[#4afa8a] font-medium'
-                  : 'border-[#2a2a2a] text-white hover:border-[#444]'
-              }`}
-            >
-              {tag.label}
-            </button>
+            />
           ))}
         </div>
       </div>

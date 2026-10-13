@@ -8,7 +8,8 @@ import PhoneMockup from '@/components/PhoneMockup'
 import BrowserMockup from '@/components/BrowserMockup'
 import ImageLightbox from '@/components/ImageLightbox'
 import { cld } from '@/lib/cloudinary'
-import { CARD_TAG_LIMIT, normalizeTags, tagClass } from '@/lib/tags'
+import { CARD_TAG_LIMIT, normalizeTags } from '@/lib/tags'
+import TagChip from '@/components/TagChip'
 
 type Props = {
   project: Project
@@ -236,14 +237,9 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
       </div>
 
       <div className="mt-auto flex flex-col gap-4">
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <span
-            key={tag}
-            className={`text-[11px] px-2 py-0.5 rounded font-medium ${tagClass(tag)}`}
-          >
-            {tag}
-          </span>
+          <TagChip key={tag} label={tag} />
         ))}
       </div>
 

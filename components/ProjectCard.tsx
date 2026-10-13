@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Github, Globe, Smartphone, ZoomIn } from 'lucide-react'
+import { Github, Globe, Smartphone, User, ZoomIn } from 'lucide-react'
 import type { Project } from '@/lib/db'
 import { useLang } from '@/components/LangProvider'
 import { t, type Lang } from '@/lib/translations'
@@ -284,7 +284,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
             {...demoAnchorProps(project.demo_url)}
             className="flex items-center gap-1.5 text-[12px] text-white border border-[#2a2a2a] rounded-md px-3 py-1.5 hover:text-white hover:border-[#444] transition-all"
           >
-            {labels.liveDemo.publicProfile}
+            <User size={13} /> {labels.liveDemo.publicProfile}
           </a>
         )}
       </div>

@@ -52,7 +52,7 @@ export const t = {
       closeDemo: 'Uždaryti demo',
       openNewTab: 'Atidaryti naujame lange',
       close: 'Uždaryti',
-      publicProfile: 'Viešas profilis',
+      publicProfile: 'Demo profilis',
     },
     dj: {
       former: 'Buvęs DJ ir renginių vedėjas. Iš šios patirties gimė DJBook.',
@@ -203,7 +203,7 @@ export const t = {
       closeDemo: 'Close demo',
       openNewTab: 'Open in new tab',
       close: 'Close',
-      publicProfile: 'Public profile demo',
+      publicProfile: 'Demo profile',
     },
     dj: {
       former: 'Former DJ and event MC. This is where DJBook came from.',

@@ -14,6 +14,7 @@ export type Project = {
   github_url: string | null
   live_url: string | null
   live_type: 'web' | 'app' | null
+  demo_url: string | null
   status: 'shipped' | 'in_progress' | 'archived'
   sort_order: number
   created_at: string
@@ -59,6 +60,7 @@ function rowToProject(row: any): Project {
     ...row,
     title_en: row.title_en ?? null,
     description_en: row.description_en ?? null,
+    demo_url: blankToNull(row.demo_url),
     tags: normalizeTags(typeof row.tags === 'string' ? JSON.parse(row.tags) : row.tags),
   }
 }
@@ -72,8 +74,8 @@ export async function getAllProjects(): Promise<Project[]> {
 export async function createProject(data: Partial<Project>): Promise<Project> {
   const pool = getPool()
   const [result] = await pool.query(
-    `INSERT INTO projects (title, title_en, description, description_en, emoji, image_url, platform, tags, github_url, live_url, live_type, status, sort_order)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO projects (title, title_en, description, description_en, emoji, image_url, platform, tags, github_url, live_url, live_type, demo_url, status, sort_order)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       data.title,
       blankToNull(data.title_en),
@@ -86,6 +88,7 @@ export async function createProject(data: Partial<Project>): Promise<Project> {
       data.github_url || null,
       data.live_url || null,
       data.live_type || null,
+      blankToNull(data.demo_url),
       data.status || 'shipped',
       data.sort_order || 0,
     ]
@@ -111,6 +114,7 @@ export async function updateProject(id: number, data: Partial<Project>): Promise
   if (data.github_url !== undefined) { fields.push('github_url = ?'); values.push(data.github_url) }
   if (data.live_url !== undefined) { fields.push('live_url = ?'); values.push(data.live_url) }
   if (data.live_type !== undefined) { fields.push('live_type = ?'); values.push(data.live_type) }
+  if (data.demo_url !== undefined) { fields.push('demo_url = ?'); values.push(blankToNull(data.demo_url)) }
   if (data.status !== undefined) { fields.push('status = ?'); values.push(data.status) }
   if (data.sort_order !== undefined) { fields.push('sort_order = ?'); values.push(data.sort_order) }
 

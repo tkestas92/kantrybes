@@ -23,23 +23,13 @@ export default function Landing() {
               <NameAnimation />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
-              <Link
-                href="/dev"
-                className="group bg-[#161616] border border-[#252525] rounded-xl p-8 flex flex-col items-center gap-3 hover:border-[#4afa8a]/30 hover:bg-[#1e1e1e] transition-all"
-              >
-                <span className="text-white font-medium text-[15px]">{labels.devTitle}</span>
-                <span className="text-white text-[12px] text-center">{labels.devDesc}</span>
-              </Link>
-
-              <Link
-                href="/dj"
-                className="group bg-[#161616] border border-[#252525] rounded-xl p-8 flex flex-col items-center gap-3 hover:border-[#4afa8a]/30 hover:bg-[#1e1e1e] transition-all"
-              >
-                <span className="text-white font-medium text-[15px]">{labels.djTitle}</span>
-                <span className="text-white text-[12px] text-center">{labels.djDesc}</span>
-              </Link>
-            </div>
+            <Link
+              href="/dev"
+              className="group flex w-full max-w-xs flex-col items-center gap-3 rounded-xl border border-[#252525] bg-[#161616] p-8 transition-all hover:border-[#4afa8a]/30 hover:bg-[#1e1e1e]"
+            >
+              <span className="text-white font-medium text-[15px]">{labels.devTitle}</span>
+              <span className="text-white text-[12px] text-center">{labels.devDesc}</span>
+            </Link>
           </div>
         </PageTransition>
       </ContentColumn>

@@ -25,6 +25,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
   const [githubUrl, setGithubUrl] = useState(initial?.github_url || '')
   const [liveUrl, setLiveUrl] = useState(initial?.live_url || '')
   const [liveType, setLiveType] = useState<Project['live_type']>(initial?.live_type || null)
+  const [demoUrl, setDemoUrl] = useState(initial?.demo_url || '')
   const [status, setStatus] = useState<Project['status']>(initial?.status || 'shipped')
   const [loading, setLoading] = useState(false)
 
@@ -59,6 +60,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
       github_url: githubUrl,
       live_url: liveUrl || null,
       live_type: liveUrl ? liveType : null,
+      demo_url: demoUrl,
       status,
     })
     setLoading(false)
@@ -170,6 +172,16 @@ export default function ProjectForm({ initial, onSave, onCancel }: Props) {
             else setLiveType(null)
           }}
           placeholder="Live URL (nebūtina)"
+        />
+      </div>
+
+      <div>
+        <p className="text-[12px] text-white mb-2">Demo / viešas profilis (URL)</p>
+        <input
+          className={inputClass}
+          value={demoUrl}
+          onChange={e => setDemoUrl(e.target.value)}
+          placeholder="/dj arba https://..."
         />
       </div>
 

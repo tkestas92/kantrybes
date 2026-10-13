@@ -10,8 +10,12 @@ import ContentColumn from '@/components/ContentColumn'
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Kantrybės — DJ Vilniuje',
-  description: 'DJ paslaugos ir renginių įgarsinimas Vilniuje.',
+  title: 'Kęstas Trybė — DJBook',
+  description: 'Buvęs DJ ir renginių vedėjas. Iš šios patirties gimė DJBook.',
+  openGraph: {
+    title: 'Kęstas Trybė — DJBook',
+    description: 'Buvęs DJ ir renginių vedėjas. Iš šios patirties gimė DJBook.',
+  },
 }
 
 export default async function DjPage() {

@@ -5,8 +5,6 @@ export const t = {
     landing: {
       devTitle: 'Dev',
       devDesc: 'Full-stack, AI/ML, mobilios apps — nuo idėjos iki produkcijos.',
-      djTitle: 'DJ',
-      djDesc: 'DJ paslaugos ir renginių įgarsinimas.',
     },
     dev: {
       bio: 'Full-stack developer ir AI/ML inžinierius iš Vilniaus. Kuriu mobilias aplikacijas, backend servisus ir machine learning sprendimus — nuo idėjos iki produkcijos. Kuo nestandartiškiau, tuo įdomiau!',
@@ -54,15 +52,13 @@ export const t = {
       closeDemo: 'Uždaryti demo',
       openNewTab: 'Atidaryti naujame lange',
       close: 'Uždaryti',
+      publicProfile: 'Viešas profilis',
     },
     dj: {
-      bio: 'DJ ir renginių vedėjas iš Vilniaus. DJ paslaugos ir renginių įgarsinimas.',
-      fallbackBio:
-        'DJ ir event organizatorius iš Vilniaus. 100+ renginių, sunset boat party, charity events ir bendradarbiavimas su žinomais brandais.',
+      former: 'Buvęs DJ ir renginių vedėjas. Iš šios patirties gimė DJBook.',
       back: 'kantrybes.lt',
       djbook: 'DJBook app · name in progress',
-      loadError: 'Nepavyko užkrauti DJ profilio. Bandykite vėliau arba susisiekite tiesiogiai dėl booking.',
-      write: 'Parašyti',
+      loadError: 'Nepavyko užkrauti profilio. Bandykite vėliau.',
       tagline: 'DJ · Vilnius',
       gallery: 'Galerija',
       events: 'Artimiausi renginiai',
@@ -99,7 +95,7 @@ export const t = {
     },
     footer: {
       privacy: 'Privatumo politika',
-      djProfile: 'DJ profilis →',
+      backToDev: '← Dev',
     },
     notFound: {
       title: 'Puslapis nerastas',
@@ -160,8 +156,6 @@ export const t = {
     landing: {
       devTitle: 'Dev',
       devDesc: 'Full-stack, AI/ML, mobile apps — from idea to production.',
-      djTitle: 'DJ',
-      djDesc: 'DJ services and event sound production.',
     },
     dev: {
       bio: 'Full-stack developer and AI/ML engineer from Vilnius. I build mobile applications, backend services and machine learning solutions — from idea to production. The more unconventional, the better!',
@@ -209,15 +203,13 @@ export const t = {
       closeDemo: 'Close demo',
       openNewTab: 'Open in new tab',
       close: 'Close',
+      publicProfile: 'Public profile demo',
     },
     dj: {
-      bio: 'DJ and event host from Vilnius. DJ services and event sound production.',
-      fallbackBio:
-        'DJ and event organizer from Vilnius. 100+ events, sunset boat parties, charity events, and collaborations with well-known brands.',
+      former: 'Former DJ and event MC. This is where DJBook came from.',
       back: 'kantrybes.lt',
       djbook: 'DJBook app · name in progress',
-      loadError: 'Could not load DJ profile. Try again later or get in touch directly for booking.',
-      write: 'Get in touch',
+      loadError: 'Could not load the profile. Try again later.',
       tagline: 'DJ · Vilnius',
       gallery: 'Gallery',
       events: 'Upcoming events',
@@ -254,7 +246,7 @@ export const t = {
     },
     footer: {
       privacy: 'Privacy policy',
-      djProfile: 'DJ profile →',
+      backToDev: '← Dev',
     },
     notFound: {
       title: 'Page not found',

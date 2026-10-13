@@ -449,6 +449,7 @@ export default function DjProfileSection({ profile, labels }: Props) {
           <h1 className="text-[32px] font-semibold leading-tight tracking-tight text-white">
             <BpmTrigger className="pointer-events-auto">{profile.djName}</BpmTrigger>
           </h1>
+          <p className="mt-2 max-w-lg text-[14px] leading-relaxed text-white/80">{labels.former}</p>
           <p className="mt-1 text-[14px] text-white/70">{labels.tagline}</p>
         </div>
       </section>

@@ -24,10 +24,9 @@ export default function Header({ current, innerClassName, variant }: Props) {
           </Link>
         )}
         <div className={`flex items-center gap-4${landing ? ' ml-auto min-h-[30px]' : ''}`}>
-          {landing ? null : (
+          {landing || current === 'dj' ? null : (
             <nav className="flex items-center gap-1 bg-[var(--surface-solid)] text-[12px]">
               <Link href="/dev" className={`px-3 py-1.5 rounded-md transition-colors ${current === 'dev' ? 'text-[#4afa8a] bg-[var(--surface-card)]' : 'bg-[var(--surface-solid)] text-white hover:text-gray-400'}`}>Dev</Link>
-              <Link href="/dj" className={`px-3 py-1.5 rounded-md transition-colors ${current === 'dj' ? 'text-[#4afa8a] bg-[var(--surface-card)]' : 'bg-[var(--surface-solid)] text-white hover:text-gray-400'}`}>DJ</Link>
             </nav>
           )}
           <LangSwitcher lang={lang} onChange={setLang} />

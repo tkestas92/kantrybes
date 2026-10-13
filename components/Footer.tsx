@@ -43,9 +43,11 @@ export default function Footer({ innerClassName, variant }: Props) {
         <button type="button" onClick={() => setOpen(true)} className="hover:text-gray-400 transition-colors flex items-center gap-1.5">
           <Mail size={13} /> Email
         </button>
-        <Link href={onDj ? '/dev' : '/dj'} className="hover:text-[#4afa8a] transition-colors">
-          {onDj ? 'Dev →' : t[lang].footer.djProfile}
-        </Link>
+        {onDj ? (
+          <Link href="/dev" className="hover:text-[#4afa8a] transition-colors">
+            {t[lang].footer.backToDev}
+          </Link>
+        ) : null}
       </div>
       )}
     </div>

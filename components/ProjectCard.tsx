@@ -29,6 +29,17 @@ const GRID_BG = {
   backgroundSize: '16px 16px',
 } as const
 
+function demoAnchorProps(url: string): { target?: string; rel?: string } {
+  if (url.startsWith('/') && !url.startsWith('//')) return {}
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '')
+    if (host === 'kantrybes.lt' || host === 'localhost') return {}
+  } catch {
+    return { target: '_blank', rel: 'noopener noreferrer' }
+  }
+  return { target: '_blank', rel: 'noopener noreferrer' }
+}
+
 function localizedText(project: Project, lang: Lang) {
   if (lang !== 'en') return { title: project.title, description: project.description }
   return {
@@ -236,7 +247,7 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
         ))}
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {project.github_url && (
           <a
             href={project.github_url}
@@ -266,6 +277,15 @@ export default function ProjectCard({ project, labels, onLiveClick }: Props) {
               <LiveIcon size={13} /> {liveLabel}
             </a>
           )
+        )}
+        {project.demo_url?.trim() && (
+          <a
+            href={project.demo_url}
+            {...demoAnchorProps(project.demo_url)}
+            className="flex items-center gap-1.5 text-[12px] text-white border border-[#2a2a2a] rounded-md px-3 py-1.5 hover:text-white hover:border-[#444] transition-all"
+          >
+            {labels.liveDemo.publicProfile}
+          </a>
         )}
       </div>
       </div>

@@ -10,9 +10,7 @@ export default function GoogleAnalytics() {
   const started = useRef(false)
 
   useEffect(() => {
-    if (!ready || consent.thirdParty !== true || started.current) return
-    if (document.querySelector('script[data-ga="loader"]')) return
-    started.current = true
+    if (!ready || consent.thirdParty !== true) return
 
     window.gtag?.('consent', 'update', {
       analytics_storage: 'granted',
@@ -20,6 +18,13 @@ export default function GoogleAnalytics() {
       ad_user_data: 'denied',
       ad_personalization: 'denied',
     })
+
+    if (started.current || document.querySelector('script[data-ga="loader"]')) {
+      started.current = true
+      return
+    }
+    started.current = true
+
     window.gtag?.('js', new Date())
     window.gtag?.('config', GA_ID)
 

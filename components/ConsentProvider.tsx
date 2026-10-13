@@ -80,14 +80,15 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
     if (choosing.current) return
     choosing.current = true
     const finish = () => {
-      if (thirdParty) {
-        writeConsent(true)
-      } else {
-        writeConsent(false)
+      const record = writeConsent(thirdParty)
+      if (!thirdParty) {
         clearAnalyticsCookies()
         denyAnalyticsConsent()
       }
-      window.location.reload()
+      setConsent(record)
+      setSettingsOpen(false)
+      setLeaving(false)
+      choosing.current = false
     }
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (showBanner && !reduceMotion) {

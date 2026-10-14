@@ -88,19 +88,21 @@ Dažniausiai siejamas su Vilniaus loftų kultūra ir alternatyviomis elektronin�
       nextPhoto: 'Kita nuotrauka',
     },
     bpm: {
-      title: 'BPM matuoklis',
+      title: 'Suradai. Kantrybė atsipirko.',
       explain:
-        'Slaptas easter egg. Spaudyk mygtuką pagal bet kokios muzikos ritmą, o aš parodysiu, kiek tai dūžių per minutę (BPM).',
-      tap: 'SPAUSK',
+        'Likutis iš mano DJ laikų: spaudyk mygtuką pagal muzikos ritmą, o aš pasakysiu, kiek tai BPM.',
+      tap: 'SPAUSK RITMU',
+      waiting: 'Laukiu pirmo dūžio',
+      hint: 'Užtenka 4–5 paspaudimų.',
       reset: 'Iš naujo',
       close: 'Uždaryti',
-      closeHint: 'Uždaryti: Esc arba paspausk už lango.',
-      resetHint: 'Iš naujo: paspausk „Iš naujo“.',
-      genres: {
-        downtempo: 'lėtasis',
-        house: 'hausas',
-        houseTechno: 'hausas / technas',
-        techno: 'technas',
+      moods: {
+        calm: 'Ramiai, bet kantriai',
+        slow: 'Lėtas ritmas',
+        deepHouse: 'Deep house teritorija',
+        house: 'House',
+        techno: 'Techno',
+        fast: 'Greičiau, nei kantrybė spėja',
       },
     },
     contact: {
@@ -290,19 +292,21 @@ He is most often associated with Vilnius’s loft culture and alternative electr
       nextPhoto: 'Next photo',
     },
     bpm: {
-      title: 'BPM tap meter',
+      title: 'You found it. Patience paid off.',
       explain:
-        "A little easter egg. Tap the button to the beat of any music and I'll show the beats per minute (BPM).",
-      tap: 'TAP',
+        "A leftover from my DJ days: tap the button to the beat of any music and I'll tell you the BPM.",
+      tap: 'TAP TO THE BEAT',
+      waiting: 'Waiting for the first beat',
+      hint: '4–5 taps is enough.',
       reset: 'Reset',
       close: 'Close',
-      closeHint: 'Close: Esc or click outside.',
-      resetHint: 'Reset: press Reset.',
-      genres: {
-        downtempo: 'downtempo',
-        house: 'house',
-        houseTechno: 'house / techno',
-        techno: 'techno',
+      moods: {
+        calm: 'Slow and patient',
+        slow: 'Easy tempo',
+        deepHouse: 'Deep house territory',
+        house: 'House',
+        techno: 'Techno',
+        fast: 'Faster than patience can follow',
       },
     },
     contact: {

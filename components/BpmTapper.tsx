@@ -19,8 +19,6 @@ function moodKey(bpm: number): 'calm' | 'slow' | 'deepHouse' | 'house' | 'techno
   return 'fast'
 }
 
-const EMPTY_BPM = '--'
-
 export default function BpmTapper({ onClose }: Props) {
   const { lang } = useLang()
   const copy = t[lang].bpm
@@ -146,69 +144,75 @@ export default function BpmTapper({ onClose }: Props) {
         role="dialog"
         aria-modal="true"
         aria-label={copy.title}
-        className="flex flex-col items-center gap-5 overflow-x-hidden text-center text-white"
+        className="box-border flex w-[min(calc(100vw-32px),340px)] max-w-[340px] min-w-0 flex-col items-stretch gap-5 overflow-x-hidden text-center text-white"
         style={{
           position: 'fixed',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: 'min(90vw, 360px)',
           maxHeight: '85dvh',
           overflowY: 'auto',
         }}
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex w-full max-w-full flex-col items-center gap-1.5">
-          <p className="text-[16px] font-medium leading-snug text-white">{copy.title}</p>
-          <p className="text-[14px] leading-snug text-white/70">{copy.explain}</p>
+        <div className="flex w-full min-w-0 flex-col items-center gap-2">
+          <p className="w-full text-[18px] font-semibold leading-snug text-white">{copy.title}</p>
+          <p className="line-clamp-3 w-full text-[14px] leading-[1.5] text-white/60">{copy.explain}</p>
         </div>
-        <div
-          className="flex w-full flex-col items-center gap-4 overflow-x-hidden border border-[#262626] bg-[#161616] px-6 py-4"
-          style={{ borderRadius: 16 }}
-        >
-        <p className="font-mono text-[56px] leading-none text-white">
-          {bpm === null ? EMPTY_BPM : bpm}
-        </p>
-        {bpm === null ? (
-          <p className="max-w-full text-[14px] leading-snug text-white/50">{copy.waiting}</p>
-        ) : null}
-        {mood ? (
-          <p className="max-w-full text-[14px] leading-snug text-white/50">{mood}</p>
-        ) : null}
-
-        <button
-          ref={tapRef}
-          type="button"
-          data-bpm-action="tap"
-          aria-label={copy.tap}
-          onClick={registerTap}
-          className="flex h-[120px] w-[120px] max-h-[160px] max-w-[160px] shrink-0 items-center justify-center rounded-full border border-[#4afa8a] px-3 text-center text-[14px] font-medium leading-tight tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4afa8a]"
-          style={{ backgroundColor: pressed ? '#1a3d2c' : 'var(--surface-solid)' }}
-        >
-          {copy.tap}
-        </button>
-        <p className="max-w-full text-[13px] leading-snug text-white/50">{copy.hint}</p>
-
-        <div className="flex items-center justify-center gap-6">
+        <div className="flex w-full min-w-0 flex-col items-center gap-4 rounded-2xl border border-[#262626] bg-[#161616] p-6">
+          <div className="flex h-[72px] items-center justify-center">
+            <p
+              className={
+                bpm === null
+                  ? 'font-mono text-[40px] leading-none text-white/25'
+                  : 'font-mono text-[68px] tabular-nums leading-none text-white'
+              }
+            >
+              {bpm === null ? '—' : bpm}
+            </p>
+          </div>
+          <div className="flex min-h-[1.25rem] w-full min-w-0 flex-col items-center text-[13px] leading-snug text-white/50">
+            {bpm === null ? (
+              <p className="max-w-full">
+                {copy.waiting}
+                <br />
+                {copy.hint}
+              </p>
+            ) : mood ? (
+              <p className="max-w-full">{mood}</p>
+            ) : null}
+          </div>
           <button
+            ref={tapRef}
             type="button"
-            data-bpm-action="reset"
-            aria-label={copy.reset}
-            onClick={reset}
-            className="surface-card inline-flex min-h-11 min-w-11 items-center justify-center px-3 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
+            data-bpm-action="tap"
+            aria-label={copy.tap}
+            onClick={registerTap}
+            className="flex h-[120px] w-[120px] shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-[#4afa8a] px-3 text-[12px] font-medium text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4afa8a]"
+            style={{ backgroundColor: pressed ? '#1a3d2c' : 'var(--surface-solid)' }}
           >
-            {copy.reset}
+            {copy.tap}
           </button>
-          <button
-            type="button"
-            data-bpm-action="close"
-            aria-label={copy.close}
-            onClick={() => onCloseRef.current()}
-            className="surface-card inline-flex min-h-11 min-w-11 items-center justify-center px-3 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
-          >
-            {copy.close}
-          </button>
-        </div>
+          <div className="flex w-full items-center justify-between border-t border-white/10 pt-4">
+            <button
+              type="button"
+              data-bpm-action="reset"
+              aria-label={copy.reset}
+              onClick={reset}
+              className="bg-transparent px-1 py-1 text-[13px] text-white/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
+            >
+              {copy.reset}
+            </button>
+            <button
+              type="button"
+              data-bpm-action="close"
+              aria-label={copy.close}
+              onClick={() => onCloseRef.current()}
+              className="bg-transparent px-1 py-1 text-[13px] text-white/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
+            >
+              {copy.close}
+            </button>
+          </div>
         </div>
       </div>
     </div>,

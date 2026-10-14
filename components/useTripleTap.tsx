@@ -6,21 +6,6 @@ export const OPEN_BPM_EVENT = 'open-bpm'
 export const CLOSE_BPM_EVENT = 'close-bpm'
 const BPM_SEEN_KEY = 'bpm-opened'
 
-export const BPM_COPY = {
-  dialog: 'BPM',
-  empty: '--',
-  hint: 'Tap the beat',
-  tap: 'TAP',
-  reset: 'Reset',
-  close: 'Close',
-  genres: {
-    downtempo: 'downtempo',
-    house: 'house',
-    houseTechno: 'house / techno',
-    techno: 'techno',
-  },
-} as const
-
 const TAP_GAP_MS = 600
 const HINT_FADE_MS = 150
 const PHONE_HINT_MS = 1500

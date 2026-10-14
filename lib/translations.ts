@@ -87,6 +87,22 @@ Dažniausiai siejamas su Vilniaus loftų kultūra ir alternatyviomis elektronin�
       prevPhoto: 'Ankstesnė nuotrauka',
       nextPhoto: 'Kita nuotrauka',
     },
+    bpm: {
+      title: 'BPM matuoklis',
+      explain:
+        'Slaptas easter egg. Spaudyk mygtuką pagal bet kokios muzikos ritmą, o aš parodysiu, kiek tai dūžių per minutę (BPM).',
+      tap: 'SPAUSK',
+      reset: 'Iš naujo',
+      close: 'Uždaryti',
+      closeHint: 'Uždaryti: Esc arba paspausk už lango.',
+      resetHint: 'Iš naujo: paspausk „Iš naujo“.',
+      genres: {
+        downtempo: 'lėtasis',
+        house: 'hausas',
+        houseTechno: 'hausas / technas',
+        techno: 'technas',
+      },
+    },
     contact: {
       title: 'Pasikalbėkim',
       name: 'Vardas',
@@ -272,6 +288,22 @@ He is most often associated with Vilnius’s loft culture and alternative electr
       close: 'Close',
       prevPhoto: 'Previous photo',
       nextPhoto: 'Next photo',
+    },
+    bpm: {
+      title: 'BPM tap meter',
+      explain:
+        "A little easter egg. Tap the button to the beat of any music and I'll show the beats per minute (BPM).",
+      tap: 'TAP',
+      reset: 'Reset',
+      close: 'Close',
+      closeHint: 'Close: Esc or click outside.',
+      resetHint: 'Reset: press Reset.',
+      genres: {
+        downtempo: 'downtempo',
+        house: 'house',
+        houseTechno: 'house / techno',
+        techno: 'techno',
+      },
     },
     contact: {
       title: "Let's talk",

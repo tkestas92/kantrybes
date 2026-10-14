@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { BPM_COPY } from '@/components/useTripleTap'
+import { useLang } from '@/components/LangProvider'
+import { t } from '@/lib/translations'
 
 type Props = { onClose: () => void }
 
@@ -17,7 +18,11 @@ function genreKey(bpm: number): 'downtempo' | 'house' | 'houseTechno' | 'techno'
   return null
 }
 
+const EMPTY_BPM = '--'
+
 export default function BpmTapper({ onClose }: Props) {
+  const { lang } = useLang()
+  const copy = t[lang].bpm
   const dialogRef = useRef<HTMLDivElement>(null)
   const tapRef = useRef<HTMLButtonElement>(null)
   const tapsRef = useRef<number[]>([])
@@ -135,7 +140,7 @@ export default function BpmTapper({ onClose }: Props) {
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label={BPM_COPY.dialog}
+        aria-label={copy.title}
         className="flex flex-col items-center gap-4 overflow-x-hidden border border-[#262626] bg-[#161616] px-6 py-6 text-center text-white"
         style={{
           position: 'fixed',
@@ -149,45 +154,52 @@ export default function BpmTapper({ onClose }: Props) {
         }}
         onClick={(event) => event.stopPropagation()}
       >
+        <div className="flex max-w-full flex-col items-center gap-1.5">
+          <p className="text-[16px] font-medium leading-snug text-white">{copy.title}</p>
+          <p className="text-[14px] leading-snug text-white/50">{copy.explain}</p>
+        </div>
         <p className="font-mono text-[56px] leading-none text-white">
-          {bpm === null ? BPM_COPY.empty : bpm}
+          {bpm === null ? EMPTY_BPM : bpm}
         </p>
         {genre ? (
-          <p className="font-mono text-[12px] text-[#4afa8a]">{BPM_COPY.genres[genre]}</p>
+          <p className="font-mono text-[12px] text-[#4afa8a]">{copy.genres[genre]}</p>
         ) : null}
-        <p className="text-[14px] text-white/70">{BPM_COPY.hint}</p>
 
         <button
           ref={tapRef}
           type="button"
           data-bpm-action="tap"
-          aria-label={BPM_COPY.tap}
+          aria-label={copy.tap}
           onClick={registerTap}
           className="flex h-[120px] w-[120px] max-h-[160px] max-w-[160px] shrink-0 items-center justify-center rounded-full border border-[#4afa8a] text-[14px] font-medium tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4afa8a]"
           style={{ backgroundColor: pressed ? '#1a3d2c' : 'var(--surface-solid)' }}
         >
-          {BPM_COPY.tap}
+          {copy.tap}
         </button>
 
         <div className="flex items-center justify-center gap-6">
           <button
             type="button"
             data-bpm-action="reset"
-            aria-label={BPM_COPY.reset}
+            aria-label={copy.reset}
             onClick={reset}
             className="surface-card inline-flex min-h-11 min-w-11 items-center justify-center px-3 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
           >
-            {BPM_COPY.reset}
+            {copy.reset}
           </button>
           <button
             type="button"
             data-bpm-action="close"
-            aria-label={BPM_COPY.close}
+            aria-label={copy.close}
             onClick={() => onCloseRef.current()}
             className="surface-card inline-flex min-h-11 min-w-11 items-center justify-center px-3 text-[13px] text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4afa8a]"
           >
-            {BPM_COPY.close}
+            {copy.close}
           </button>
+        </div>
+        <div className="flex max-w-full flex-col items-center gap-1">
+          <p className="text-[13px] leading-snug text-white/50">{copy.closeHint}</p>
+          <p className="text-[13px] leading-snug text-white/50">{copy.resetHint}</p>
         </div>
       </div>
     </div>,

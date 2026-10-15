@@ -155,10 +155,6 @@ export default function BpmTapper({ onClose }: Props) {
         }}
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex w-full min-w-0 flex-col items-center gap-2">
-          <p className="w-full text-[18px] font-semibold leading-snug text-white">{copy.title}</p>
-          <p className="line-clamp-3 w-full text-[14px] leading-[1.5] text-white/60">{copy.explain}</p>
-        </div>
         <div className="flex w-full min-w-0 flex-col items-center gap-4 rounded-2xl border border-[#262626] bg-[#161616] p-6">
           <div className="flex h-[72px] items-center justify-center">
             <p

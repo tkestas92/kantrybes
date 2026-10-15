@@ -89,8 +89,6 @@ Dažniausiai siejamas su Vilniaus loftų kultūra ir alternatyviomis elektronin�
     },
     bpm: {
       title: 'Suradai. Kantrybė atsipirko.',
-      explain:
-        'Likutis iš mano DJ laikų: spaudyk mygtuką pagal muzikos ritmą, o aš pasakysiu, kiek tai BPM.',
       tap: 'SPAUSK RITMU',
       waiting: 'Laukiu pirmo dūžio',
       hint: 'Užtenka 4–5 paspaudimų.',
@@ -293,8 +291,6 @@ He is most often associated with Vilnius’s loft culture and alternative electr
     },
     bpm: {
       title: 'You found it. Patience paid off.',
-      explain:
-        "A leftover from my DJ days: tap the button to the beat of any music and I'll tell you the BPM.",
       tap: 'TAP TO THE BEAT',
       waiting: 'Waiting for the first beat',
       hint: '4–5 taps is enough.',

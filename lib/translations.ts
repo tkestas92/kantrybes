@@ -25,8 +25,6 @@ export const t = {
       viewPhoto: 'Peržiūrėti {title} nuotrauką',
       more: 'Daugiau',
       less: 'Mažiau',
-      cvLoading: 'Kraunama...',
-      cvError: 'Nepavyko parodyti CV.',
       certItems: [
         {
           title: 'Artificial Intelligence and Python Development',
@@ -227,8 +225,6 @@ Dažniausiai siejamas su Vilniaus loftų kultūra ir alternatyviomis elektronin�
       viewPhoto: 'View the {title} photo',
       more: 'More',
       less: 'Less',
-      cvLoading: 'Loading...',
-      cvError: "Couldn't show the CV.",
       certItems: [
         {
           title: 'Artificial Intelligence and Python Development',

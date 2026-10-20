@@ -1,9 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import { Github, Linkedin, FileText } from 'lucide-react'
 import EmailButton from '@/components/EmailButton'
-import CvModal from '@/components/CvModal'
 import type { Project } from '@/lib/db'
 import ProjectGrid from '@/components/ProjectGrid'
 import NameAnimation from '@/components/NameAnimation'
@@ -19,7 +17,6 @@ type Props = {
 export default function DevPageClient({ projects }: Props) {
   const { lang } = useLang()
   const labels = t[lang].dev
-  const [cvOpen, setCvOpen] = useState(false)
 
   return (
     <>
@@ -46,13 +43,14 @@ export default function DevPageClient({ projects }: Props) {
             >
               <Linkedin size={15} /> LinkedIn
             </a>
-            <button
-              type="button"
-              onClick={() => setCvOpen(true)}
+            <a
+              href="/cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#0f0f0f] text-[13px] text-white border border-[#2a2a2a] rounded-lg px-4 py-2 hover:text-[#4afa8a] hover:border-[#4afa8a] hover:bg-[#0e2a1a] transition-all"
             >
               <FileText size={15} /> {labels.cvButton}
-            </button>
+            </a>
             <EmailButton />
           </div>
         </div>
@@ -88,17 +86,6 @@ export default function DevPageClient({ projects }: Props) {
         }}
       />
       <WaveCta lang={lang} />
-      {cvOpen && (
-        <CvModal
-          title={labels.cvButton}
-          src="/cv.pdf"
-          closeLabel={labels.close}
-          openNewTabLabel={t[lang].liveDemo.openNewTab}
-          loadingLabel={labels.cvLoading}
-          errorLabel={labels.cvError}
-          onClose={() => setCvOpen(false)}
-        />
-      )}
     </>
   )
 }

@@ -171,6 +171,7 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadi
           <div className="flex items-center gap-2">
             <a
               href={src}
+              download="CV Kęstas Trybė.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex select-text items-center gap-1.5 text-[12px] text-white hover:text-[#4afa8a] transition-colors"

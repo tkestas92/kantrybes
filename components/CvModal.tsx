@@ -118,16 +118,21 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadi
       return pdfjs.getDocument(src).promise.then((pdf) => ({ pdfjs, pdf }))
     })
 
+    function isCurrent(gen: number) {
+      return !cancelled && gen === generation && host
+    }
+
     async function paint(width: number, gen: number) {
       const { pdfjs, pdf } = await pdfPromise
-      if (cancelled || gen !== generation || !host) return
+      if (!isCurrent(gen)) return
 
-      host.replaceChildren()
       const outputScale = Math.min(2, Math.max(1, window.devicePixelRatio || 1))
+      const pages: HTMLDivElement[] = []
 
       for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
-        if (cancelled || gen !== generation) return
+        if (!isCurrent(gen)) return
         const page = await pdf.getPage(pageNumber)
+        if (!isCurrent(gen)) return
         const unscaled = page.getViewport({ scale: 1 })
         const cssScale = width / unscaled.width
         const viewport = page.getViewport({ scale: cssScale })
@@ -144,7 +149,7 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadi
           transform: outputScale === 1 ? undefined : [outputScale, 0, 0, outputScale, 0, 0],
         })
         await renderTask.promise
-        if (cancelled || gen !== generation) return
+        if (!isCurrent(gen)) return
 
         const textLayerDiv = document.createElement('div')
         textLayerDiv.className = 'textLayer'
@@ -162,6 +167,7 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadi
           page.getAnnotations(),
           page.getTextContent(),
         ])
+        if (!isCurrent(gen)) return
         const annotationLayer = new pdfjs.AnnotationLayer({
           div: linkLayer,
           accessibilityManager: null,
@@ -176,7 +182,7 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadi
         pageEl.className = 'cv-page'
         pageEl.setAttribute('aria-label', `${title} ${pageNumber}`)
         pageEl.append(canvas, textLayerDiv, linkLayer)
-        host.append(pageEl)
+        pages.push(pageEl)
 
         await Promise.all([
           textLayer.render(),
@@ -189,7 +195,7 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadi
             renderForms: false,
           }),
         ])
-        if (cancelled || gen !== generation) return
+        if (!isCurrent(gen)) return
 
         addTextLinks(linkLayer, textContent.items, viewport)
         linkLayer.querySelectorAll('a').forEach((anchor) => {
@@ -197,7 +203,9 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadi
         })
       }
 
-      if (!cancelled && gen === generation && loadingRef.current) loadingRef.current.hidden = true
+      if (!isCurrent(gen) || !host) return
+      host.replaceChildren(...pages)
+      if (loadingRef.current) loadingRef.current.hidden = true
     }
 
     function requestPaint(width: number) {

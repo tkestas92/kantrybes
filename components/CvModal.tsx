@@ -163,6 +163,7 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadi
 
         const linkLayer = document.createElement('div')
         linkLayer.className = 'annotationLayer'
+        linkLayer.style.setProperty('--scale-factor', String(viewport.scale))
         const [annotations, textContent] = await Promise.all([
           page.getAnnotations(),
           page.getTextContent(),
@@ -180,6 +181,7 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadi
 
         const pageEl = document.createElement('div')
         pageEl.className = 'cv-page'
+        pageEl.style.setProperty('--scale-factor', String(viewport.scale))
         pageEl.setAttribute('aria-label', `${title} ${pageNumber}`)
         pageEl.append(canvas, textLayerDiv, linkLayer)
         pages.push(pageEl)
@@ -196,6 +198,8 @@ export default function CvModal({ title, src, closeLabel, openNewTabLabel, loadi
           }),
         ])
         if (!isCurrent(gen)) return
+        linkLayer.style.width = `${viewport.width}px`
+        linkLayer.style.height = `${viewport.height}px`
 
         addTextLinks(linkLayer, textContent.items, viewport)
         linkLayer.querySelectorAll('a').forEach((anchor) => {

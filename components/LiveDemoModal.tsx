@@ -27,17 +27,27 @@ export default function LiveDemoModal({ url, title, type, labels, onClose }: Pro
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
+    const html = document.documentElement
+    const previousBodyOverflow = document.body.style.overflow
+    const previousHtmlOverflow = html.style.overflow
+    const previousHtmlOverflowX = html.style.overflowX
     document.body.style.overflow = 'hidden'
+    html.style.overflow = 'hidden'
+    html.style.overflowX = 'hidden'
     window.addEventListener('keydown', onKeyDown)
     return () => {
-      document.body.style.overflow = ''
+      document.body.style.overflow = previousBodyOverflow
+      html.style.overflow = previousHtmlOverflow
+      html.style.overflowX = previousHtmlOverflowX
       window.removeEventListener('keydown', onKeyDown)
     }
   }, [onClose])
 
   return (
     <div
-      className="surface-solid fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+      className={`surface-solid fixed inset-0 z-50 flex items-center justify-center overflow-hidden ${
+        isApp ? 'p-0 sm:p-6' : 'p-4 sm:p-6'
+      }`}
       role="dialog"
       aria-modal="true"
       aria-label={`${title} ${subtitle}`}
@@ -50,23 +60,25 @@ export default function LiveDemoModal({ url, title, type, labels, onClose }: Pro
       />
 
       <div
-        className={`surface-card relative z-10 flex w-full flex-col overflow-hidden rounded-2xl border border-[#2a2a2a] shadow-2xl ${
-          isApp ? 'max-w-[420px]' : 'max-w-6xl'
+        className={`surface-card relative z-10 flex w-full flex-col overflow-hidden border-[#2a2a2a] shadow-2xl ${
+          isApp
+            ? 'h-[100dvh] max-h-[100dvh] max-w-none rounded-none border-0 sm:h-auto sm:max-h-none sm:max-w-[420px] sm:rounded-2xl sm:border'
+            : 'max-w-6xl rounded-2xl border'
         }`}
       >
-        <div className="flex items-center justify-between border-b border-[#222] px-4 py-3">
-          <div>
-            <p className="text-[13px] font-medium text-white">{title}</p>
-            <p className="text-[11px] text-white">{subtitle}</p>
+        <div className="flex shrink-0 items-center justify-between border-b border-[#222] px-4 py-3">
+          <div className="min-w-0 pr-2">
+            <p className="truncate text-[13px] font-medium text-white">{title}</p>
+            <p className="truncate text-[11px] text-white">{subtitle}</p>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex shrink-0 items-center gap-1">
             {!isApp && (
               <a
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackDemoOpenNewTab({ title, type, url })}
-                className="rounded-lg p-1.5 text-white transition-colors hover:bg-[#222] hover:text-white"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-white transition-colors hover:bg-[#222] hover:text-white"
                 aria-label={labels.openNewTab}
               >
                 <ExternalLink size={16} />
@@ -75,7 +87,7 @@ export default function LiveDemoModal({ url, title, type, labels, onClose }: Pro
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg p-1.5 text-white transition-colors hover:bg-[#222] hover:text-white"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-white transition-colors hover:bg-[#222] hover:text-white"
               aria-label={labels.close}
             >
               <X size={18} />
@@ -84,14 +96,16 @@ export default function LiveDemoModal({ url, title, type, labels, onClose }: Pro
         </div>
 
         <div
-          className={`relative w-full bg-[#0a0a0a] ${
-            isApp ? 'aspect-[9/19.5]' : 'h-[75vh] min-h-[420px]'
+          className={`relative min-h-0 w-full overflow-hidden bg-[#0a0a0a] ${
+            isApp
+              ? 'flex flex-1 items-center justify-center sm:aspect-[9/19.5] sm:flex-none'
+              : 'h-[75vh] min-h-[420px]'
           }`}
         >
           <iframe
             src={iframeUrl}
             title={`${title} ${subtitle}`}
-            className="absolute inset-0 h-full w-full border-0"
+            className="absolute inset-0 h-full w-full max-w-full border-0"
             allow="autoplay; fullscreen"
             referrerPolicy="strict-origin-when-cross-origin"
           />

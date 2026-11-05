@@ -188,15 +188,15 @@ function TikTokCardView({ card, fallbackAlt }: { card: DjTikTokCard; fallbackAlt
       rel="noopener noreferrer"
       className="relative block h-full w-full overflow-hidden bg-[#161616]"
     >
-      <img src={card.thumbnailUrl} alt={card.title ?? fallbackAlt} className="h-full w-full object-cover" />
-      <div className="surface-solid pointer-events-none absolute inset-x-0 top-0 h-16" />
+      <img src={card.thumbnailUrl} alt={card.title ?? fallbackAlt} className="absolute inset-0 h-full w-full object-cover" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/80 to-transparent" />
       {card.title ? (
         <p className="pointer-events-none absolute left-3 right-3 top-3 text-[13px] font-bold leading-snug text-white line-clamp-2">
           {card.title}
         </p>
       ) : null}
-      <span className="surface-solid pointer-events-none absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-white">
-        <FaPlay size={24} color="#fff" aria-hidden className="ml-0.5" />
+      <span className="pointer-events-none absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-md">
+        <FaPlay size={20} color="#111" aria-hidden className="ml-0.5" />
       </span>
     </a>
   )
